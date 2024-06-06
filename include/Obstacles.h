@@ -1,10 +1,11 @@
 #pragma once
 #include "StaticObjects.h"
 
-class Pickable:public StaticObjects
+class Obstacles:public StaticObjects
 {
 public:
 
 private:
 
 };
+

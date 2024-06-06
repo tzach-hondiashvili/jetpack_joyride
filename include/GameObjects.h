@@ -1,10 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class GameObjects
+class GameObjects 
 {
 public:
 	GameObjects();
+	GameObjects(sf::Vector2f position, sf::Texture* texture);
+	const sf::Sprite &getSprite() const;
+	void changeSpriteAnimation(sf::IntRect rect);
 private:
-	sf::RectangleShape m_shape;
+	sf::Sprite m_sprite;
 };
