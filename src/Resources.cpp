@@ -12,24 +12,63 @@ Resources& Resources::instance()
 
 void Resources::fillTextures()
 {
-	std::vector<std::string> namesOfTextures = { };
+	std::vector<std::string > namesOfObjectTextures = { "" };
+	std::vector<std::string> namesOfPlayerTextures = { "" };
+	std::vector<std::string> namesOfOtherTextures = {""};
+
 	sf::Texture temp;
-	for (int i = 0; i < namesOfTextures.size(); i++)
+
+	//objects
+	for (int i = 0; i < namesOfObjectTextures.size(); i++)
 	{
-		if (temp.loadFromFile(namesOfTextures[i]))
+		if (temp.loadFromFile(namesOfObjectTextures[i]))
 		{
-			m_textures.push_back(temp);
+			m_objectsTextures.push_back(temp);
 		}
 		else
 		{
-			std::cerr << "Failed to load texture: " << namesOfTextures[i] << std::endl;
+			std::cerr << "Failed to load texture: " << namesOfObjectTextures[i] << std::endl;
+		}
+	}
+	//player
+	for (int i = 0; i < namesOfPlayerTextures.size(); i++)
+	{
+		if (temp.loadFromFile(namesOfPlayerTextures[i]))
+		{
+			m_playerTextures.push_back(temp);
+		}
+		else
+		{
+			std::cerr << "Failed to load texture: " << namesOfPlayerTextures[i] << std::endl;
+		}
+	}
+	//other
+	for (int i = 0; i < namesOfOtherTextures.size(); i++)
+	{
+		if (temp.loadFromFile(namesOfOtherTextures[i]))
+		{
+			m_otherTextures.push_back(temp);
+		}
+		else
+		{
+			std::cerr << "Failed to load texture: " << namesOfOtherTextures[i] << std::endl;
 		}
 	}
 }
 
-sf::Texture& Resources::getTexture(int index)
+sf::Texture& Resources::getObjectTexture(int index)
 {
-	return m_textures[index];
+	return m_objectsTextures[index];
+}
+
+sf::Texture& Resources::getOtherTexture(int index)
+{
+	return m_otherTextures[index];
+}
+
+sf::Texture& Resources::getPlayerTexture(int index)
+{
+	return m_playerTextures[index];
 }
 
 void Resources::updateFont()
@@ -43,6 +82,6 @@ const sf::Font& Resources::getFont()
 }
 
 Resources::Resources()
-	:m_textures({}), m_font(sf::Font())
+	:m_objectsTextures({}), m_font(sf::Font()),m_otherTextures({}),m_playerTextures({})
 {
 }
