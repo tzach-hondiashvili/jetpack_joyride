@@ -2,10 +2,10 @@
 #include "Command.h"
 #include "Menu.h"
 
-class Help : public Command
+class Return2Menu : public Command
 {
 public:
-	Help(Menu * menu);
+	Return2Menu(Menu* menu);
 	virtual void execute() override;
 	virtual void updateAnimation() override {};
 };

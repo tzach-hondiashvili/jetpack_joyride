@@ -10,7 +10,7 @@ public:
 	Command();
 	virtual void execute() = 0;
 	virtual void updateAnimation() = 0;
-	void updateSprite(sf::Vector2f position,sf::Texture* texture,sf::Vector2f size);
+	void updateSprite(sf::Vector2f position,sf::Texture* texture);
 	Menu* getMenu() const;
 	void updateMenu(Menu *menu);
 	sf::Sprite& getSprite();

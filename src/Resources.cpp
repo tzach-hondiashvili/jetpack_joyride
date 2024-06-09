@@ -22,93 +22,86 @@ void Resources::fillTextures()
 														"h_MissileIncoming.png",
 														"i_MissileWarning.png",
 														"j_Piggy.png",
-														"k_PowerUpBox.png", //10
+														"k_PowerUpBox.png" //10
 													  };
 
-	std::vector<std::string> namesOfPlayerTextures = { "a_KingAvatar.png" //0
-													   "b_KingDead.png"
-													   "c_KingHit.png"
-													   "d_KingWalking.png"
-													   "e_BerryAvatar.png"
-													   "f_BerryDead.png" //5
-													   "g_BerryHit.png"
-													   "h_BerryWalking.png"
-													   "i_ScientistAvatar.png"
-													   "j_ScientistDead.png"
-													   "k_ScientistHit.png" //10
-													   "l_ScientistWalking.png"
-													   "m_SoldierAvatar.png"
-													   "n_SoldierDead.png" 
-													   "o_SoldierHit.png"
-													   "p_SoldierWalking.png" //15
-													   "q_GokuAvatar.png"
-													   "r_SuperPowerFlyTank.png"
-													   "s_SuperPowerRunner.png"
+	std::vector<std::string> namesOfPlayerTextures = { "a_KingAvatar.png", //0
+													   "b_KingDead.png",
+													   "c_KingHit.png",
+													   "d_KingWalking.png",
+													   "e_BerryAvatar.png",
+													   "f_BerryDead.png", //5
+													   "g_BerryHit.png",
+													   "h_BerryWalking.png",
+													   "i_ScientistAvatar.png",
+													   "j_ScientistDead.png",
+													   "k_ScientistHit.png", //10
+													   "l_ScientistWalking.png",
+													   "m_SoldierAvatar.png",
+													   "n_SoldierDead.png" ,
+													   "o_SoldierHit.png",
+													   "p_SoldierWalking.png", //15
+													   "q_GokuAvatar.png",
+													   "r_SuperPowerFlyTank.png",
+													   "s_SuperPowerRunner.png",
 													   "t_SuperPowerTank.png"
 																			//20
 													  };
 
-	std::vector<std::string> namesOfOtherTextures = {"a_arrow.png" //0
-                                                     "b_Buy.png"
-                                                     "c_Equip.png"
-                                                     "d_GameMenu.png"
-                                                     "e_GameSettingButton.png"
-                                                     "f_Hall.png" //5
-                                                     "g_HelpMenuOne.png"
-                                                     "h_HelpMenuThree.png"
-                                                     "i_HelpMenuTwo.png"
-                                                     "j_helpOff.png"
-                                                     "k_helpOn.png" //10
-                                                     "l_PlaygameOff.png"
-                                                     "m_PlayGameOn.png"
-                                                     "q_Retry.png"
-                                                     "p_Resume.png"
-                                                     "r_Scientist.png" //15
-                                                     "s_SettingQuit.png"
-                                                     "t_SettingsMenu.png"
-                                                     "u_SettingsOff.png"
-                                                     "v_SettingsOn.png"
-                                                     "w_ShopOff.png" //20
-                                                     "x_ShopOn.png"
-                                                     "y_StartOfHall.png"
+	std::vector<std::string> namesOfOtherTextures = {"a_arrow.png", //0
+                                                     "b_Buy.png",
+                                                     "c_Equip.png",
+                                                     "d_GameMenu.png",
+                                                     "e_GameSettingButton.png",
+                                                     "f_Hall.png", //5
+                                                     "g_HelpMenuOne.png",
+                                                     "h_HelpMenuThree.png",
+                                                     "i_HelpMenuTwo.png",
+                                                     "j_helpOff.png",
+                                                     "k_helpOn.png", //10
+                                                     "l_PlaygameOff.png",
+                                                     "m_PlayGameOn.png",
+                                                     "q_Retry.png",
+                                                     "p_Resume.png",
+                                                     "r_Scientist.png" ,//15
+                                                     "s_SettingQuit.png",
+                                                     "t_SettingsMenu.png",
+                                                     "u_SettingsOff.png",
+                                                     "v_SettingsOn.png",
+                                                     "w_ShopOff.png", //20
+                                                     "x_ShopOn.png",
+                                                     "y_StartOfHall.png",
                                                      "z_Title.png"
                                                      };
+
+	std::vector<std::string > namesOfHelpTextures = { "1.png", //0
+														"2.png",
+														"3.png",
+														"4.png",
+														"5.png",
+														"6.png", //5												
+	                                                };
+	
+
+	fillTextureVectors(namesOfHelpTextures,m_HelpTextures);
+	fillTextureVectors(namesOfObjectTextures,m_objectsTextures);
+	fillTextureVectors(namesOfOtherTextures,m_otherTextures);
+	fillTextureVectors(namesOfPlayerTextures,m_playerTextures);
+}
+
+void Resources::fillTextureVectors(std::vector<std::string > names, std::vector<sf::Texture> &member)
+{
 	sf::Texture temp;
 
-	//objects
-	for (int i = 0; i < namesOfObjectTextures.size(); i++)
+	for (int i = 0; i < names.size(); i++)
 	{
-		if (temp.loadFromFile(namesOfObjectTextures[i]))
+		if (temp.loadFromFile(names[i]))
 		{
-			m_objectsTextures.push_back(temp);
+			member.emplace_back(temp);
 		}
 		else
 		{
-			std::cerr << "Failed to load texture: " << namesOfObjectTextures[i] << std::endl;
-		}
-	}
-	//player
-	for (int i = 0; i < namesOfPlayerTextures.size(); i++)
-	{
-		if (temp.loadFromFile(namesOfPlayerTextures[i]))
-		{
-			m_playerTextures.push_back(temp);
-		}
-		else
-		{
-			std::cerr << "Failed to load texture: " << namesOfPlayerTextures[i] << std::endl;
-		}
-	}
-	//other
-	for (int i = 0; i < namesOfOtherTextures.size(); i++)
-	{
-		if (temp.loadFromFile(namesOfOtherTextures[i]))
-		{
-			m_otherTextures.push_back(temp);
-		}
-		else
-		{
-			std::cerr << "Failed to load texture: " << namesOfOtherTextures[i] << std::endl;
+			std::cerr << "Failed to load texture: " << names[i] << std::endl;
 		}
 	}
 }
@@ -126,6 +119,11 @@ sf::Texture& Resources::getOtherTexture(int index)
 sf::Texture& Resources::getPlayerTexture(int index)
 {
 	return m_playerTextures[index];
+}
+
+sf::Texture& Resources::getHelpTexture(int index)
+{
+	return m_HelpTextures[index];
 }
 
 void Resources::updateFont()

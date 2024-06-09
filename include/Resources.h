@@ -10,8 +10,11 @@ public:
 	sf::Texture& getObjectTexture(int index);
 	sf::Texture& getOtherTexture(int index);
 	sf::Texture& getPlayerTexture(int index);
+	sf::Texture& getHelpTexture(int index);
 	void updateFont();
 	const sf::Font& getFont();
+	void fillTextureVectors(std::vector<std::string > names, std::vector<sf::Texture>& member);
+
 private:
 	Resources();
 	Resources(const Resources&) = default;
@@ -20,5 +23,6 @@ private:
 	std::vector<sf::Texture> m_objectsTextures;
 	std::vector<sf::Texture> m_otherTextures;
 	std::vector<sf::Texture> m_playerTextures;
+	std::vector<sf::Texture> m_HelpTextures;
 	sf::Font m_font;
 };

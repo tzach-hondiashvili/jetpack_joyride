@@ -64,3 +64,14 @@ configure_file ("Images/Player/q_GokuAvatar.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Player/r_SuperPowerFlyTank.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Player/s_SuperPowerRunner.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Player/t_SuperPowerTank.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+#font
+configure_file ("Images/Other/Jetpackia.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
+
+#Help
+configure_file ("Images/Help/1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Help/2.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Help/3.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Help/4.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Help/5.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Help/6.png" ${CMAKE_BINARY_DIR} COPYONLY)

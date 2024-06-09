@@ -2,7 +2,11 @@
 #include "Controller.h"
 #include "Help.h"
 #include "StartGame.h"
+#include "Return2Menu.h"
+#include "HelpLeft.h"
+#include "HelpRight.h"
 #include <iostream>
+#include <string>
 
 typedef std::pair<std::string, std::unique_ptr<Command>> option;
 
@@ -17,8 +21,17 @@ public:
 	void show();
 	void updateOptions();
 	void handleButtonClick(const sf::Event::MouseButtonEvent& event);
+	void handleHelpButtonClick(const sf::Event::MouseButtonEvent& event);
+	void showHelpButtons();
+	void return2Menu();
+	void moveHelpLeft();
+	void moveHelpRight();
 
 private:
 	sf::RenderWindow m_window;
 	std::vector<option> m_options;
+	std::vector<option> m_helpButtons;
+
+	bool m_runHelp;
+	unsigned m_helpPage;
 };

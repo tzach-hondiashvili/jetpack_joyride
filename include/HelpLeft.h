@@ -1,11 +1,10 @@
 #pragma once
 #include "Command.h"
-#include "Menu.h"
 
-class Help : public Command
+class HelpLeft : public Command
 {
 public:
-	Help(Menu * menu);
+	HelpLeft(Menu* menu);
 	virtual void execute() override;
 	virtual void updateAnimation() override {};
 };

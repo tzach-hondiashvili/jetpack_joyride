@@ -3,10 +3,9 @@
 
 StartGame::StartGame(Menu* menu)
 {
-	sf::Vector2f position = {364/2,80};
-	sf::Vector2f size = {60/364,20/240};
+	sf::Vector2f position = { 500, 300};
 	
-	updateSprite(position,&Resources::instance().getOtherTexture(11),size);
+	updateSprite(position,&Resources::instance().getOtherTexture(11));
 	updateMenu(menu);
 }
 

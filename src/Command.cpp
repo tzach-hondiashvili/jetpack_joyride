@@ -1,14 +1,13 @@
 #include "Command.h"
 
 Command::Command()
-	:m_menu(nullptr)
+	:m_menu(nullptr),m_sprite(sf::Sprite())
 {
 }
 
-void Command::updateSprite(sf::Vector2f position, sf::Texture* texture, sf::Vector2f size)
+void Command::updateSprite(sf::Vector2f position, sf::Texture* texture)
 {
 	m_sprite.setPosition(position);
-	m_sprite.setScale(size);
 	m_sprite.setTexture(*texture);
 }
 
