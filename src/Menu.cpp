@@ -9,13 +9,15 @@ Menu::Menu()
 
 void Menu::runMenu()
 {
-    Resources::instance().fillTextures();
-    Resources::instance().updateFont();
+    // Load textures in a separate thread
+    std::future<void> loadingFuture = std::async(std::launch::async, [&]()
+    {
+        Resources::instance().fillTextures();
+        Resources::instance().updateFont();
+        updateOptions();
+    });
+
     m_window.setFramerateLimit(60);
-
-    updateOptions();
-
-    sf::Sprite backgroundSprite(Resources::instance().getOtherTexture(3));
 
     while (m_window.isOpen())
     {
@@ -34,8 +36,21 @@ void Menu::runMenu()
         sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
 
         m_window.clear();
-        m_window.draw(backgroundSprite);
-        show();
+
+        // Check if textures are still loading
+        if (loadingFuture.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready) 
+        {
+            // Textures are loaded, proceed to normal rendering
+            sf::Sprite backgroundSprite(Resources::instance().getOtherTexture(3));
+            m_window.draw(backgroundSprite);
+            show();
+        }
+        else {
+            // Textures are still loading, display the loading screen
+            m_window.draw(m_loadingScreen.render());
+        }
+       // m_window.draw(backgroundSprite);
+        //show();
         //hoverButton(mousePosition);
         m_window.display();
     }
@@ -98,8 +113,8 @@ void Menu::updateOptions()
 	m_options.emplace_back(option("StartGame", std::move(std::make_unique<StartGame>(this))));
 
     m_helpButtons.emplace_back(option("Return2Menu", std::move(std::make_unique<Return2Menu>(this))));
-    m_helpButtons.emplace_back(option("Return2Menu", std::move(std::make_unique<HelpLeft>(this))));
-    m_helpButtons.emplace_back(option("Return2Menu", std::move(std::make_unique<HelpRight>(this))));
+    m_helpButtons.emplace_back(option("HelpLeft", std::move(std::make_unique<HelpLeft>(this))));
+    m_helpButtons.emplace_back(option("HelpRight", std::move(std::make_unique<HelpRight>(this))));
 
     m_helpButtons[2].second->getSprite().setRotation(180);
 

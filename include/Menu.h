@@ -7,6 +7,9 @@
 #include "HelpRight.h"
 #include <iostream>
 #include <string>
+#include <future>
+#include <thread>
+#include "LoadingScreen.h"
 
 typedef std::pair<std::string, std::unique_ptr<Command>> option;
 
@@ -31,6 +34,8 @@ private:
 	sf::RenderWindow m_window;
 	std::vector<option> m_options;
 	std::vector<option> m_helpButtons;
+	LoadingScreen m_loadingScreen;
+
 
 	bool m_runHelp;
 	unsigned m_helpPage;

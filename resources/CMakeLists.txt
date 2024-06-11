@@ -38,6 +38,7 @@ configure_file ("Images/Other/w_ShopOff.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Other/x_ShopOn.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Other/y_StartOfHall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Other/z_Title.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Other/loading.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 #Player
 configure_file ("Images/Player/KingBerry/a_KingAvatar.png" ${CMAKE_BINARY_DIR} COPYONLY)
