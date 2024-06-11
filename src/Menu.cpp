@@ -59,7 +59,30 @@ void Menu::runMenu()
 
 void Menu::runGame()
 {
-    std::cout << "hi bodeki" << std::endl;
+    while (m_window.isOpen())
+    {
+        sf::Sprite hallStartSprite(Resources::instance().getOtherTexture(22));
+        hallStartSprite.setScale(1456/(649-277), 960/240);
+
+        for (auto event = sf::Event{}; m_window.pollEvent(event);)
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+                m_window.close();
+                break;
+            case sf::Event::MouseButtonReleased:
+                handleHelpButtonClick(event.mouseButton);
+                break;
+            }
+        }
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
+
+        m_window.clear();
+        m_window.draw(hallStartSprite);
+        //hoverButton(mousePosition);
+        m_window.display();
+    }
 }
 
 void Menu::runHelp()
