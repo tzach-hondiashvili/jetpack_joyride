@@ -59,6 +59,7 @@ void Menu::runMenu()
 
 void Menu::runGame()
 {
+    m_controller.getPlayer().createPlayer();
     while (m_window.isOpen())
     {
         sf::Sprite hallStartSprite(Resources::instance().getOtherTexture(22));
@@ -80,6 +81,7 @@ void Menu::runGame()
 
         m_window.clear();
         m_window.draw(hallStartSprite);
+        m_window.draw(m_controller.getPlayer().getSprite());
         //hoverButton(mousePosition);
         m_window.display();
     }

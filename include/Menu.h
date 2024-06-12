@@ -35,7 +35,7 @@ private:
 	std::vector<option> m_options;
 	std::vector<option> m_helpButtons;
 	LoadingScreen m_loadingScreen;
-
+	Controller m_controller;
 
 	bool m_runHelp;
 	unsigned m_helpPage;

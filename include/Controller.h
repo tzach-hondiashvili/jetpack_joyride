@@ -6,6 +6,7 @@ class Controller
 {
 public:
 	Controller();
+	Player &getPlayer();
 
 private:
 	Player m_player;

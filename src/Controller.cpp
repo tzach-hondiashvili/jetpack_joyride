@@ -5,3 +5,8 @@ Controller::Controller()
 {
 
 }
+
+Player& Controller::getPlayer()
+{
+	return m_player;
+}
