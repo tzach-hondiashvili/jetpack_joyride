@@ -14,3 +14,15 @@ void Help::execute()
 {
 	getMenu()->runHelp();
 }
+
+void Help::updateAnimation(bool Switch)
+{
+	if (Switch)
+	{
+		updateSprite(getSprite().getPosition(),&Resources::instance().getOtherTexture(10));
+	}
+	else
+	{
+		updateSprite(getSprite().getPosition(), &Resources::instance().getOtherTexture(9));
+	}
+}

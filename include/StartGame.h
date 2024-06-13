@@ -6,5 +6,5 @@ class StartGame : public Command
 public:
 	StartGame(Menu* menu);
 	virtual void execute() override; 
-	virtual void updateAnimation() override {};
+	virtual void updateAnimation(bool Switch) override;
 };

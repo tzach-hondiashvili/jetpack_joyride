@@ -4,7 +4,7 @@
 class MovingObjects:public GameObjects
 {
 public:
-	virtual void move() = 0;
+	virtual void move(sf::Vector2f pos, float time) = 0;
 
 private:
 

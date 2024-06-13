@@ -7,5 +7,5 @@ class Return2Menu : public Command
 public:
 	Return2Menu(Menu* menu);
 	virtual void execute() override;
-	virtual void updateAnimation() override {};
+	virtual void updateAnimation(bool Switch) override {};
 };

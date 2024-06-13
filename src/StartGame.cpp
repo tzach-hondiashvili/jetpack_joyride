@@ -13,3 +13,15 @@ void StartGame::execute()
 {
 	getMenu()->runGame();
 }
+
+void StartGame::updateAnimation(bool Switch)
+{
+	if (Switch)
+	{
+		updateSprite(getSprite().getPosition(), &Resources::instance().getOtherTexture(12));
+	}
+	else
+	{
+		updateSprite(getSprite().getPosition(), &Resources::instance().getOtherTexture(11));
+	}
+}

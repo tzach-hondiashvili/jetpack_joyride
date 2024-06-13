@@ -7,6 +7,7 @@ class Controller
 public:
 	Controller();
 	Player &getPlayer();
+	void updatePlayerPos(sf::Vector2f pos, float time);
 
 private:
 	Player m_player;

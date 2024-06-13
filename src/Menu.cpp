@@ -49,9 +49,7 @@ void Menu::runMenu()
             // Textures are still loading, display the loading screen
             m_window.draw(m_loadingScreen.render());
         }
-       // m_window.draw(backgroundSprite);
-        //show();
-        //hoverButton(mousePosition);
+        hoverButton(mousePosition);
         m_window.display();
     }
 
@@ -60,27 +58,81 @@ void Menu::runMenu()
 void Menu::runGame()
 {
     m_controller.getPlayer().createPlayer();
-    while (m_window.isOpen())
-    {
-        sf::Sprite hallStartSprite(Resources::instance().getOtherTexture(22));
-        hallStartSprite.setScale(1456/(649-277), 960/240);
 
-        for (auto event = sf::Event{}; m_window.pollEvent(event);)
-        {
-            switch (event.type)
-            {
+    // Load player sprite
+    sf::Sprite playerSprite = m_controller.getPlayer().getSprite();
+
+    // Load hall and background textures
+    sf::Texture hallTexture = Resources::instance().getOtherTexture(22);
+    sf::Texture backgroundTexture = Resources::instance().getOtherTexture(5);
+
+    // Create sprites and scale them
+    sf::Sprite hallStartSprite(hallTexture);
+    sf::Sprite background1(backgroundTexture);
+    sf::Sprite background2(backgroundTexture);
+
+    hallStartSprite.setScale(1456.f / 649, 960.f / 240);
+    background1.setScale(1456.f / 277, 960.f / 240);
+    background2.setScale(1456.f / 277, 960.f / 240);
+
+    // Initial positions for backgrounds
+    float hallWidth = hallTexture.getSize().x * (1456.f / 649);  // Width of the hall sprite
+    float backgroundWidth = 277.f * (1456.f / 277);  // Adjusted width of the background sprite
+
+    hallStartSprite.setPosition(0.f, 0.f);
+    background1.setPosition(hallWidth, 0.f);
+    background2.setPosition(hallWidth + backgroundWidth, 0.f);
+
+    sf::Clock clock;
+    float scrollSpeed = 150.0f; // Initial scroll speed
+
+    sf::View view(sf::FloatRect(0, 0, 1456, 960));
+
+    while (m_window.isOpen()) {
+        float deltaTime = clock.restart().asSeconds();
+        for (auto event = sf::Event{}; m_window.pollEvent(event);) {
+            switch (event.type) {
             case sf::Event::Closed:
                 m_window.close();
                 break;
             case sf::Event::MouseButtonReleased:
-                handleHelpButtonClick(event.mouseButton);
+                // handleHelpButtonClick(event.mouseButton); // Assuming this is defined elsewhere
                 break;
             }
         }
-        sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
 
+        //updateblock
+        // 
+        // Move the view to the right
+        view.move(scrollSpeed * deltaTime, 0.f);
+
+        // Update background positions to create endless effect
+        if (background1.getPosition().x + backgroundWidth < view.getCenter().x - view.getSize().x / 2)
+        {
+            background1.setPosition(background2.getPosition().x + backgroundWidth, 0.f);
+        }
+        if (background2.getPosition().x + backgroundWidth < view.getCenter().x - view.getSize().x / 2)
+        {
+            background2.setPosition(background1.getPosition().x + backgroundWidth, 0.f);
+        }
+
+        updateController({view.getCenter().x - 600 , 760 },deltaTime);
+        updateScoreBoard();
+
+        // Increase scroll speed over time
+        scrollSpeed += 5.0f * deltaTime;
+
+        m_window.setView(view);
         m_window.clear();
-        m_window.draw(hallStartSprite);
+        // Draw sprites
+        if (view.getCenter().x - 760*2 < hallTexture.getSize().x) 
+        {
+            m_window.draw(hallStartSprite); // Draw hall if it's still visible
+        }
+        m_window.draw(background1);
+        m_window.draw(background2);
+        printScoreBoard();
+
         m_window.draw(m_controller.getPlayer().getSprite());
         //hoverButton(mousePosition);
         m_window.display();
@@ -197,4 +249,35 @@ void Menu::moveHelpLeft()
 void Menu::moveHelpRight()
 {
     m_helpPage += 1;
+}
+
+void Menu::updateController(sf::Vector2f pos, float time)
+{
+    m_controller.updatePlayerPos(pos,time);
+}
+
+void Menu::printScoreBoard()
+{
+    m_window.draw(m_scoreBoard.getDistance());
+}
+
+void Menu::updateScoreBoard()
+{
+    m_scoreBoard.updateDistance(m_controller.getPlayer().getSprite().getPosition().x , m_controller.getPlayer().getSprite().getPosition());
+}
+
+void Menu::hoverButton(sf::Vector2i position)
+{
+    for (int i = 0; i < m_options.size(); i++)
+    {
+        if (m_options[i].second->getSprite().getGlobalBounds().contains(
+            m_window.mapPixelToCoords({ position.x, position.y })))
+        {
+            m_options[i].second->updateAnimation(true);
+        }
+        else
+        {
+            m_options[i].second->updateAnimation(false);
+        }
+    }
 }
