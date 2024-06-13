@@ -88,15 +88,17 @@ void Menu::runGame()
 
     sf::View view(sf::FloatRect(0, 0, 1456, 960));
 
-    while (m_window.isOpen()) {
+    while (m_window.isOpen()) 
+    {
         float deltaTime = clock.restart().asSeconds();
         for (auto event = sf::Event{}; m_window.pollEvent(event);) {
-            switch (event.type) {
+
+            switch (event.type) 
+            {
             case sf::Event::Closed:
                 m_window.close();
                 break;
             case sf::Event::MouseButtonReleased:
-                // handleHelpButtonClick(event.mouseButton); // Assuming this is defined elsewhere
                 break;
             }
         }
@@ -122,6 +124,7 @@ void Menu::runGame()
         // Increase scroll speed over time
         scrollSpeed += 5.0f * deltaTime;
 
+        //print block
         m_window.setView(view);
         m_window.clear();
         // Draw sprites
@@ -251,9 +254,10 @@ void Menu::moveHelpRight()
     m_helpPage += 1;
 }
 
-void Menu::updateController(sf::Vector2f pos, float time)
+void Menu::updateController(sf::Vector2f pos, float time) 
 {
-    m_controller.updatePlayerPos(pos,time);
+    m_controller.getPlayer().handleInput();
+    m_controller.updatePlayerPos(pos, time);
 }
 
 void Menu::printScoreBoard()

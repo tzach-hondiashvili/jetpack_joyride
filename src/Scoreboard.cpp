@@ -18,7 +18,7 @@ Scoreboard::Scoreboard()
 void Scoreboard::updateDistance(float distance,sf::Vector2f newpos)
 {
 	m_distanceCounter.setString("Distance: " + std::to_string((int)distance/100)+"M");
-	m_distanceCounter.setPosition({newpos.x - 80,newpos.y - 730});
+	m_distanceCounter.setPosition({newpos.x - 80,20});
 }
 
 const sf::Text& Scoreboard::getDistance() const
