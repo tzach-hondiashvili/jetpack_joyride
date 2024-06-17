@@ -11,5 +11,5 @@ HelpRight::HelpRight(Menu* menu)
 
 void HelpRight::execute()
 {
-	getMenu()->moveHelpRight();
+	getMenu()->getState()->moveHelpRight();
 }

@@ -11,5 +11,6 @@ Return2Menu::Return2Menu(Menu* menu)
 
 void Return2Menu::execute()
 {
-	getMenu()->return2Menu();
+	std::unique_ptr<MenuState> temp = std::make_unique<DefaultMenu>(getMenu());
+	getMenu()->updateState(std::move(temp));
 }

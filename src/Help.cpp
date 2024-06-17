@@ -12,7 +12,8 @@ Help::Help(Menu* menu)
 
 void Help::execute()
 {
-	getMenu()->runHelp();
+	std::unique_ptr<MenuState> temp = std::make_unique<HelpState>(getMenu());
+	getMenu()->updateState(std::move(temp));
 }
 
 void Help::updateAnimation(bool Switch)
