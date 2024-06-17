@@ -4,6 +4,7 @@
 class StaticObjects:public GameObjects
 {
 public:
+	StaticObjects();
 
 private:
 

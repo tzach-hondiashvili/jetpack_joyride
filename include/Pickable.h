@@ -4,7 +4,7 @@
 class Pickable:public StaticObjects
 {
 public:
-
+	Pickable();
 private:
 
 };
