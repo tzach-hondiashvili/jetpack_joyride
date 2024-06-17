@@ -11,7 +11,7 @@ public:
 	void changeSpriteAnimation(sf::IntRect rect);
 	void updateSprite(sf::Vector2f position, sf::Texture* texture);
 	void updateSpritePos(sf::Vector2f position);
-	virtual void show() = 0;
+	virtual void show() {};
 
 private:
 	sf::Sprite m_sprite;

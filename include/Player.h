@@ -7,6 +7,7 @@ public:
     int getLives() const;
     sf::Sprite& getFlame();
     virtual void move(sf::Vector2f pos, float time);
+    virtual void show() override {} ;
     void createPlayer();
     bool isFlying();
     void handleInput();
