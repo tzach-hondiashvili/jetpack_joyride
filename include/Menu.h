@@ -11,6 +11,10 @@
 #include <thread>
 #include "LoadingScreen.h"
 #include "Scoreboard.h"
+#include "HelpState.h"
+#include "MenuState.h"
+#include "RunGameState.h"
+#include "DefaultMenu.h"
 
 typedef std::pair<std::string, std::unique_ptr<Command>> option;
 
@@ -20,29 +24,26 @@ public:
 	Menu();
 	void runGame();
 	void runMenu();
-	void runHelp();
+
 	void quitGame();
-	void show();
-	void updateOptions();
-	void handleButtonClick(const sf::Event::MouseButtonEvent& event);
-	void handleHelpButtonClick(const sf::Event::MouseButtonEvent& event);
-	void showHelpButtons();
-	void return2Menu();
-	void moveHelpLeft();
-	void moveHelpRight();
+
 	void updateController(sf::Vector2f pos, float time);
 	void printScoreBoard();
 	void updateScoreBoard();
-	void  hoverButton(sf::Vector2i mousePosition);
+	void printPlayer();
+	Controller& getController();
+
+	sf::RenderWindow& getWindow();
+	std::unique_ptr<MenuState>&getState();
+
+	void updateState(std::unique_ptr<MenuState> state);
+
 
 private:
 	sf::RenderWindow m_window;
-	std::vector<option> m_options;
-	std::vector<option> m_helpButtons;
-	LoadingScreen m_loadingScreen;
+
 	Controller m_controller;
 	Scoreboard m_scoreBoard;
-
-	bool m_runHelp;
-	unsigned m_helpPage;
+	LoadingScreen m_loadingScreen;
+	std::unique_ptr<MenuState> m_state;
 };

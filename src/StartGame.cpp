@@ -11,7 +11,8 @@ StartGame::StartGame(Menu* menu)
 
 void StartGame::execute()
 {
-	getMenu()->runGame();
+	std::unique_ptr temp =  std::make_unique<RunGameState>(getMenu());
+	getMenu()->updateState(std::move(temp));
 }
 
 void StartGame::updateAnimation(bool Switch)

@@ -5,6 +5,7 @@ class Player : public MovingObjects {
 public:
     Player();
     int getLives() const;
+    sf::Sprite& getFlame();
     virtual void move(sf::Vector2f pos, float time);
     void createPlayer();
     bool isFlying();
@@ -17,4 +18,5 @@ private:
     float m_jumpForce;
     bool m_isFlying;
     void applyGravity(float deltaTime);
+    sf::Sprite m_flame;
 };
