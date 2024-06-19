@@ -15,6 +15,7 @@
 #include "MenuState.h"
 #include "RunGameState.h"
 #include "DefaultMenu.h"
+#include "ChooseSkinState.h"
 
 typedef std::pair<std::string, std::unique_ptr<Command>> option;
 

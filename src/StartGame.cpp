@@ -11,7 +11,7 @@ StartGame::StartGame(Menu* menu)
 
 void StartGame::execute()
 {
-	std::unique_ptr temp =  std::make_unique<RunGameState>(getMenu());
+	std::unique_ptr temp = std::make_unique<ChooseSkinState>(getMenu());
 	getMenu()->updateState(std::move(temp));
 }
 

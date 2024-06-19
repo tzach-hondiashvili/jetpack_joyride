@@ -42,17 +42,17 @@ void Player::move(sf::Vector2f pos, float time)
 
         if (getSprite().getPosition().y != 750)
         {
-            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getSprite().getTextureRect().height);
+            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
             changeSpriteAnimation(frameRect);
 
             // Update the flame animation while the player is flying
-            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, m_flame.getTextureRect().height);
+            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getSprite().getTexture()->getSize().y);
             m_flame.setTextureRect(flameRect);
         }
         else
         {
 
-            sf::IntRect frameRect(currFrame * frameWidth, 0, frameWidth, getSprite().getTextureRect().height);
+            sf::IntRect frameRect(currFrame * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
             changeSpriteAnimation(frameRect);
             currFlame = 0;
         }

@@ -22,6 +22,11 @@ void GameObjects::updateSpritePos(sf::Vector2f position)
 	m_sprite.setPosition(position);
 }
 
+void GameObjects::setScale(sf::Vector2f scale)
+{
+	m_sprite.setScale(scale);
+}
+
 
 const sf::Sprite& GameObjects::getSprite() const
 {

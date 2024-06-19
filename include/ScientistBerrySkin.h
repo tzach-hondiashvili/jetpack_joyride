@@ -2,10 +2,10 @@
 #include "Command.h"
 #include "Menu.h"
 
-class KingSkinOption : public Command
+class ScientistBerrySkin : public Command
 {
 public:
-	KingSkinOption(Menu* menu);
+	ScientistBerrySkin(Menu* menu);
 	virtual void execute() override;
 	virtual void updateAnimation(bool Switch) override;
 };

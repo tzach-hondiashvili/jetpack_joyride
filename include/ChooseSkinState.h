@@ -14,7 +14,10 @@ public:
 
 
 	virtual void hoverButton(sf::Vector2i position) override;
+	virtual void moveHelpLeft()	override {};
+	virtual void moveHelpRight() override {};
 
 private:
-
+	std::vector<option> m_skins;
+	sf::Sprite m_backGround;
 };

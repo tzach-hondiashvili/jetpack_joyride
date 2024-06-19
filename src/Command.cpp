@@ -25,3 +25,8 @@ sf::Sprite& Command::getSprite()
 {
 	return m_sprite;
 }
+
+void Command::setscale(sf::Vector2f scale)
+{
+	m_sprite.setScale(scale);
+}

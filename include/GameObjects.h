@@ -12,6 +12,7 @@ public:
 	void updateSprite(sf::Vector2f position, sf::Texture* texture);
 	void updateSpritePos(sf::Vector2f position);
 	virtual void show() {};
+	void setScale(sf::Vector2f scale);
 
 private:
 	sf::Sprite m_sprite;

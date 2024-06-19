@@ -1,25 +1,24 @@
-#include "KingSkinOption.h"
+#include "SoldierBerrySkin.h"
 #include "Menu.h"
 
-KingSkinOption::KingSkinOption(Menu* menu)
+SoldierBerrySkin::SoldierBerrySkin(Menu* menu)
 {
-	sf::Vector2f position = { 420, 500 };
+	sf::Vector2f position = { 1020, 500 };
 
-	updateSprite(position, &Resources::instance().getPlayerTexture(0));
+	updateSprite(position, &Resources::instance().getPlayerTexture(12));
 	setscale(sf::Vector2f(100 / float(getSprite().getTexture()->getSize().x), 200 / float(getSprite().getTexture()->getSize().y)));
-
 	updateMenu(menu);
 }
 
-void KingSkinOption::execute()
+void SoldierBerrySkin::execute()
 {
-	getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), &Resources::instance().getPlayerTexture(3));
+	getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), &Resources::instance().getPlayerTexture(15));
 	getMenu()->getController().getPlayer().setScale(sf::Vector2f(389 / (float)getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x, 528 / (float)getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x));
 	std::unique_ptr temp = std::make_unique<RunGameState>(getMenu());
 	getMenu()->updateState(std::move(temp));
 }
 
-void KingSkinOption::updateAnimation(bool Switch)
+void SoldierBerrySkin::updateAnimation(bool Switch)
 {
 
 }
