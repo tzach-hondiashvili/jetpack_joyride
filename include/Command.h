@@ -15,6 +15,7 @@ public:
 	void updateMenu(Menu *menu);
 	sf::Sprite& getSprite();
 	void setscale(sf::Vector2f scale);
+	void setOrigin(sf::Vector2f origin);
 
 private:
 	sf::Sprite m_sprite;

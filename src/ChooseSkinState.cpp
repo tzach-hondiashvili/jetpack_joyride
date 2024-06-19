@@ -61,4 +61,16 @@ void ChooseSkinState::handleClick(const sf::Event::MouseButtonEvent& event)
 
 void ChooseSkinState::hoverButton(sf::Vector2i position)
 {
+    for (int i = 0; i < m_skins.size(); i++)
+    {
+        if (m_skins[i].second->getSprite().getGlobalBounds().contains(
+            getMenu()->getWindow().mapPixelToCoords({ position.x, position.y })))
+        {
+            m_skins[i].second->updateAnimation(true);
+        }
+        else
+        {
+            m_skins[i].second->updateAnimation(false);
+        }
+    }
 }

@@ -30,3 +30,8 @@ void Command::setscale(sf::Vector2f scale)
 {
 	m_sprite.setScale(scale);
 }
+
+void Command::setOrigin(sf::Vector2f origin)
+{
+	m_sprite.setOrigin(origin);
+}

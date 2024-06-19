@@ -4,6 +4,7 @@
 OriginalSkinOption::OriginalSkinOption(Menu* menu)
 {
 	sf::Vector2f position = { 620, 500 };
+	setOrigin(sf::Vector2f(50, 100));
 
 	updateSprite(position, &Resources::instance().getPlayerTexture(4));
 	setscale(sf::Vector2f(100 / float(getSprite().getTexture()->getSize().x), 200 / float(getSprite().getTexture()->getSize().y)));
@@ -19,5 +20,12 @@ void OriginalSkinOption::execute()
 
 void OriginalSkinOption::updateAnimation(bool Switch)
 {
-
+	if (Switch)
+	{
+		setscale(sf::Vector2f(150 / float(getSprite().getTexture()->getSize().x), 300 / float(getSprite().getTexture()->getSize().y)));
+	}
+	else
+	{
+		setscale(sf::Vector2f(100 / float(getSprite().getTexture()->getSize().x), 200 / float(getSprite().getTexture()->getSize().y)));
+	}
 }
