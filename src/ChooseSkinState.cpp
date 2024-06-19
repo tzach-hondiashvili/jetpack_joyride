@@ -17,7 +17,6 @@ void ChooseSkinState::handleClick(const sf::Event::MouseButtonEvent& event)
 {
 }
 
-}
 
 void ChooseSkinState::hoverButton(sf::Vector2i position)
 {
