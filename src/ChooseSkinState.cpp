@@ -15,6 +15,7 @@ void ChooseSkinState::print()
 
 void ChooseSkinState::handleClick(const sf::Event::MouseButtonEvent& event)
 {
+}
 
 }
 
