@@ -1,26 +1,29 @@
 #include "Factory.h"
 
 //Create a GameObject instance based on the provided name.
-std::unique_ptr<GameObjects> Factory::create(const std::string& name)
+std::unique_ptr<GameObjects> Factory::create(const std::string& name, sf::Vector2f position)
 {
 	auto it = getMap().find(name);
 	if (it == getMap().end())
 		return nullptr;
-	return it->second();
+	return it->second(position);
 }
 
 //Register a factory function for creating a GameObject by name.
-bool Factory::registerit(const std::string& name, std::unique_ptr<GameObjects>(*f)())
+bool Factory::registerit(const std::string& name, std::unique_ptr<GameObjects>(*f)(sf::Vector2f position))
 {
 	getMap().emplace(name, f);
 	return true;
 }
 
-sf::VertexArray Factory::createDiamond(const std::string& name)
+std::unique_ptr<GameObjects> createCoin(sf::Vector2f position) {
+    auto coin = Factory::create("Coin", position);
+    return coin;
+}
+
+std::unique_ptr<GameObjects> Factory::createDiamond(const std::string& name)
 {
-    int numCoins = 25; // Number of coins in the diamond shape (adjust as needed)
-    sf::VertexArray vertexArray;
-    vertexArray.resize(numCoins);
+    std::list<std::unique_ptr <Pickable>> temp;
 
     // Calculate positions for each coin in the diamond shape
     for (int i = 0; i < 5; ++i)
@@ -29,17 +32,13 @@ sf::VertexArray Factory::createDiamond(const std::string& name)
         {
             int index = i * 5 + j; // Compute index in the vertex array
             sf::Vector2f position(100.f + i * 50.f - j * 25.f, 100.f + j * 50.f);
-            vertexArray[index].position = position;
 
-            // Update the sprite position and texture
-            auto coin = std::make_unique<Coin>();
-            coin->updateSprite(position, &Resources::instance().getObjectTexture(0));
+            auto obj = Factory::create(name, position);
 
-            // Add the created coin to the map
-            //getMap().emplace(name, std::move(coin));
+            // Cast to Pickable and add to the list
+            temp.push_back(std::unique_ptr<Pickable>(static_cast<Pickable*>(obj.release())));
         }
     }
-    return vertexArray;
 }
 
 sf::VertexArray Factory::createRectangle(const std::string& name)
@@ -162,4 +161,34 @@ sf::VertexArray Factory::createHeart(const std::string& name)
         ++index;
     }
     return vertexArray;
+}
+
+void createRandom()
+{
+    std::srand(std::time(0));
+
+    // Generate a random number between 0 and 4
+    int randomNumber = std::rand() % 5;
+
+    // Create a shape based on the random number
+    switch (randomNumber) {
+    case 0:
+        createDiamond("Coin");
+        break;
+    case 1:
+        createRectangle("Coin");
+        break;
+    case 2:
+        createTriangle("Coin");
+        break;
+    case 3:
+        createCircle("Coin");
+        break;
+    case 4:
+        createHeart("Coin");
+        break;
+    default:
+        break;
+    }
+
 }

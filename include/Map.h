@@ -5,8 +5,10 @@
 class Map
 {
 public:
+	void updatePickables(std::list<std::unique_ptr <Pickable>> object);
+	void updateStaticObjects();
 
 private:
-	std::list<Pickable> m_pickables; //list because we are removing object from te board
-	std::list<StaticObjects> m_obstacles;
+	std::list<std::unique_ptr <Pickable>> m_pickables; //list because we are removing object from the board
+	std::unique_ptr <std::list<StaticObjects>> m_obstacles;
 };

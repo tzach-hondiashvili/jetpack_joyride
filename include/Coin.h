@@ -12,9 +12,6 @@ public:
 	Coin();
 	virtual void show();
 	
-
 private:
 	static bool m_registerit;
-	int m_numPatterns;  // Number of patterns 
-	
 };
