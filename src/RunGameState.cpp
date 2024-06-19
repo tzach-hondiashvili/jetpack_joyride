@@ -6,7 +6,7 @@ RunGameState::RunGameState(Menu* menu)
     sf::View view(sf::FloatRect(0, 0, 1456, 960));
     m_view = view;
 
-    m_scrollSpeed = 150.0f;
+    m_scrollSpeed = 250.0f;
 
 	updateMenu(menu);
 

@@ -9,6 +9,14 @@ ChooseSkinState::ChooseSkinState(Menu* menu)
 {
     updateMenu(menu);
 
+    m_ChooseSkin.setFont(Resources::instance().getFont());
+    m_ChooseSkin.setString("CHOOSE SKIN");
+    m_ChooseSkin.setCharacterSize(100);
+    m_ChooseSkin.setPosition({ 500,200 });
+    m_ChooseSkin.setFillColor(sf::Color(77,120,125));
+    m_ChooseSkin.setOutlineThickness(3);
+    m_ChooseSkin.setOutlineColor(sf::Color(77, 132, 196));
+
     if (menu->finishedLoading())
     {
         m_backGround.setTexture(Resources::instance().getOtherTexture(3));
@@ -28,6 +36,8 @@ void ChooseSkinState::print()
 {
  
     getMenu()->getWindow().draw(m_backGround);
+    getMenu()->getWindow().draw(m_ChooseSkin);
+
 
     for (int i = 0; i < m_skins.size(); i++)
     {

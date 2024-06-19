@@ -20,4 +20,5 @@ public:
 private:
 	std::vector<option> m_skins;
 	sf::Sprite m_backGround;
+	sf::Text m_ChooseSkin;
 };
