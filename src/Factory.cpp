@@ -203,7 +203,8 @@ std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f
     // Create a shape based on the random number
     switch (randomNumber) {
     case 0:
-        temp = createDiamond("Coin", scrollOffset);
+
+        //std::copy(createDiamond("Coin", scrollOffset).begin(), createDiamond("Coin", scrollOffset).end(), std::back_inserter(temp));
         break;
     case 1:
         temp = createRectangle("Coin", scrollOffset);
