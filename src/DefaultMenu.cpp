@@ -5,6 +5,10 @@ DefaultMenu::DefaultMenu(Menu* menu)
     :m_options()
 {
 	updateMenu(menu);
+    if (menu->finishedLoading())
+    {
+        updateOptions();
+    }
 
 }
 
@@ -19,8 +23,8 @@ void DefaultMenu::print()
 
     if (check)
     {
-        updateOptions();
         getMenu()->getController().getPlayer().createPlayer();
+        updateOptions();
         check = false;
     }
     // Textures are loaded, proceed to normal rendering

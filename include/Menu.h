@@ -22,17 +22,17 @@ class Menu
 {
 public:
 	Menu();
-	void runGame();
-	void runMenu();
 
+	void runMenu();
 	void quitGame();
 
+	bool finishedLoading();
 	void updateController(sf::Vector2f pos, float time);
 	void printScoreBoard();
 	void updateScoreBoard();
 	void printPlayer();
-	Controller& getController();
 
+	Controller& getController();
 	sf::RenderWindow& getWindow();
 	std::unique_ptr<MenuState>&getState();
 
@@ -46,4 +46,6 @@ private:
 	Scoreboard m_scoreBoard;
 	LoadingScreen m_loadingScreen;
 	std::unique_ptr<MenuState> m_state;
+
+	bool m_finishedLoading;
 };
