@@ -16,6 +16,8 @@ void ChooseSkinState::print()
 void ChooseSkinState::handleClick(const sf::Event::MouseButtonEvent& event)
 {
 
+}
 
-	MenuState
+void ChooseSkinState::hoverButton(sf::Vector2i position)
+{
 }

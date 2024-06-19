@@ -16,15 +16,10 @@ bool Factory::registerit(const std::string& name, std::unique_ptr<GameObjects>(*
 	return true;
 }
 
-std::unique_ptr<GameObjects> createCoin(sf::Vector2f position) {
-    auto coin = Factory::create("Coin", position);
-    return coin;
-}
-
-std::unique_ptr<GameObjects> Factory::createDiamond(const std::string& name)
+std::list<std::unique_ptr<Pickable>> Factory::createDiamond(const std::string& name)
 {
     std::list<std::unique_ptr <Pickable>> temp;
-
+    
     // Calculate positions for each coin in the diamond shape
     for (int i = 0; i < 5; ++i)
     {
@@ -33,19 +28,25 @@ std::unique_ptr<GameObjects> Factory::createDiamond(const std::string& name)
             int index = i * 5 + j; // Compute index in the vertex array
             sf::Vector2f position(100.f + i * 50.f - j * 25.f, 100.f + j * 50.f);
 
-            auto obj = Factory::create(name, position);
+            // Create a GameObject instance
+            std::unique_ptr<GameObjects> coin = Factory::create(name, position);
+            if (coin)
+            {
+                // Downcast to Pickable by transferring ownership and casting raw pointer
+                std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(coin.release()));
 
-            // Cast to Pickable and add to the list
-            temp.push_back(std::unique_ptr<Pickable>(static_cast<Pickable*>(obj.release())));
+                // Add to temp
+                temp.push_back(std::move(pickable));
+            }
         }
     }
+    return temp;
 }
 
-sf::VertexArray Factory::createRectangle(const std::string& name)
+std::list<std::unique_ptr<Pickable>> Factory::createRectangle(const std::string& name)
 {
     int numCoins = 20; // Number of coins in the rectangle shape (adjust as needed)
-    sf::VertexArray vertexArray;
-    vertexArray.resize(numCoins);
+    std::list<std::unique_ptr <Pickable>> temp;
 
     // Example: Creating a rectangle shape of coins
     float startX = 100.f;
@@ -59,24 +60,26 @@ sf::VertexArray Factory::createRectangle(const std::string& name)
         for (float y = startY; y < startY + height; y += height / 5.f) 
         {
             sf::Vector2f position(x, y);
-            vertexArray[index].position = position;
-            // Update the sprite position and texture
-            auto coin = std::make_unique<Coin>();
-            coin->updateSprite(position, &Resources::instance().getObjectTexture(0));
+     
+            // Create a GameObject instance
+            std::unique_ptr<GameObjects> coin = Factory::create(name, position);
+            if (coin)
+            {
+                // Downcast to Pickable by transferring ownership and casting raw pointer
+                std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(coin.release()));
 
-            // Add the created coin to the map
-            //getMap().emplace(name, std::move(coin));
-            ++index;
+                // Add to temp
+                temp.push_back(std::move(pickable));
+            }
         }
     }
-    return vertexArray;
+    return temp;
 }
 
-sf::VertexArray Factory::createTriangle(const std::string& name)
+std::list<std::unique_ptr<Pickable>> Factory::createTriangle(const std::string& name)
 {
     int numCoins = 10; // Number of coins in the triangle shape (adjust as needed)
-    sf::VertexArray vertexArray;
-    vertexArray.resize(numCoins);
+    std::list<std::unique_ptr <Pickable>> temp;
 
     // Example: Creating a triangle shape of coins
     float startX = 100.f;
@@ -90,24 +93,26 @@ sf::VertexArray Factory::createTriangle(const std::string& name)
         for (float x = startX; x < startX + base * (1 - (y - startY) / height); x += base / (5.f - (y - startY) / (height / 5.f))) 
         {
             sf::Vector2f position(x, y);
-            vertexArray[index].position = position;
-            // Update the sprite position and texture
-            auto coin = std::make_unique<Coin>();
-            coin->updateSprite(position, &Resources::instance().getObjectTexture(0));
+   
+            // Create a GameObject instance
+            std::unique_ptr<GameObjects> coin = Factory::create(name, position);
+            if (coin)
+            {
+                // Downcast to Pickable by transferring ownership and casting raw pointer
+                std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(coin.release()));
 
-            // Add the created coin to the map
-            //getMap().emplace(name, std::move(coin));
-            ++index;
+                // Add to temp
+                temp.push_back(std::move(pickable));
+            }
         }
     }
-    return vertexArray;
+    return temp;
 }
 
-sf::VertexArray Factory::createCircle(const std::string& name)
+std::list<std::unique_ptr<Pickable>> Factory::createCircle(const std::string& name)
 {
     int numCoins = 50; // Number of coins in the circle shape (adjust as needed)
-    sf::VertexArray vertexArray;
-    vertexArray.resize(numCoins);
+    std::list<std::unique_ptr <Pickable>> temp;
 
     // Example: Creating a circle shape of coins
     float centerX = 300.f;
@@ -121,23 +126,27 @@ sf::VertexArray Factory::createCircle(const std::string& name)
         float x = centerX + std::cos(angle * 3.14f / 180.f) * radius;
         float y = centerY + std::sin(angle * 3.14f / 180.f) * radius;
         sf::Vector2f position(x, y);
-        vertexArray[index].position = position;
-        // Update the sprite position and texture
-        auto coin = std::make_unique<Coin>();
-        coin->updateSprite(position, &Resources::instance().getObjectTexture(0));
+   
+        // Create a GameObject instance
+        std::unique_ptr<GameObjects> coin = Factory::create(name, position);
+        if (coin)
+        {
+            // Downcast to Pickable by transferring ownership and casting raw pointer
+            std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(coin.release()));
 
-        // Add the created coin to the map
-        //getMap().emplace(name, std::move(coin));
-        ++index;
+            // Add to temp
+            temp.push_back(std::move(pickable));
+        }
     }
-    return vertexArray;
+    return temp;
 }
 
-sf::VertexArray Factory::createHeart(const std::string& name)
+
+
+std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& name)
 {
     int numCoins = 30; // Number of coins in the heart shape (adjust as needed)
-    sf::VertexArray vertexArray;
-    vertexArray.resize(numCoins);
+    std::list<std::unique_ptr <Pickable>> temp;
 
     float centerX = 400.f;
     float centerY = 300.f;
@@ -151,19 +160,23 @@ sf::VertexArray Factory::createHeart(const std::string& name)
         float x = scale * (16.f * std::pow(std::sin(t), 3.f));
         float y = -scale * (13.f * std::cos(t) - 5.f * std::cos(2.f * t) - 2.f * std::cos(3.f * t) - std::cos(4.f * t));
         sf::Vector2f position(centerX + x, centerY + y);
-        vertexArray[index].position = position;
-        // Update the sprite position and texture
-        auto coin = std::make_unique<Coin>();
-        coin->updateSprite(position, &Resources::instance().getObjectTexture(0));
+ 
+        // Create a GameObject instance
+        std::unique_ptr<GameObjects> coin = Factory::create(name, position);
+        if (coin)
+        {
+            // Downcast to Pickable by transferring ownership and casting raw pointer
+            std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(coin.release()));
 
-        // Add the created coin to the map
-        //getMap().emplace(name, std::move(coin));
-        ++index;
+            // Add to temp
+            temp.push_back(std::move(pickable));
+        }
     }
-    return vertexArray;
+    return temp;
 }
 
-void createRandom()
+
+void Factory::createRandom()
 {
     std::srand(std::time(0));
 

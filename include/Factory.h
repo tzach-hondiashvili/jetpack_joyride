@@ -21,14 +21,13 @@ public:
     static bool registerit(const std::string& name, std::unique_ptr<GameObjects>(*)(sf::Vector2f position));
 
     void createRandom();
-    std::unique_ptr<GameObjects> createCoin(sf::Vector2f position);
 
     // Methods to create different coin shapes
-    static std::unique_ptr<GameObjects> createDiamond(const std::string& name);
-    static sf::VertexArray createRectangle(const std::string& name);
-    static sf::VertexArray createTriangle(const std::string& name);
-    static sf::VertexArray createCircle(const std::string& name);
-    static sf::VertexArray createHeart(const std::string& name);
+    std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name);
+    std::list<std::unique_ptr<Pickable>> createRectangle(const std::string& name);
+    std::list<std::unique_ptr<Pickable>> createTriangle(const std::string& name);
+    std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name);
+    std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name);
 
 private:
     //Get the static map of factory functions.
