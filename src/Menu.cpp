@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 Menu::Menu()
-    :m_window(sf::VideoMode(1456, 960), "Jetpack Joyride")
+    :m_window(sf::VideoMode(1456, 960), "Jetpack Joyride"),m_finishedLoading(false)
 {
     m_state = std::move(std::make_unique<DefaultMenu>(this));
 }
@@ -47,7 +47,7 @@ void Menu::runMenu()
 
         if (loadingFuture.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready)
         {
-            
+            m_finishedLoading = true;
             m_state->print();
         }
         else 
@@ -66,6 +66,11 @@ void Menu::quitGame()
 {
 	m_window.clear();
 	m_window.close();
+}
+
+bool Menu::finishedLoading()
+{
+    return m_finishedLoading;
 }
 
 void Menu::updateController(sf::Vector2f pos, float time) 
