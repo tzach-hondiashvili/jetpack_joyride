@@ -25,17 +25,20 @@ std::list<std::unique_ptr<Pickable>> Factory::createDiamond(const std::string& n
     float startX = 100.f;
     float startY = 100.f;
 
-    // Calculate updated positions after applying scroll offset
-    startX += scrollOffset.x;
-    startY += scrollOffset.y;
-
+    // Calculate updated positions after applying scroll offset  
+    
+    int randomNumberX = std::rand() % (1456-100);
+    int randomNumberY = std::rand() % (960-260);
+    startX += scrollOffset.x + randomNumberX;
+    startY += scrollOffset.y + randomNumberY;
 
     // Calculate positions for each coin in the diamond shape
-    for (int i = 0; i < 5; ++i)
+    int halfSize = (std::rand() % 3) + 1; // Half the size of the diamond (adjust as needed)
+    for (int i = -halfSize; i <= halfSize; ++i)
     {
-        for (int j = 0; j < 5; ++j)
+        int steps = halfSize - std::abs(i);
+        for (int j = -steps; j <= steps; ++j)
         {
-            int index = i * 5 + j; // Compute index in the vertex array
             sf::Vector2f position(startX + i * 50.f, startY + j * 40.f);
 
             // Create a GameObject instance
@@ -63,12 +66,17 @@ std::list<std::unique_ptr<Pickable>> Factory::createRectangle(const std::string&
     float startY = 100.f;
 
     // Calculate updated positions after applying scroll offset
-    startX += scrollOffset.x;
-    startY += scrollOffset.y;
+    int randomNumberX = std::rand() % (1456 - 100);
+    int randomNumberY = std::rand() % (960 - 260);
+    startX += scrollOffset.x + randomNumberX;
+    startY += scrollOffset.y + randomNumberY;
 
-    for (int i = 0; i < 4; ++i)
+    float width = (std::rand() % 6) + 1; // Adjust range and base size as needed
+    float height = (std::rand() % 6) + 1;
+
+    for (int i = 0; i < height; ++i)
     {
-        for (int j = 0; j < 5; ++j)
+        for (int j = 0; j < width; ++j)
         {
             sf::Vector2f position(startX + i * 50.f, startY + j * 40.f);
      
@@ -92,20 +100,32 @@ std::list<std::unique_ptr<Pickable>> Factory::createTriangle(const std::string& 
     int numCoins = 10; // Number of coins in the triangle shape (adjust as needed)
     std::list<std::unique_ptr <Pickable>> temp;
 
-    // Initial positions for triangle shape
     float startX = 100.f;
     float startY = 100.f;
 
-    // Calculate updated positions after applying scroll offset
-    startX += scrollOffset.x;
-    startY += scrollOffset.y;
+    // Calculate updated positions after applying scroll offset and randomization
+    int randomNumberX = std::rand() % (1456 - 100);
+    int randomNumberY = std::rand() % (960 - 400);
+    startX += scrollOffset.x + randomNumberX;
+    startY += scrollOffset.y + randomNumberY;
 
-    for (int i = 0; i < 5; ++i)
+    // Randomize the size of the triangle
+    int baseLength = (std::rand() % 11) + 1; // Adjust range and base size as needed
+    int height = (std::rand() % 7) + 1;
+
+    for (int i = 0; i < height; ++i)
     {
-        for (int j = 0; j <= i; ++j)
+        int spaces = height - i - 1; // Decreasing spaces as we move upwards
+        for (int j = 0; j <= spaces; ++j)
         {
-            sf::Vector2f position(startX + j * 40.f, startY + i * 40.f);
-   
+            // Calculate horizontal position for centering the triangle
+            float centerX = startX + baseLength * 20.f / 2.f;
+            float positionX = centerX - i * 20.f + j * 40.f;
+
+            // Calculate vertical position
+            float positionY = startY + i * 40.f;
+
+            sf::Vector2f position(positionX, positionY);
             // Create a GameObject instance
             std::unique_ptr<GameObjects> coin = Factory::create(name, position);
             if (coin)
@@ -126,22 +146,21 @@ std::list<std::unique_ptr<Pickable>> Factory::createCircle(const std::string& na
     int numCoins = 50; // Number of coins in the circle shape (adjust as needed)
     std::list<std::unique_ptr <Pickable>> temp;
 
-    // Initial positions for circle shape
-    float centerX = 300.f;
-    float centerY = 300.f;
-
-    // Calculate updated positions after applying scroll offset
-    centerX += scrollOffset.x;
-    centerY += scrollOffset.y;
+    // Randomize center position within a range
+    float centerX = 100.f + static_cast<float>(std::rand() % 1356) + scrollOffset.x;
+    float centerY = 260.f + static_cast<float>(std::rand() % 400) + scrollOffset.y;
+    
+    // Randomize radius within a range
+    float minRadius = 50.f;
+    float maxRadius = 150.f;
+    float radius = minRadius + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxRadius - minRadius)));
 
     for (int i = 0; i < numCoins; ++i)
     {
         float angle = i * (360.f / numCoins);
-        float radius = 100.f;
         sf::Vector2f position(centerX + std::cos(angle * 3.14f / 180.f) * radius,
             centerY + std::sin(angle * 3.14f / 180.f) * radius);
 
-   
         // Create a GameObject instance
         std::unique_ptr<GameObjects> coin = Factory::create(name, position);
         if (coin)
@@ -161,23 +180,34 @@ std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& nam
     int numCoins = 30; // Number of coins in the heart shape (adjust as needed)
     std::list<std::unique_ptr <Pickable>> temp;
 
-    // Initial positions for heart shape
-    float centerX = 400.f;
-    float centerY = 300.f;
+    // Randomize center position within a range
+    float minX = 100.f;
+    float maxX = 700.f;
+    float minY = 100.f;
+    float maxY = 500.f;
+    float centerX = minX + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxX - minX)));
+    float centerY = minY + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxY - minY)));
 
     // Calculate updated positions after applying scroll offset
     centerX += scrollOffset.x;
     centerY += scrollOffset.y;
 
+    // Randomize radius within a range
+    float minRadius = 20.f;
+    float maxRadius = 40.f;
+    float radius = minRadius + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxRadius - minRadius)));
+
     for (int i = 0; i < numCoins; ++i)
     {
         float angle = i * (360.f / numCoins);
-        float radius = 80.f;
         float x = radius * 16.f * std::pow(std::sin(angle * 3.14f / 180.f), 3.f);
         float y = -radius * (13.f * std::cos(angle * 3.14f / 180.f) - 5.f * std::cos(2.f * angle * 3.14f / 180.f) -
             2.f * std::cos(3.f * angle * 3.14f / 180.f) - std::cos(4.f * angle * 3.14f / 180.f));
+
+        // Adjust position to fit within the sprite size
+        x *= 0.5f; // Scale down x position to fit within 320
+        y *= 0.5f; // Scale down y position to fit within 8
         sf::Vector2f position(centerX + x, centerY + y);
- 
         // Create a GameObject instance
         std::unique_ptr<GameObjects> coin = Factory::create(name, position);
         if (coin)
@@ -194,7 +224,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& nam
 
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset)
 {
-    std::srand(std::time(0));
+    std::srand(std::time(NULL));
 
     using CreateFunction = std::list<std::unique_ptr<Pickable>>(*)(const std::string&, sf::Vector2f);
 
