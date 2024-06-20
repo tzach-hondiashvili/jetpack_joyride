@@ -1,11 +1,13 @@
 #pragma once
 #include <list>
 #include "Pickable.h"
+#include "Factory.h"
 
 class Map
 {
 public:
-	void updatePickables(std::list<std::unique_ptr <Pickable>> object);
+	std::list<std::unique_ptr <Pickable>>& getPickables();
+	void updatePickables(sf::Vector2f scrollOffset);
 	void updateStaticObjects();
 
 private:

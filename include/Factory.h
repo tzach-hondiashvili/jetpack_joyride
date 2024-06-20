@@ -7,6 +7,9 @@
 #include "GameObjects.h"
 #include "Coin.h"
 #include "Map.h"
+#include <functional>
+#include <cstdlib>
+#include <ctime>
 
 //Typedef for a map storing factory functions for GameObject creation.
 typedef std::map<std::string, std::unique_ptr<GameObjects>(*)(sf::Vector2f position)> mymap;
@@ -20,14 +23,14 @@ public:
     //Register a factory function for creating a GameObject by name.
     static bool registerit(const std::string& name, std::unique_ptr<GameObjects>(*)(sf::Vector2f position));
 
-    std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
 
     // Methods to create different coin shapes
-    std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
-    std::list<std::unique_ptr<Pickable>> createRectangle(const std::string& name, sf::Vector2f scrollOffset);
-    std::list<std::unique_ptr<Pickable>> createTriangle(const std::string& name, sf::Vector2f scrollOffset);
-    std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
-    std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createRectangle(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createTriangle(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
 
 private:
     //Get the static map of factory functions.

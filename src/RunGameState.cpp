@@ -48,10 +48,12 @@ void RunGameState::update(float deltaTime)
     if ((m_background1.getPosition().x + 277.f * (1456.f / 277)) < (m_view.getCenter().x - m_view.getSize().x / 2))
     {
         m_background1.setPosition(m_background2.getPosition().x + 277.f * (1456.f / 277), 0.f);
+        getMenu()->getController().getMap().updatePickables(m_background1.getPosition());
     }
     if (m_background2.getPosition().x + 277.f * (1456.f / 277) < m_view.getCenter().x - m_view.getSize().x / 2)
     {
         m_background2.setPosition(m_background1.getPosition().x + 277.f * (1456.f / 277), 0.f);
+        getMenu()->getController().getMap().updatePickables(m_background2.getPosition());
     }
 
     getMenu()->updateController({m_view.getCenter().x - 600 , 760}, deltaTime);
@@ -70,6 +72,12 @@ void RunGameState::print()
     }
     getMenu()->getWindow().draw(m_background1);
     getMenu()->getWindow().draw(m_background2);
+    
+    //print pickable object list
+    for (auto it = getMenu()->getController().getMap().getPickables().begin();it!= getMenu()->getController().getMap().getPickables().end();it++)
+    {
+        getMenu()->getWindow().draw((*it)->getSprite());
+    }
 
     getMenu()->printPlayer();
 

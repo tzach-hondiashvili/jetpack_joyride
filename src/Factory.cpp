@@ -194,33 +194,33 @@ std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& nam
 
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset)
 {
-    std::list<std::unique_ptr<Pickable>> temp;
     std::srand(std::time(0));
+
+    using CreateFunction = std::list<std::unique_ptr<Pickable>>(*)(const std::string&, sf::Vector2f);
+
+
+    // Map random numbers to shape creation functions
+    static std::map<int, CreateFunction> FunctionMap =
+    {
+        {0, &Factory::createDiamond},
+        {1, &Factory::createRectangle},
+        {2, &Factory::createTriangle},
+        {3, &Factory::createCircle},
+        {4, &Factory::createHeart}
+    };
 
     // Generate a random number between 0 and 4
     int randomNumber = std::rand() % 5;
+    std::list<std::unique_ptr<Pickable>> basic;
 
-    // Create a shape based on the random number
-    switch (randomNumber) {
-    case 0:
-
-        //std::copy(createDiamond("Coin", scrollOffset).begin(), createDiamond("Coin", scrollOffset).end(), std::back_inserter(temp));
-        break;
-    case 1:
-        temp = createRectangle("Coin", scrollOffset);
-        break;
-    case 2:
-        temp = createTriangle("Coin", scrollOffset);
-        break;
-    case 3:
-        temp = createCircle("Coin", scrollOffset);
-        break;
-    case 4:
-        temp = createHeart("Coin", scrollOffset);
-        break;
-    default:
-        break;
+    // Find the corresponding creation function and call it
+    auto it = FunctionMap.find(randomNumber);
+    if (it != FunctionMap.end())
+    {
+        CreateFunction createFunc = it->second;
+        std::list<std::unique_ptr<Pickable>> temp = createFunc("Coin", scrollOffset);
+        basic.insert(basic.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
     }
-
-    return temp;
+   
+    return basic;
 }

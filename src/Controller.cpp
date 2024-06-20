@@ -15,3 +15,8 @@ void Controller::updatePlayerPos(sf::Vector2f pos, float time)
 {
 	m_player.move(pos,time);
 }
+
+Map& Controller::getMap()
+{
+	return m_map;
+}

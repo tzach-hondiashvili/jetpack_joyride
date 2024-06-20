@@ -9,7 +9,7 @@
 class Coin:public Pickable
 {
 public:
-	Coin();
+	Coin(sf::Vector2f position);
 	virtual void show();
 	
 private:
