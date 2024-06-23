@@ -18,3 +18,13 @@ Coin::Coin(sf::Vector2f position)
 void Coin::show() {
     // Implementation of show function
 }
+
+void Coin::updateAnimation(float time)
+{
+    setAnimationFrame((getAnimationFrame() + 1) % 8);
+
+    int frameWidth = getSprite().getTexture()->getSize().x / 8;
+
+    sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
+    changeSpriteAnimation(frameRect);
+}

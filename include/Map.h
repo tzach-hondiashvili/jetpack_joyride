@@ -9,6 +9,7 @@ public:
 	std::list<std::unique_ptr <Pickable>>& getPickables();
 	void updatePickables(sf::Vector2f scrollOffset);
 	void updateStaticObjects();
+	void updatePickablesAnimation(float time);
 
 private:
 	std::list<std::unique_ptr <Pickable>> m_pickables; //list because we are removing object from the board

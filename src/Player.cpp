@@ -25,40 +25,9 @@ void Player::applyGravity(float deltaTime)
 
 void Player::move(sf::Vector2f pos, float time)
 {
-    static int currFrame = 0, currFlame = 0;
     updateSpritePos({ pos.x, getSprite().getPosition().y });
 
-    static float timeSinceLastFrame = 0.f;
-    timeSinceLastFrame += time;
-
-    if (timeSinceLastFrame >= 0.15f) 
-    {
-        currFrame = (currFrame + 1) % 4;
-        currFlame = (currFlame + 1) % 6;
-
-        int frameWidth = getSprite().getTexture()->getSize().x / 4;
-        int flameWidth = m_flame.getTexture()->getSize().x / 6;
-
-
-        if (getSprite().getPosition().y != 750)
-        {
-            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
-            changeSpriteAnimation(frameRect);
-
-            // Update the flame animation while the player is flying
-            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getSprite().getTexture()->getSize().y);
-            m_flame.setTextureRect(flameRect);
-        }
-        else
-        {
-
-            sf::IntRect frameRect(currFrame * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
-            changeSpriteAnimation(frameRect);
-            currFlame = 0;
-        }
-
-        timeSinceLastFrame = 0.f;
-    }
+    updateAnimation(time);
 
     applyGravity(time);
     handleInput();
@@ -105,5 +74,42 @@ void Player::handleInput()
     }
     else {
         m_isFlying = false;
+    }
+}
+
+void Player::updateAnimation(float time)
+{
+    static int currFlame = 0;
+    
+    static float timeSinceLastFrame = 0.f;
+    timeSinceLastFrame += time;
+
+    if (timeSinceLastFrame >= 0.13f - getSprite().getPosition().x/10000000)
+    {
+        setAnimationFrame((getAnimationFrame() + 1) % 4);
+        currFlame = (currFlame + 1) % 6;
+
+        int frameWidth = getSprite().getTexture()->getSize().x / 4;
+        int flameWidth = m_flame.getTexture()->getSize().x / 6;
+
+
+        if (getSprite().getPosition().y != 750)
+        {
+            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
+            changeSpriteAnimation(frameRect);
+
+            // Update the flame animation while the player is flying
+            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getSprite().getTexture()->getSize().y);
+            m_flame.setTextureRect(flameRect);
+        }
+        else
+        {
+
+            sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
+            changeSpriteAnimation(frameRect);
+            currFlame = 0;
+        }
+
+        timeSinceLastFrame = 0.f;
     }
 }

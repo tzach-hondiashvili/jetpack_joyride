@@ -1,11 +1,12 @@
 #include "GameObjects.h"
 
 GameObjects::GameObjects()
-	:m_sprite()
+	:m_sprite() ,m_animationFrame(0)
 {
 }
 
 GameObjects::GameObjects(sf::Vector2f position, sf::Texture* texture)
+	:m_animationFrame(0)
 {
 	m_sprite.setPosition(position);
 	m_sprite.setTexture(*texture);
@@ -25,6 +26,16 @@ void GameObjects::updateSpritePos(sf::Vector2f position)
 void GameObjects::setScale(sf::Vector2f scale)
 {
 	m_sprite.setScale(scale);
+}
+
+int GameObjects::getAnimationFrame()
+{
+	return m_animationFrame;
+}
+
+void GameObjects::setAnimationFrame(int frame)
+{
+	m_animationFrame = frame;
 }
 
 

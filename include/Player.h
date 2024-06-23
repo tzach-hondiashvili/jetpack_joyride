@@ -11,6 +11,7 @@ public:
     void createPlayer();
     bool isFlying();
     void handleInput();
+    virtual void updateAnimation(float time) override;
 
 private:
     int m_lives;

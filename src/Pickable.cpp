@@ -3,3 +3,7 @@
 Pickable::Pickable()
 {
 }
+
+void Pickable::updateAnimation(float time)
+{
+}

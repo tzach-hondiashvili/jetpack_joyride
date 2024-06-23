@@ -15,3 +15,19 @@ void Map::updatePickables(sf::Vector2f scrollOffset)
 void Map::updateStaticObjects()
 {
 }
+
+void Map::updatePickablesAnimation(float time)
+{
+	static float timeSinceLastFrame = 0.f;
+	timeSinceLastFrame += time;
+
+	if (timeSinceLastFrame >= 0.10f)
+	{
+		for (auto it = m_pickables.begin(); it != m_pickables.end(); it++)
+		{
+			(*it)->updateAnimation(time);
+		}
+
+		timeSinceLastFrame = 0;
+	}
+}

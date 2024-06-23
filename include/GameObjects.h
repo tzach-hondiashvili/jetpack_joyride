@@ -13,7 +13,11 @@ public:
 	void updateSpritePos(sf::Vector2f position);
 	virtual void show() {};
 	void setScale(sf::Vector2f scale);
+	virtual void updateAnimation(float time) = 0;
+	int getAnimationFrame();
+	void setAnimationFrame(int frame);
 
 private:
 	sf::Sprite m_sprite;
+	int m_animationFrame;
 };

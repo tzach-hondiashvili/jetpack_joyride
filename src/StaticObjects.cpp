@@ -3,3 +3,7 @@
 StaticObjects::StaticObjects()
 {
 }
+
+void StaticObjects::updateAnimation(float time)
+{
+}
