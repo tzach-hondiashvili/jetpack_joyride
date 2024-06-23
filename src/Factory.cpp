@@ -331,12 +331,24 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createXparallel(const std::st
         std::unique_ptr<StaticObjects> staticLaserHead1(static_cast<StaticObjects*>(laserHead1.release()));
         std::unique_ptr<StaticObjects> staticLaserHead2(static_cast<StaticObjects*>(laserHead2.release()));
 
-        
+        // Calculate the distance and angle between the two laser heads
+        float deltaX = position2.x - position1.x;
+        float deltaY = position2.y - position1.y;
+        float distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
+        float angle = std::atan2(deltaY, deltaX) * 180.f / 3.14159265358979323846;
 
         sf::Vector2f beamPosition(startX + randomNumber / 2.f, startY);
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
+            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
+            float scaleX = distance / originalBeamWidth;
+            float originalBeamHeight = beam->getSprite().getLocalBounds().height;
+            float scaleY = distance / originalBeamHeight;
+
+            beam->setScale(sf::Vector2f(1, scaleY));
+            beam->rotate(90);
+
             std::unique_ptr<StaticObjects> staticBeam(static_cast<StaticObjects*>(beam.release()));
             temp.push_back(std::move(staticBeam));
         }
@@ -376,12 +388,21 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingLeft(const std::s
         std::unique_ptr<StaticObjects> staticLaserHead1(static_cast<StaticObjects*>(laserHead1.release()));
         std::unique_ptr<StaticObjects> staticLaserHead2(static_cast<StaticObjects*>(laserHead2.release()));
 
-       
+        // Calculate the distance and angle between the two laser heads
+        float distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        sf::Vector2f beamPosition(startX - randomNumber / 2.f, startY); // Midpoint of the laser heads
+        sf::Vector2f beamPosition((position1.x + position2.x) / 2, (position1.y + position2.y) / 2); // Midpoint of the laser heads
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
+            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
+            float scaleX = distance / originalBeamWidth;
+            float originalBeamHeight = beam->getSprite().getLocalBounds().height;
+            float scaleY = distance / originalBeamHeight;
+
+            beam->setScale(sf::Vector2f(1, scaleY));
+            beam->rotate(45);
+
             std::unique_ptr<StaticObjects> staticBeam(static_cast<StaticObjects*>(beam.release()));
             temp.push_back(std::move(staticBeam));
         }  
@@ -407,6 +428,11 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
     std::unique_ptr<GameObjects> laserHead1 = Factory::create(name, position1);
     std::unique_ptr<GameObjects> laserHead2 = Factory::create(name, position2);
 
+    // Calculate the distance and angle between the two laser heads
+    float deltaX = position2.x - position1.x;
+    float deltaY = position2.y - position1.y;
+    float distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
+
     if (laserHead1 && laserHead2)
     {
         // Calculate the angle between the two positions
@@ -423,10 +449,18 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
 
        
 
-        sf::Vector2f beamPosition(startX - randomNumber / 2.f, startY); // Midpoint of the laser heads
+        sf::Vector2f beamPosition((position1.x + position2.x) / 2, (position1.y + position2.y) / 2); // Midpoint of the laser heads
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
+            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
+            float scaleX = distance / originalBeamWidth;
+            float originalBeamHeight = beam->getSprite().getLocalBounds().height;
+            float scaleY = distance / originalBeamHeight;
+
+            beam->setScale(sf::Vector2f(1, scaleY));
+            beam->rotate(360 - 45);
+
             std::unique_ptr<StaticObjects> staticBeam(static_cast<StaticObjects*>(beam.release()));
             temp.push_back(std::move(staticBeam));
         }
@@ -451,7 +485,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vec
         {3, &Factory::createLayingRight}
     };
 
-    int randomNumber = 0;//std::rand() % 4;
+    int randomNumber = std::rand() % 4;
     std::list<std::unique_ptr<StaticObjects>> obstacles;
 
     auto it = FunctionMap.find(randomNumber);
