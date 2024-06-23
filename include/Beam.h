@@ -1,11 +1,13 @@
 #pragma once
-#include "Enemy.h"
+#include "Obstacles.h"
+#include "Factory.h"
 
-class Beam:public Enemy
+class Beam:public Obstacles
 {
 public:
-	void move();
-
+	Beam(sf::Vector2f position);
+	virtual void show();
+	virtual void updateAnimation(float time) override;
 private:
-
+	static bool m_registerit;
 };

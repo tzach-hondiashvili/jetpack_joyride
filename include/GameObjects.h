@@ -16,6 +16,8 @@ public:
 	virtual void updateAnimation(float time) = 0;
 	int getAnimationFrame();
 	void setAnimationFrame(int frame);
+	void rotate(int angle);
+	void setOrigin(sf::Vector2f origin);
 
 private:
 	sf::Sprite m_sprite;

@@ -10,6 +10,7 @@
 #include <functional>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 
 //Typedef for a map storing factory functions for GameObject creation.
 typedef std::map<std::string, std::unique_ptr<GameObjects>(*)(sf::Vector2f position)> mymap;
@@ -23,7 +24,9 @@ public:
     //Register a factory function for creating a GameObject by name.
     static bool registerit(const std::string& name, std::unique_ptr<GameObjects>(*)(sf::Vector2f position));
 
+    //Logic function
     static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset);
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
@@ -31,6 +34,12 @@ public:
     static std::list<std::unique_ptr<Pickable>> createTriangle(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
+
+    // Methods to create different lazer shapes
+    static std::list<std::unique_ptr<StaticObjects>> createYparallel(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<StaticObjects>> createXparallel(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<StaticObjects>> createLayingLeft(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<StaticObjects>> createLayingRight(const std::string& name, sf::Vector2f scrollOffset);
 
 private:
     //Get the static map of factory functions.

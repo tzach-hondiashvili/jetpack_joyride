@@ -28,6 +28,11 @@ void GameObjects::setScale(sf::Vector2f scale)
 	m_sprite.setScale(scale);
 }
 
+void GameObjects::setOrigin(sf::Vector2f origin)
+{
+	m_sprite.setOrigin(origin);
+}
+
 int GameObjects::getAnimationFrame()
 {
 	return m_animationFrame;
@@ -36,6 +41,11 @@ int GameObjects::getAnimationFrame()
 void GameObjects::setAnimationFrame(int frame)
 {
 	m_animationFrame = frame;
+}
+
+void GameObjects::rotate(int angle)
+{
+	m_sprite.rotate(angle);
 }
 
 
