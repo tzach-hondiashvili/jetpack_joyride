@@ -143,7 +143,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createTriangle(const std::string& 
 
 std::list<std::unique_ptr<Pickable>> Factory::createCircle(const std::string& name, sf::Vector2f scrollOffset)
 {
-    int numCoins = 50; // Number of coins in the circle shape (adjust as needed)
+    int numCoins = 30; // Number of coins in the circle shape (adjust as needed)
     std::list<std::unique_ptr <Pickable>> temp;
 
     // Randomize center position within a range
@@ -151,7 +151,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createCircle(const std::string& na
     float centerY = 260.f + static_cast<float>(std::rand() % 400) + scrollOffset.y;
     
     // Randomize radius within a range
-    float minRadius = 50.f;
+    float minRadius = 75.f;
     float maxRadius = 150.f;
     float radius = minRadius + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxRadius - minRadius)));
 

@@ -12,5 +12,6 @@ Return2Menu::Return2Menu(Menu* menu)
 void Return2Menu::execute()
 {
 	getMenu()->resetView();
+	getMenu()->getController().getPlayer().resetCoins();
 	getMenu()->updateState(std::move(std::make_unique<DefaultMenu>(getMenu())));
 }

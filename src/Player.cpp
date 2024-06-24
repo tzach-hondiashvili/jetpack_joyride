@@ -123,3 +123,8 @@ int Player::getCoinsCounter()
 {
     return m_coinsCounter;
 }
+
+void Player::resetCoins()
+{
+    m_coinsCounter = 0;
+}

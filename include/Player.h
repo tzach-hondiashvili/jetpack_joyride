@@ -16,6 +16,7 @@ public:
     virtual void updateAnimation(float time) override;
     void collectCoin();
     int getCoinsCounter();
+    void resetCoins();
 
 private:
     int m_lives;
