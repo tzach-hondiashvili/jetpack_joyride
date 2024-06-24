@@ -43,7 +43,7 @@ void Map::updateObstaclesAnimation(float time)
 	static float timeSinceLastFrame = 0.f;
 	timeSinceLastFrame += time;
 
-	if (timeSinceLastFrame >= 0.10f)
+	if (timeSinceLastFrame >= 0.08f)
 	{
 		for (auto it = m_obstacles.begin(); it != m_obstacles.end(); it++)
 		{

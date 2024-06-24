@@ -28,3 +28,4 @@ void Beam::updateAnimation(float time)
     sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(frameRect);
 }
+

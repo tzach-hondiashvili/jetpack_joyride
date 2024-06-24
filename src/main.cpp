@@ -2,9 +2,9 @@
 
 int main()
 {
-	Menu main;
+	Menu Game;
 
-	main.runMenu();
+	Game.runMenu();
 	
 	return EXIT_SUCCESS;
 }

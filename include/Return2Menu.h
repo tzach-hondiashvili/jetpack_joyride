@@ -6,6 +6,8 @@ class Return2Menu : public Command
 {
 public:
 	Return2Menu(Menu* menu);
+	virtual ~Return2Menu() {};
+
 	virtual void execute() override;
 	virtual void updateAnimation(bool Switch) override {};
 };

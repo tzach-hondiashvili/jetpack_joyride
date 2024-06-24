@@ -10,6 +10,8 @@ class Coin:public Pickable
 {
 public:
 	Coin(sf::Vector2f position);
+	virtual ~Coin() override{};
+
 	virtual void show();
 	virtual void updateAnimation(float time) override;
 	

@@ -4,6 +4,7 @@
 class Obstacles:public StaticObjects
 {
 public:
+	virtual ~Obstacles() {};
 
 private:
 

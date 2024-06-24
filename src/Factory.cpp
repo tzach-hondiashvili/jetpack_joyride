@@ -193,8 +193,8 @@ std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& nam
     centerY += scrollOffset.y;
 
     // Randomize radius within a range
-    float minRadius = 20.f;
-    float maxRadius = 40.f;
+    float minRadius = 15.f;
+    float maxRadius = 30.f;
     float radius = minRadius + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxRadius - minRadius)));
 
     for (int i = 0; i < numCoins; ++i)

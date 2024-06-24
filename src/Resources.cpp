@@ -106,6 +106,32 @@ void Resources::fillTextureVectors(std::vector<std::string > names, std::vector<
 	}
 }
 
+void Resources::updateGameMusic()
+{
+	m_gameMusic.openFromFile("JetpackJoyrideMusic.ogg");
+	m_gameMusic.setVolume(50);
+}
+
+void Resources::fillSoundFX()
+{
+	std::vector<std::string> namesOfSounds =
+	{
+		"a_coin.ogg",		   //0
+		"b_getPowerSound.ogg", //1
+		"c_hitSound.ogg",      //2  
+		"d_MissileAlarm.ogg",  //3
+		"e_missileLaunch.ogg", //4
+		"f_ZapperSound.ogg",   //5
+	};
+
+	for (int i = 0; i < namesOfSounds.size(); i++)
+	{
+		sf::SoundBuffer temp;
+		temp.loadFromFile(namesOfSounds[i]);
+		m_soundFX.push_back(temp);
+	}
+}
+
 sf::Texture& Resources::getObjectTexture(int index)
 {
 	return m_objectsTextures[index];
@@ -124,6 +150,22 @@ sf::Texture& Resources::getPlayerTexture(int index)
 sf::Texture& Resources::getHelpTexture(int index)
 {
 	return m_HelpTextures[index];
+}
+
+sf::SoundBuffer& Resources::getSoundEffect(int index)
+{
+	return m_soundFX[index];
+}
+
+void Resources::startGameMusic()
+{
+	m_gameMusic.play();
+	m_gameMusic.setLoop(true);
+}
+
+void Resources::endGameMusic()
+{
+	m_gameMusic.stop();
 }
 
 void Resources::updateFont()

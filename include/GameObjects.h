@@ -6,6 +6,8 @@ class GameObjects
 {
 public:
 	GameObjects();
+	virtual ~GameObjects() {};
+
 	GameObjects(sf::Vector2f position, sf::Texture* texture);
 	const sf::Sprite &getSprite() const;
 	void changeSpriteAnimation(sf::IntRect rect);

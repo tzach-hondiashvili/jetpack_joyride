@@ -1,4 +1,5 @@
 #include "Lazer.h"
+#include "Lazer.h"
 
 // Register Coin class with the Factory
 bool Lazer::m_registerit = Factory::registerit("Lazer", [](sf::Vector2f position) -> std::unique_ptr<GameObjects>
@@ -21,10 +22,10 @@ void Lazer::show() {
 
 void Lazer::updateAnimation(float time)
 {
-    setAnimationFrame((getAnimationFrame() + 1) % 4);
+    //setAnimationFrame((getAnimationFrame() + 1) % 4);
 
-    int frameWidth = getSprite().getTexture()->getSize().x / 4;
+    //int frameWidth = getSprite().getTexture()->getSize().x / 4;
 
-    sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
-    changeSpriteAnimation(frameRect);
+    //sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
+    //changeSpriteAnimation(frameRect);
 }

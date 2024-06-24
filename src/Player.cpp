@@ -2,7 +2,7 @@
 #include <SFML/Window/Keyboard.hpp>
 
 Player::Player()
-    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1000.f), m_jumpForce(-500.f), m_isFlying(false), m_flame(sf::Sprite())
+    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1000.f), m_jumpForce(-500.f), m_isFlying(false), m_flame(sf::Sprite()),m_coinsCounter(0)
 {
 }
 
@@ -112,4 +112,14 @@ void Player::updateAnimation(float time)
 
         timeSinceLastFrame = 0.f;
     }
+}
+
+void Player::collectCoin()
+{
+    m_coinsCounter += 1;
+}
+
+int Player::getCoinsCounter()
+{
+    return m_coinsCounter;
 }

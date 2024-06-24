@@ -15,6 +15,8 @@ void Menu::runMenu()
             sf::Clock clock;
             Resources::instance().fillTextures();
             Resources::instance().updateFont();
+            Resources::instance().updateGameMusic();
+            Resources::instance().fillSoundFX();
             float deltaTime = clock.restart().asSeconds();
 
             m_state->update(deltaTime);
@@ -79,16 +81,19 @@ void Menu::updateController(sf::Vector2f pos, float time)
     m_controller.updatePlayerPos(pos, time);
 
     m_controller.getMap().updatePickablesAnimation(time);
+    m_controller.getMap().updateObstaclesAnimation(time);
 }
 
 void Menu::printScoreBoard()
 {
     m_window.draw(m_scoreBoard.getDistance());
+    m_window.draw(m_scoreBoard.getCoinsCounter());
 }
 
 void Menu::updateScoreBoard()
 {
     m_scoreBoard.updateDistance(m_controller.getPlayer().getSprite().getPosition().x , m_controller.getPlayer().getSprite().getPosition());
+    m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());
 }
 
 void Menu::printPlayer()
@@ -114,6 +119,16 @@ sf::RenderWindow& Menu::getWindow()
 std::unique_ptr<MenuState>& Menu::getState()
 {
     return m_state;
+}
+
+Scoreboard& Menu::getSb()
+{
+    return m_scoreBoard;
+}
+
+void Menu::resetView()
+{
+    m_window.setView(m_window.getDefaultView());
 }
 
 void Menu::updateState(std::unique_ptr<MenuState> state)

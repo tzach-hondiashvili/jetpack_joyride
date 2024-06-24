@@ -6,6 +6,7 @@ class SoldierBerrySkin : public Command
 {
 public:
 	SoldierBerrySkin(Menu* menu);
+	virtual ~SoldierBerrySkin() {};
 	virtual void execute() override;
 	virtual void updateAnimation(bool Switch) override;
 };

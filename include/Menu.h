@@ -36,7 +36,9 @@ public:
 	Controller& getController();
 	sf::RenderWindow& getWindow();
 	std::unique_ptr<MenuState>&getState();
+	Scoreboard& getSb();
 
+	void resetView();
 	void updateState(std::unique_ptr<MenuState> state);
 
 

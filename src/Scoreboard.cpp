@@ -13,6 +13,16 @@ Scoreboard::Scoreboard()
 	m_distanceCounter.setOutlineThickness(6);
 	m_distanceCounter.setOutlineColor(sf::Color::Black);
 
+	m_coinsCounter.setCharacterSize(40);
+	m_coinsCounter.setOutlineThickness(6);
+	m_coinsCounter.setOutlineColor(sf::Color::Black);
+
+}
+
+void Scoreboard::updateCoins(int numOfCoins)
+{
+	m_coinsCounter.setString("COINS: " + std::to_string(numOfCoins));
+	m_coinsCounter.setPosition(m_distanceCounter.getPosition() + sf::Vector2f(0, 50));
 }
 
 void Scoreboard::updateDistance(float distance,sf::Vector2f newpos)
@@ -24,4 +34,9 @@ void Scoreboard::updateDistance(float distance,sf::Vector2f newpos)
 const sf::Text& Scoreboard::getDistance() const
 {
 	return m_distanceCounter;
+}
+
+const sf::Text& Scoreboard::getCoinsCounter() const
+{
+	return m_coinsCounter;
 }

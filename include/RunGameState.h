@@ -5,6 +5,7 @@ class RunGameState :public MenuState
 {
 public:
 	RunGameState(Menu* menu);
+	virtual ~RunGameState() override;
 
 	virtual void update(float deltaTime) override;
 	virtual void print() override;
@@ -13,12 +14,17 @@ public:
 	virtual void moveHelpLeft() override;
 	virtual void moveHelpRight() override;
 
+	void updateOptions();
+	void show();
+
 private:
 	sf::Sprite m_hall,
 		m_background1,
 		m_background2;
 
 	sf::View m_view;
+
+	std::vector<option> m_options;
 
 	float m_scrollSpeed;
 };

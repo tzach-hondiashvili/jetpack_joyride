@@ -3,12 +3,17 @@
 
 RunGameState::RunGameState(Menu* menu)
 {
+
+    updateMenu(menu);
+    updateOptions();
+    Resources::instance().startGameMusic();
+
+
     sf::View view(sf::FloatRect(0, 0, 1456, 960));
     m_view = view;
 
     m_scrollSpeed = 250.0f;
 
-	updateMenu(menu);
 
     sf::Texture hallTexture = Resources::instance().getOtherTexture(22);
     sf::Texture backgroundTexture = Resources::instance().getOtherTexture(5);
@@ -40,9 +45,16 @@ RunGameState::RunGameState(Menu* menu)
 
 }
 
+RunGameState::~RunGameState()
+{
+    Resources::instance().endGameMusic();
+}
+
 void RunGameState::update(float deltaTime)
 {
     m_view.move(m_scrollSpeed * deltaTime, 0.f);
+
+    getMenu()->getController().checkCollision();
 
     // Update background positions to create endless effect
     if ((m_background1.getPosition().x + 277.f * (1456.f / 277)) < (m_view.getCenter().x - m_view.getSize().x / 2))
@@ -60,6 +72,7 @@ void RunGameState::update(float deltaTime)
 
     getMenu()->updateController({m_view.getCenter().x - 600 , 760}, deltaTime);
     getMenu()->updateScoreBoard();
+    m_options[0].second->updateSprite(getMenu()->getSb().getDistance().getPosition() + sf::Vector2f{1300,0}, &Resources::instance().getOtherTexture(4));
 
     m_scrollSpeed += 5.0f * deltaTime;
 
@@ -88,10 +101,20 @@ void RunGameState::print()
     getMenu()->printPlayer();
 
     getMenu()->printScoreBoard();
+
+    show();
 }
 
 void RunGameState::handleClick(const sf::Event::MouseButtonEvent& event)
 {
+    for (size_t i = 0; i < m_options.size(); i++)
+    {
+        if (m_options[i].second->getSprite().getGlobalBounds().contains(getMenu()->getWindow().mapPixelToCoords({ event.x, event.y })))
+        {
+            m_options[i].second->execute();
+            return;
+        }
+    }
 
 }
 
@@ -107,3 +130,20 @@ void RunGameState::moveHelpLeft()
 void RunGameState::moveHelpRight()
 {
 }
+
+void RunGameState::updateOptions()
+{
+
+    m_options.emplace_back(std::make_pair("Return2Menu", std::make_unique<Return2Menu>(getMenu())));
+
+    m_options[0].second->updateSprite({1400,900}, &Resources::instance().getOtherTexture(4));
+}
+
+void RunGameState::show()
+{
+    for (int i = 0; i < m_options.size(); i++)
+    {
+        getMenu()->getWindow().draw(m_options[i].second->getSprite());
+    }
+}
+

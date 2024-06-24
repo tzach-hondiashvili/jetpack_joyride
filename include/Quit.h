@@ -5,6 +5,8 @@ class Quit : public Command
 {
 public:
 	Quit(Menu* menu);
+	virtual ~Quit() {};
+
 	virtual void execute() override;
 	virtual void updateAnimation(bool Switch) override {};
 };
