@@ -514,7 +514,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scro
         {4, &Factory::createMissile}
     };
     
-    int randomNumber = 0;//std::rand() % 4;
+    int randomNumber = 4;//std::rand() % 4;
     std::list<std::unique_ptr<Enemy>> enemies;
     
     auto it = FunctionMap.find(randomNumber);
@@ -533,8 +533,8 @@ std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 1456; // Adjust as needed
-    float startY = 100.f + (std::rand() % static_cast<int>(960 - 200.f));
+    float startX = 1456 + scrollOffset.x; // Adjust as needed
+    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
 
     sf::Vector2f position(startX, startY);
 
