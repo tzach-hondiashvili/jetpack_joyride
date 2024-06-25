@@ -10,6 +10,11 @@ std::list<std::unique_ptr<StaticObjects>>& Map::getObstacles()
 	return m_obstacles;
 }
 
+std::list<std::unique_ptr<Enemy>>& Map::getEnemies()
+{
+	return m_enemies;
+}
+
 void Map::updatePickables(sf::Vector2f scrollOffset)
 {
 	auto temp = Factory::createAndGetPickables(scrollOffset);
@@ -20,6 +25,12 @@ void Map::updateObstacles(sf::Vector2f scrollOffset)
 {
 	auto temp = Factory::createAndGetObstacles(scrollOffset);
 	m_obstacles.insert(m_obstacles.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+}
+
+void Map::updateEnemies(sf::Vector2f scrollOffset)
+{
+	auto temp = Factory::createAndGetEnemies(scrollOffset);
+	m_enemies.insert(m_enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
 void Map::updatePickablesAnimation(float time)
@@ -46,6 +57,22 @@ void Map::updateObstaclesAnimation(float time)
 	if (timeSinceLastFrame >= 0.08f)
 	{
 		for (auto it = m_obstacles.begin(); it != m_obstacles.end(); it++)
+		{
+			(*it)->updateAnimation(time);
+		}
+
+		timeSinceLastFrame = 0;
+	}
+}
+
+void Map::updateEnemiesAnimation(float time)
+{
+	static float timeSinceLastFrame = 0.f;
+	timeSinceLastFrame += time;
+
+	if (timeSinceLastFrame >= 0.08f)
+	{
+		for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
 		{
 			(*it)->updateAnimation(time);
 		}

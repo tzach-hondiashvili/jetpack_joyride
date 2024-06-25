@@ -1,12 +1,15 @@
 #pragma once
 #include "Enemy.h"
+#include "Factory.h"
 
-class Missle:public Enemy
+class Missile :public Enemy
 {
 public:
-	void move();
-	virtual ~Missle() {};
-
+	Missile(sf::Vector2f position);
+	virtual ~Missile() override {};
+	void move(sf::Vector2f pos, float time) override;
+	virtual void show();
+	virtual void updateAnimation(float time) override;
 private:
-
+	static bool m_registerit;
 };

@@ -6,11 +6,13 @@
 #include <string>
 #include "GameObjects.h"
 #include "Coin.h"
+#include "Missile.h"
 #include "Map.h"
 #include <functional>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include "Enemy.h"
 
 //Typedef for a map storing factory functions for GameObject creation.
 typedef std::map<std::string, std::unique_ptr<GameObjects>(*)(sf::Vector2f position)> mymap;
@@ -27,6 +29,7 @@ public:
     //Logic function
     static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset);
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
@@ -41,6 +44,12 @@ public:
     static std::list<std::unique_ptr<StaticObjects>> createLayingLeft(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<StaticObjects>> createLayingRight(const std::string& name, sf::Vector2f scrollOffset);
 
+    // Methods to create different missile shapes
+    static std::list<std::unique_ptr<Enemy>> createMissile(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Enemy>> create2oneByOne(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Enemy>> create4oneByOne(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Enemy>> create2together(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Enemy>> create4together(const std::string& name, sf::Vector2f scrollOffset);
 private:
     //Get the static map of factory functions.
     static mymap& getMap()

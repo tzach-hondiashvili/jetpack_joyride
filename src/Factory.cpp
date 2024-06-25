@@ -498,3 +498,78 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vec
 
     return obstacles;
 }
+
+std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scrollOffset)
+{ 
+    std::srand(std::time(NULL));
+    
+    using CreateFunction = std::list<std::unique_ptr<Enemy>>(*)(const std::string&, sf::Vector2f);
+    
+    static std::map<int, CreateFunction> FunctionMap =
+    {
+        {0, &Factory::create4together},
+        {1, &Factory::create2together},
+        {2, &Factory::create4oneByOne},
+        {3, &Factory::create2oneByOne},
+        {4, &Factory::createMissile}
+    };
+    
+    int randomNumber = 0;//std::rand() % 4;
+    std::list<std::unique_ptr<Enemy>> enemies;
+    
+    auto it = FunctionMap.find(randomNumber);
+    if (it != FunctionMap.end())
+    {
+        CreateFunction createFunc = it->second;
+        std::list<std::unique_ptr<Enemy>> temp = createFunc("Missile", scrollOffset);
+        enemies.insert(enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+    }
+    
+    return enemies;
+}
+
+std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr<Enemy>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 1456; // Adjust as needed
+    float startY = 100.f + (std::rand() % static_cast<int>(960 - 200.f));
+
+    sf::Vector2f position(startX, startY);
+
+    // Create the missile
+    std::unique_ptr<GameObjects> missile = Factory::create(name, position);
+
+    std::unique_ptr<Enemy> enemyObject(static_cast<Enemy*>(missile.release()));
+    temp.push_back(std::move(enemyObject));
+
+    // Set initial phase and other properties if needed
+    //missile->setPhase(Missile::Phase::Incoming);
+
+    return temp;
+}
+
+std::list<std::unique_ptr<Enemy>> Factory::create2oneByOne(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr<Enemy>> temp;
+    return temp;
+}
+
+std::list<std::unique_ptr<Enemy>> Factory::create4oneByOne(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr<Enemy>> temp;
+    return temp;
+}
+
+std::list<std::unique_ptr<Enemy>> Factory::create2together(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr<Enemy>> temp;
+    return temp;
+}
+
+std::list<std::unique_ptr<Enemy>> Factory::create4together(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr<Enemy>> temp;
+    return temp;
+}

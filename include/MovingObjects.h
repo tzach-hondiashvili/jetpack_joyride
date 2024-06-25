@@ -4,8 +4,10 @@
 class MovingObjects:public GameObjects
 {
 public:
-	virtual void move(sf::Vector2f pos, float time) = 0;
+	MovingObjects();
 	virtual ~MovingObjects() {};
+	virtual void updateAnimation(float time) override;
+	virtual void move(sf::Vector2f pos, float time) = 0;
 
 private:
 
