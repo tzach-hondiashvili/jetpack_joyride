@@ -82,6 +82,7 @@ void Menu::updateController(sf::Vector2f pos, float time)
 
     m_controller.getMap().updatePickablesAnimation(time);
     m_controller.getMap().updateObstaclesAnimation(time);
+    m_controller.getMap().updateEnemiesAnimation(time);
 }
 
 void Menu::printScoreBoard()
