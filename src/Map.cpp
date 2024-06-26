@@ -92,6 +92,13 @@ void Map::updateEnemiesAnimation(float time)
 		}
 }
 
+void Map::resetMap()
+{
+	m_enemies.clear();
+	m_obstacles.clear();
+	m_pickables.clear();
+}
+
 Map::Map(Map&& other) noexcept
 	: m_pickables(std::move(other.m_pickables)),
 	m_obstacles(std::move(other.m_obstacles)),

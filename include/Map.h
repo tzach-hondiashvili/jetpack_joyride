@@ -21,6 +21,8 @@ public:
 	void updateObstaclesAnimation(float time);
 	void updateEnemiesAnimation(float time);
 
+	void resetMap();
+
 	Map(Map&& other) noexcept;
 
 private:

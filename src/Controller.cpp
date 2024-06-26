@@ -52,4 +52,13 @@ void Controller::checkCollision()
 			break; // Exit loop on first collision found
 		}
 	}
+
+	for (auto it = m_map.getEnemies().begin(); it != m_map.getEnemies().end(); it++)
+	{
+		if (Collision::pixelPerfectTest(m_player.getSprite(), (*it)->getSprite(), 128))
+		{
+			processCollision(m_player, *(*it));
+			break; // Exit loop on first collision found
+		}
+	}
 }

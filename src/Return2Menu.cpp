@@ -13,5 +13,6 @@ void Return2Menu::execute()
 {
 	getMenu()->resetView();
 	getMenu()->getController().getPlayer().resetCoins();
+	getMenu()->getController().getMap().resetMap();
 	getMenu()->updateState(std::move(std::make_unique<DefaultMenu>(getMenu())));
 }

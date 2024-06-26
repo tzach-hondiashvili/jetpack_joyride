@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Beam.h"
 #include "Lazer.h"
+#include "PowerUp.h"
 
 
 
@@ -62,11 +63,27 @@ namespace // anonymous namespace — the standard way to make function "static"
        Zap.setVolume(100);
        Zap.play();
    }
-    //void asteroidStation(GameObject& /*asteroid*/,
-    //    GameObject& /*spaceStation*/)
-    //{
-    //    std::cout << "Asteroid and SpaceStation collision!\n";
-    //}
+
+   void PlayerMissile(GameObjects& player,
+       GameObjects& missile)
+   {
+       static_cast<Player&>(player).die();
+
+       /*static sf::Sound boom;
+       boom.setBuffer(Resources::instance().getSoundEffect(5));
+       boom.setVolume(100);
+       boom.play();*/
+   }
+
+   void PlayerPowerUp(GameObjects& player,
+       GameObjects& powerUp)
+   {
+       static sf::Sound power;
+       power.setBuffer(Resources::instance().getSoundEffect(1));
+       power.setVolume(100);
+       power.play();
+   }
+  
 
     //void shipShip(GameObject& /*spaceShip1*/,
     //    GameObject& /*spaceShip2*/)
@@ -103,9 +120,11 @@ namespace // anonymous namespace — the standard way to make function "static"
     HitMap initializeCollisionMap()
     {
         HitMap phm;
-        phm[Key(typeid(Player), typeid(Coin))] = &playerCoin;
+        phm[Key(typeid(Player), typeid(Coin))] = &playerCoin; 
         phm[Key(typeid(Player), typeid(Beam))] = &PlayerBeam;
         phm[Key(typeid(Player), typeid(Lazer))] = &PlayerLazer;
+        phm[Key(typeid(Player), typeid(Missile))] = &PlayerMissile;
+        phm[Key(typeid(Player), typeid(PowerUp))] = &PlayerPowerUp;
         //phm[Key(typeid(SpaceShip), typeid(SpaceStation))] = &shipStation;
         //phm[Key(typeid(Asteroid), typeid(SpaceStation))] = &asteroidStation;
         //phm[Key(typeid(SpaceShip), typeid(SpaceShip))] = &shipShip;

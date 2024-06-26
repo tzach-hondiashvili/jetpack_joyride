@@ -13,6 +13,7 @@ void StartGame::execute()
 {
 	getMenu()->resetView();
 	getMenu()->getController().getPlayer().resetCoins();
+	getMenu()->getController().getMap().resetMap();
 	std::unique_ptr temp = std::make_unique<ChooseSkinState>(getMenu());
 	getMenu()->updateState(std::move(temp));
 }
