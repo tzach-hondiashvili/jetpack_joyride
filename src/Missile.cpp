@@ -23,7 +23,7 @@ void Missile::updatebeforeMissile(int index)
 
 void Missile::move(sf::Vector2f pos, float time)
 {
-    updateSpritePos({pos.x - 800*time, pos.y });
+    updateSpritePos({pos.x - 700*time, pos.y });
 }
 
 void Missile::show() {
@@ -32,10 +32,10 @@ void Missile::show() {
 
 void Missile::updateAnimation(float time)
 {
-    //setAnimationFrame((getAnimationFrame() + 1) % 4);
+    setAnimationFrame((getAnimationFrame() + 1) % 7);
 
-    //int frameWidth = getSprite().getTexture()->getSize().x / 4;
+    int frameWidth = getSprite().getTexture()->getSize().x / 7;
 
-    //sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
-    //changeSpriteAnimation(frameRect);
+    sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
+    changeSpriteAnimation(frameRect);
 }
