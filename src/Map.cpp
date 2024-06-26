@@ -70,7 +70,8 @@ void Map::updateEnemiesAnimation(float time)
 	static float timeSinceLastFrame = 0.f;
 	timeSinceLastFrame += time;
 
-	
+		
+
 		for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
 		{
 			

@@ -37,6 +37,7 @@ public:
     static std::list<std::unique_ptr<Pickable>> createTriangle(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createPowerup(const std::string& name, sf::Vector2f scrollOffset);
 
     // Methods to create different lazer shapes
     static std::list<std::unique_ptr<StaticObjects>> createYparallel(const std::string& name, sf::Vector2f scrollOffset);

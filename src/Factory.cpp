@@ -222,13 +222,37 @@ std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& nam
     return temp;
 }
 
+std::list<std::unique_ptr<Pickable>> Factory::createPowerup(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr <Pickable>> temp;
+
+    // Randomize center position within a range
+    float centerX = 100.f + static_cast<float>(std::rand() % 1356) + scrollOffset.x;
+    float centerY = 260.f + static_cast<float>(std::rand() % 400) + scrollOffset.y;
+
+    sf::Vector2f position(centerX, centerY);
+
+        // Create a GameObject instance
+        std::unique_ptr<GameObjects> PowerUp = Factory::create(name, position);
+        if (PowerUp)
+        {
+            // Downcast to Pickable by transferring ownership and casting raw pointer
+            std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(PowerUp.release()));
+
+            // Add to temp
+            temp.push_back(std::move(pickable));
+        }
+    
+    return temp;
+}
+
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset)
 {
     std::srand(std::time(NULL));
 
     using CreateFunction = std::list<std::unique_ptr<Pickable>>(*)(const std::string&, sf::Vector2f);
 
-
+    std::string object;
     // Map random numbers to shape creation functions
     static std::map<int, CreateFunction> FunctionMap =
     {
@@ -236,19 +260,28 @@ std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f
         {1, &Factory::createRectangle},
         {2, &Factory::createTriangle},
         {3, &Factory::createCircle},
-        {4, &Factory::createHeart}
+        {4, &Factory::createHeart},
+        {5, &Factory::createPowerup}
     };
 
-    // Generate a random number between 0 and 4
-    int randomNumber = std::rand() % 5;
+    // Generate a random number between 0 and 5
+    int randomNumber = std::rand() % 6;
     std::list<std::unique_ptr<Pickable>> basic;
 
     // Find the corresponding creation function and call it
     auto it = FunctionMap.find(randomNumber);
     if (it != FunctionMap.end())
     {
+        if (randomNumber==5)
+        {
+            object = "PowerUp";
+        }
+        else
+        {
+            object = "Coin";
+        }
         CreateFunction createFunc = it->second;
-        std::list<std::unique_ptr<Pickable>> temp = createFunc("Coin", scrollOffset);
+        std::list<std::unique_ptr<Pickable>> temp = createFunc(object, scrollOffset);
         basic.insert(basic.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
     }
    
