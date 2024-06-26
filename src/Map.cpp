@@ -67,18 +67,11 @@ void Map::updateObstaclesAnimation(float time)
 
 void Map::updateEnemiesAnimation(float time)
 {
-	static float timeSinceLastFrame = 0.f;
-	timeSinceLastFrame += time;
-
-	if (timeSinceLastFrame >= 0.08f)
-	{
 		for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
 		{
 			(*it)->updateAnimation(time);
-		}
-
-		timeSinceLastFrame = 0;
-	}
+			(*it)->move({ (*it)->getSprite().getPosition().x, (*it)->getSprite().getPosition().y }, time);
+		}	
 }
 
 Map::Map(Map&& other) noexcept

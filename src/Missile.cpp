@@ -23,16 +23,7 @@ void Missile::updatebeforeMissile(int index)
 
 void Missile::move(sf::Vector2f pos, float time)
 {
-    if (getSprite().getPosition().x <= pos.x)
-    {
-        std::cout << "missile on screen \n";
-        updateSpritePos({ pos.x, pos.y });
-    }
-    else
-    {
-        std::cout << "missile before screen \n";
-    }
-    
+    updateSpritePos({pos.x - 800*time, pos.y });
 }
 
 void Missile::show() {
