@@ -48,6 +48,7 @@ private:
 	Controller m_controller;
 	Scoreboard m_scoreBoard;
 	LoadingScreen m_loadingScreen;
+
 	std::unique_ptr<MenuState> m_state;
 
 	bool m_finishedLoading;

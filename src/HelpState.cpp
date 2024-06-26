@@ -15,7 +15,7 @@ HelpState::HelpState(Menu* menu)
     }
 
 }
-void HelpState::update(float deltaTime)
+void HelpState::update(float )
 {
 
 }
@@ -49,7 +49,7 @@ void HelpState::handleClick(const sf::Event::MouseButtonEvent& event)
     }
 }
 
-void HelpState::hoverButton(sf::Vector2i position)
+void HelpState::hoverButton(sf::Vector2i )
 {
 }
 

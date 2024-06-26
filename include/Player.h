@@ -17,6 +17,9 @@ public:
     void collectCoin();
     int getCoinsCounter();
     void resetCoins();
+    Player(Player&& other) noexcept;
+    void die();
+
 
 private:
     int m_lives;

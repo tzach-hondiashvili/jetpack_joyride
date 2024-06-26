@@ -41,6 +41,27 @@ namespace // anonymous namespace — the standard way to make function "static"
         pickupCoin.play();
     }
 
+   void PlayerBeam(GameObjects& player,
+       GameObjects& Beam)
+   {
+       static_cast<Player&>(player).die();
+
+       static sf::Sound Zap;
+       Zap.setBuffer(Resources::instance().getSoundEffect(5));
+       Zap.setVolume(100);
+       Zap.play();
+   }
+
+   void PlayerLazer(GameObjects& player,
+       GameObjects& Beam)
+   {
+       static_cast<Player&>(player).die();
+
+       static sf::Sound Zap;
+       Zap.setBuffer(Resources::instance().getSoundEffect(5));
+       Zap.setVolume(100);
+       Zap.play();
+   }
     //void asteroidStation(GameObject& /*asteroid*/,
     //    GameObject& /*spaceStation*/)
     //{
@@ -83,6 +104,8 @@ namespace // anonymous namespace — the standard way to make function "static"
     {
         HitMap phm;
         phm[Key(typeid(Player), typeid(Coin))] = &playerCoin;
+        phm[Key(typeid(Player), typeid(Beam))] = &PlayerBeam;
+        phm[Key(typeid(Player), typeid(Lazer))] = &PlayerLazer;
         //phm[Key(typeid(SpaceShip), typeid(SpaceStation))] = &shipStation;
         //phm[Key(typeid(Asteroid), typeid(SpaceStation))] = &asteroidStation;
         //phm[Key(typeid(SpaceShip), typeid(SpaceShip))] = &shipShip;

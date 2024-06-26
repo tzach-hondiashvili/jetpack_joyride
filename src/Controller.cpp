@@ -2,7 +2,6 @@
 #include "CollisionHandling.h"
 
 Controller::Controller()
-	:m_map({})
 {
 
 }
@@ -44,13 +43,16 @@ void Controller::checkCollision()
 	}
 
 
-	//check collision with obstacles
-	/*for (auto it = m_map.getObstacles().begin(); it != m_map.getObstacles().end(); it++)
+	for (auto it = m_map.getObstacles().begin(); it != m_map.getObstacles().end(); it++) 
 	{
-		if (m_player.getSprite().getGlobalBounds().intersects((*it)->getSprite().getGlobalBounds()))
+		sf::FloatRect playerBounds = m_player.getSprite().getTransform().transformRect(m_player.getSprite().getLocalBounds());
+		sf::FloatRect obstacleBounds = (*it)->getSprite().getTransform().transformRect((*it)->getSprite().getLocalBounds());
+
+		if (playerBounds.intersects(obstacleBounds)) 
 		{
 			processCollision(m_player, *(*it));
 			break;
 		}
-	}*/
+	}
+
 }

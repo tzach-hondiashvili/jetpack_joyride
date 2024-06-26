@@ -12,7 +12,7 @@ DefaultMenu::DefaultMenu(Menu* menu)
 
 }
 
-void DefaultMenu::update(float deltaTime)
+void DefaultMenu::update(float )
 {
 
 }

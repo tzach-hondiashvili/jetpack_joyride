@@ -27,7 +27,7 @@ ChooseSkinState::ChooseSkinState(Menu* menu)
     
 }
 
-void ChooseSkinState::update(float deltaTime)
+void ChooseSkinState::update(float )
 {
 }
 

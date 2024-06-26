@@ -8,5 +8,5 @@ public:
 	virtual ~HelpLeft() {};
 
 	virtual void execute() override;
-	virtual void updateAnimation(bool Switch) override {};
+	virtual void updateAnimation(bool ) override {};
 };

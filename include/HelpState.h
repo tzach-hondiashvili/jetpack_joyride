@@ -8,14 +8,14 @@ public:
 
 	virtual ~HelpState()override {};
 
-	virtual void update(float deltaTime) override;
+	virtual void update(float ) override;
 	virtual void print() override;
 	virtual void handleClick(const sf::Event::MouseButtonEvent& event) override;
 
 	virtual void moveHelpLeft()	override;
 	virtual void moveHelpRight() override;
 
-	virtual void hoverButton(sf::Vector2i position) override;
+	virtual void hoverButton(sf::Vector2i ) override;
 
 private:
 	std::vector<option> m_helpButtons;

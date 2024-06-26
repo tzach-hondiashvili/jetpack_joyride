@@ -80,3 +80,11 @@ void Map::updateEnemiesAnimation(float time)
 		timeSinceLastFrame = 0;
 	}
 }
+
+Map::Map(Map&& other) noexcept
+	: m_pickables(std::move(other.m_pickables)),
+	m_obstacles(std::move(other.m_obstacles)),
+	m_enemies(std::move(other.m_enemies))
+{
+
+}

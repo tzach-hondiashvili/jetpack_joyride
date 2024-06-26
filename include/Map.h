@@ -7,6 +7,8 @@
 class Map
 {
 public:
+	Map() = default;
+
 	std::list<std::unique_ptr <Pickable>>& getPickables();
 	std::list<std::unique_ptr <StaticObjects>>& getObstacles();
 	std::list<std::unique_ptr <Enemy>>& getEnemies();
@@ -18,6 +20,8 @@ public:
 	void updatePickablesAnimation(float time);
 	void updateObstaclesAnimation(float time);
 	void updateEnemiesAnimation(float time);
+
+	Map(Map&& other) noexcept;
 
 private:
 	//list because we are removing object from the board

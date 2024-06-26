@@ -1,5 +1,6 @@
 #include "RunGameState.h"
 #include "Menu.h"
+#include "DieState.h"
 
 RunGameState::RunGameState(Menu* menu)
 {
@@ -50,8 +51,15 @@ RunGameState::~RunGameState()
     Resources::instance().endGameMusic();
 }
 
+//Menu* menu, Map& oldMap, sf::Sprite& bg1, sf::Sprite& bg2, Player& player
 void RunGameState::update(float deltaTime)
 {
+    if (getMenu()->getController().getPlayer().getLives() == 0)
+    {
+        std::unique_ptr temp = std::make_unique<DieState>(getMenu(),m_background1,m_background2);
+        getMenu()->updateState(std::move(temp));
+        return;
+    }
     m_view.move(m_scrollSpeed * deltaTime, 0.f);
 
     getMenu()->getController().checkCollision();
@@ -124,7 +132,7 @@ void RunGameState::handleClick(const sf::Event::MouseButtonEvent& event)
 
 }
 
-void RunGameState::hoverButton(sf::Vector2i position)
+void RunGameState::hoverButton(sf::Vector2i )
 {
 
 }

@@ -8,7 +8,7 @@ public:
 
 	virtual ~ChooseSkinState()override {};
 
-	virtual void update(float deltaTime) override;
+	virtual void update(float ) override;
 	virtual void print() override;
 	virtual void handleClick(const sf::Event::MouseButtonEvent& event) override;
 
