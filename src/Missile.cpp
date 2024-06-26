@@ -8,6 +8,7 @@ bool Missile::m_registerit = Factory::registerit("Missile", [](sf::Vector2f posi
 
 
 Missile::Missile(sf::Vector2f position)
+    :m_beforeMissile(&Resources::instance().getObjectTexture(8))
 {
     updateSprite(position, &Resources::instance().getObjectTexture(6));
     sf::IntRect missileRect(0, 0, getSprite().getTexture()->getSize().x / 7, getSprite().getTexture()->getSize().y);
@@ -15,23 +16,23 @@ Missile::Missile(sf::Vector2f position)
     setOrigin(sf::Vector2f(getSprite().getTexture()->getSize().x / 7, getSprite().getTexture()->getSize().y / 2));
 }
 
+void Missile::updatebeforeMissile(int index)
+{
+  
+}
+
 void Missile::move(sf::Vector2f pos, float time)
 {
-    updateSpritePos({ getSprite().getPosition().x, pos.x });
-
-    updateAnimation(time);
-
-    sf::Vector2f newPosition = getSprite().getPosition();
-    newPosition.x += 5 * time;
-
-    // Clamp the missile's position
-    if (newPosition.y > 750) {
-        newPosition.y = 750;
+    if (getSprite().getPosition().x <= pos.x)
+    {
+        std::cout << "missile on screen \n";
+        updateSpritePos({ pos.x, pos.y });
     }
-    else if (newPosition.y < 30) {
-        newPosition.y = 30;
+    else
+    {
+        std::cout << "missile before screen \n";
     }
-    updateSpritePos(newPosition);
+    
 }
 
 void Missile::show() {

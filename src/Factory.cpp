@@ -485,7 +485,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vec
         {3, &Factory::createLayingRight}
     };
 
-    int randomNumber = std::rand() % 4;
+    int randomNumber = std::rand() % 6;
     std::list<std::unique_ptr<StaticObjects>> obstacles;
 
     auto it = FunctionMap.find(randomNumber);
@@ -514,7 +514,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scro
         {4, &Factory::createMissile}
     };
     
-    int randomNumber = 4;//std::rand() % 4;
+    int randomNumber = std::rand() % 7;
     std::list<std::unique_ptr<Enemy>> enemies;
     
     auto it = FunctionMap.find(randomNumber);
@@ -533,7 +533,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 1456 + scrollOffset.x; // Adjust as needed
+    float startX = 500 + scrollOffset.x; 
     float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
 
     sf::Vector2f position(startX, startY);
@@ -544,32 +544,112 @@ std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name
     std::unique_ptr<Enemy> enemyObject(static_cast<Enemy*>(missile.release()));
     temp.push_back(std::move(enemyObject));
 
-    // Set initial phase and other properties if needed
-    //missile->setPhase(Missile::Phase::Incoming);
-
     return temp;
 }
 
 std::list<std::unique_ptr<Enemy>> Factory::create2oneByOne(const std::string& name, sf::Vector2f scrollOffset)
 {
     std::list<std::unique_ptr<Enemy>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 500 + scrollOffset.x;
+    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
+
+    sf::Vector2f position1(startX, startY+20);
+    sf::Vector2f position2(startX+200, startY);
+
+    // Create the missile
+    std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);
+    std::unique_ptr<GameObjects> missile2 = Factory::create(name, position2);
+
+    std::unique_ptr<Enemy> enemyObject1(static_cast<Enemy*>(missile1.release()));
+    temp.push_back(std::move(enemyObject1));
+    std::unique_ptr<Enemy> enemyObject2(static_cast<Enemy*>(missile2.release()));
+    temp.push_back(std::move(enemyObject2));
+
     return temp;
 }
 
 std::list<std::unique_ptr<Enemy>> Factory::create4oneByOne(const std::string& name, sf::Vector2f scrollOffset)
 {
     std::list<std::unique_ptr<Enemy>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 500 + scrollOffset.x;
+    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
+
+    sf::Vector2f position1(startX, startY);
+    sf::Vector2f position2(startX + 200, startY+50);
+    sf::Vector2f position3(startX + 350, startY+60);
+    sf::Vector2f position4(startX + 280, startY-20);
+
+    // Create the missile
+    std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);
+    std::unique_ptr<GameObjects> missile2 = Factory::create(name, position2);
+    std::unique_ptr<GameObjects> missile3 = Factory::create(name, position3);
+    std::unique_ptr<GameObjects> missile4 = Factory::create(name, position4);
+
+    std::unique_ptr<Enemy> enemyObject1(static_cast<Enemy*>(missile1.release()));
+    temp.push_back(std::move(enemyObject1));
+    std::unique_ptr<Enemy> enemyObject2(static_cast<Enemy*>(missile2.release()));
+    temp.push_back(std::move(enemyObject2));
+    std::unique_ptr<Enemy> enemyObject3(static_cast<Enemy*>(missile3.release()));
+    temp.push_back(std::move(enemyObject3));
+    std::unique_ptr<Enemy> enemyObject4(static_cast<Enemy*>(missile4.release()));
+    temp.push_back(std::move(enemyObject4));
+
     return temp;
 }
 
 std::list<std::unique_ptr<Enemy>> Factory::create2together(const std::string& name, sf::Vector2f scrollOffset)
 {
     std::list<std::unique_ptr<Enemy>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 500 + scrollOffset.x;
+    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(400));
+
+    sf::Vector2f position1(startX, startY);
+    sf::Vector2f position2(startX, startY+200);
+    // Create the missile
+    std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);
+    std::unique_ptr<GameObjects> missile2 = Factory::create(name, position2);
+
+    std::unique_ptr<Enemy> enemyObject1(static_cast<Enemy*>(missile1.release()));
+    temp.push_back(std::move(enemyObject1));
+    std::unique_ptr<Enemy> enemyObject2(static_cast<Enemy*>(missile2.release()));
+    temp.push_back(std::move(enemyObject2));
+
     return temp;
 }
 
 std::list<std::unique_ptr<Enemy>> Factory::create4together(const std::string& name, sf::Vector2f scrollOffset)
 {
     std::list<std::unique_ptr<Enemy>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 500 + scrollOffset.x;
+    float startY = 130.f + scrollOffset.y + (std::rand() % static_cast<int>(300));
+
+    sf::Vector2f position1(startX, startY);
+    sf::Vector2f position2(startX, startY + 150);
+    sf::Vector2f position3(startX, startY + 300);
+    sf::Vector2f position4(startX, startY + 450);
+
+    // Create the missile
+    std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);
+    std::unique_ptr<GameObjects> missile2 = Factory::create(name, position2);
+    std::unique_ptr<GameObjects> missile3 = Factory::create(name, position3);
+    std::unique_ptr<GameObjects> missile4 = Factory::create(name, position4);
+
+    std::unique_ptr<Enemy> enemyObject1(static_cast<Enemy*>(missile1.release()));
+    temp.push_back(std::move(enemyObject1));
+    std::unique_ptr<Enemy> enemyObject2(static_cast<Enemy*>(missile2.release()));
+    temp.push_back(std::move(enemyObject2));
+    std::unique_ptr<Enemy> enemyObject3(static_cast<Enemy*>(missile3.release()));
+    temp.push_back(std::move(enemyObject3));
+    std::unique_ptr<Enemy> enemyObject4(static_cast<Enemy*>(missile4.release()));
+    temp.push_back(std::move(enemyObject4));
+
     return temp;
 }
