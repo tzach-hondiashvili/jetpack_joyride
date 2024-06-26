@@ -15,7 +15,7 @@ public:
 
 	void updatePickables(sf::Vector2f scrollOffset);
 	void updateObstacles(sf::Vector2f scrollOffset);
-	void updateEnemies(sf::Vector2f scrollOffset);
+	void updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos);
 
 	void updatePickablesAnimation(float time);
 	void updateObstaclesAnimation(float time);

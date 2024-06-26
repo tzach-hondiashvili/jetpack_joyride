@@ -499,7 +499,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vec
     return obstacles;
 }
 
-std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scrollOffset)
+std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
 { 
     std::srand(std::time(NULL));
     
@@ -521,7 +521,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scro
     if (it != FunctionMap.end())
     {
         CreateFunction createFunc = it->second;
-        std::list<std::unique_ptr<Enemy>> temp = createFunc("Missile", scrollOffset);
+        std::list<std::unique_ptr<Enemy>> temp = createFunc("Missile", { scrollOffset.x , playerPos.y});
         enemies.insert(enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
     }
     
@@ -534,7 +534,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name
 
     // Calculate starting position outside the screen on the right side
     float startX = 500 + scrollOffset.x; 
-    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
+    float startY = scrollOffset.y + 50;
 
     sf::Vector2f position(startX, startY);
 
@@ -553,7 +553,7 @@ std::list<std::unique_ptr<Enemy>> Factory::create2oneByOne(const std::string& na
 
     // Calculate starting position outside the screen on the right side
     float startX = 500 + scrollOffset.x;
-    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
+    float startY = scrollOffset.y + 50;
 
     sf::Vector2f position1(startX, startY+20);
     sf::Vector2f position2(startX+200, startY);
@@ -576,7 +576,7 @@ std::list<std::unique_ptr<Enemy>> Factory::create4oneByOne(const std::string& na
 
     // Calculate starting position outside the screen on the right side
     float startX = 500 + scrollOffset.x;
-    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(960 - 200.f));
+    float startY = scrollOffset.y + 50;
 
     sf::Vector2f position1(startX, startY);
     sf::Vector2f position2(startX + 200, startY+50);
@@ -607,10 +607,10 @@ std::list<std::unique_ptr<Enemy>> Factory::create2together(const std::string& na
 
     // Calculate starting position outside the screen on the right side
     float startX = 500 + scrollOffset.x;
-    float startY = 100.f + scrollOffset.y + (std::rand() % static_cast<int>(400));
+    float startY = scrollOffset.y + 50;
 
-    sf::Vector2f position1(startX, startY);
-    sf::Vector2f position2(startX, startY+200);
+    sf::Vector2f position1(startX, startY-50);
+    sf::Vector2f position2(startX, startY+50);
     // Create the missile
     std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);
     std::unique_ptr<GameObjects> missile2 = Factory::create(name, position2);
@@ -629,12 +629,12 @@ std::list<std::unique_ptr<Enemy>> Factory::create4together(const std::string& na
 
     // Calculate starting position outside the screen on the right side
     float startX = 500 + scrollOffset.x;
-    float startY = 130.f + scrollOffset.y + (std::rand() % static_cast<int>(300));
+    float startY = scrollOffset.y + 50;
 
-    sf::Vector2f position1(startX, startY);
-    sf::Vector2f position2(startX, startY + 150);
-    sf::Vector2f position3(startX, startY + 300);
-    sf::Vector2f position4(startX, startY + 450);
+    sf::Vector2f position1(startX, startY-300);
+    sf::Vector2f position2(startX, startY -100);
+    sf::Vector2f position3(startX, startY + 100);
+    sf::Vector2f position4(startX, startY + 300);
 
     // Create the missile
     std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);

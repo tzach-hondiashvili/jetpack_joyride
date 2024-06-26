@@ -70,14 +70,14 @@ void RunGameState::update(float deltaTime)
         m_background1.setPosition(m_background2.getPosition().x + 277.f * (1456.f / 277), 0.f);
         getMenu()->getController().getMap().updatePickables(m_background1.getPosition());
         getMenu()->getController().getMap().updateObstacles(m_background1.getPosition());
-        getMenu()->getController().getMap().updateEnemies(m_background1.getPosition());
+        getMenu()->getController().getMap().updateEnemies(m_background1.getPosition(),getMenu()->getController().getPlayer().getSprite().getPosition());
     }
     if (m_background2.getPosition().x + 277.f * (1456.f / 277) < m_view.getCenter().x - m_view.getSize().x / 2)
     {
         m_background2.setPosition(m_background1.getPosition().x + 277.f * (1456.f / 277), 0.f);
         getMenu()->getController().getMap().updatePickables(m_background2.getPosition());
         getMenu()->getController().getMap().updateObstacles(m_background2.getPosition());
-        getMenu()->getController().getMap().updateEnemies(m_background2.getPosition());
+        getMenu()->getController().getMap().updateEnemies(m_background2.getPosition(), getMenu()->getController().getPlayer().getSprite().getPosition());
     }
 
     getMenu()->updateController({m_view.getCenter().x - 600 , 760}, deltaTime);

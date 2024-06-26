@@ -27,9 +27,9 @@ void Map::updateObstacles(sf::Vector2f scrollOffset)
 	m_obstacles.insert(m_obstacles.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
-void Map::updateEnemies(sf::Vector2f scrollOffset)
+void Map::updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
 {
-	auto temp = Factory::createAndGetEnemies(scrollOffset);
+	auto temp = Factory::createAndGetEnemies(scrollOffset, playerPos);
 	m_enemies.insert(m_enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 

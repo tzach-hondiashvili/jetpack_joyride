@@ -29,7 +29,7 @@ public:
     //Logic function
     static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos);
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
