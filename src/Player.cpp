@@ -153,3 +153,42 @@ void Player::die()
     m_lives = 0;
 }
 
+void Player::updateFallingAndDying(sf::Texture* falling, sf::Texture* dying)
+{
+    m_falling = falling;
+    m_dying = dying;
+}
+
+sf::Texture* Player::getFallingTexture()
+{
+    return m_falling;
+}
+
+sf::Texture* Player::getDyingTexture()
+{
+    return m_dying;
+}
+
+void Player::fall(float time)
+{
+    sf::Vector2f newPosition = getSprite().getPosition();
+
+     m_velocity.y += m_gravity * time;
+ 
+    // Clamp the player's position
+    if (newPosition.y > 750) 
+    {
+        newPosition.y = 750;
+        m_velocity.y = 0;
+        m_velocity.x = 0;
+    }
+    else
+    {
+        newPosition.y += m_velocity.y * time;
+        newPosition.x += 200 * time;
+    }
+
+    updateSpritePos(newPosition);
+
+}
+

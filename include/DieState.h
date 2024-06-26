@@ -27,4 +27,6 @@ private:
 	sf::Sprite m_backGround1;
 	sf::Sprite m_backGround2;
 
+	bool m_onGround;
+
 };

@@ -11,6 +11,8 @@ StartGame::StartGame(Menu* menu)
 
 void StartGame::execute()
 {
+	getMenu()->resetView();
+	getMenu()->getController().getPlayer().resetCoins();
 	std::unique_ptr temp = std::make_unique<ChooseSkinState>(getMenu());
 	getMenu()->updateState(std::move(temp));
 }

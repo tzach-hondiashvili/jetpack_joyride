@@ -35,3 +35,10 @@ void Command::setOrigin(sf::Vector2f origin)
 {
 	m_sprite.setOrigin(origin);
 }
+
+void Command::adjustRec()
+{
+	sf::IntRect Rect(0, 0, m_sprite.getTexture()->getSize().x, m_sprite.getTexture()->getSize().y);
+	m_sprite.setTextureRect(Rect);
+}
+

@@ -18,6 +18,7 @@ public:
 	sf::Sprite& getSprite();
 	void setscale(sf::Vector2f scale);
 	void setOrigin(sf::Vector2f origin);
+	void adjustRec();
 
 private:
 	sf::Sprite m_sprite;

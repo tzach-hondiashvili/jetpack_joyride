@@ -19,6 +19,11 @@ public:
     void resetCoins();
     Player(Player&& other) noexcept;
     void die();
+    void updateFallingAndDying(sf::Texture* falling, sf::Texture* dying);
+
+    sf::Texture* getFallingTexture();
+    sf::Texture* getDyingTexture();
+    void fall(float time);
 
 
 private:
@@ -30,4 +35,5 @@ private:
     bool m_isFlying;
     void applyGravity(float deltaTime);
     sf::Sprite m_flame;
+    sf::Texture* m_falling,* m_dying;
 };

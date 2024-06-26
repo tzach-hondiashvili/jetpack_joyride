@@ -7,6 +7,7 @@ OriginalSkinOption::OriginalSkinOption(Menu* menu)
 	setOrigin(sf::Vector2f(50, 100));
 
 	updateSprite(position, &Resources::instance().getPlayerTexture(4));
+	setscale({ 1,1 });
 	setscale(sf::Vector2f(100 / float(getSprite().getTexture()->getSize().x), 200 / float(getSprite().getTexture()->getSize().y)));
 	updateMenu(menu);
 }
@@ -14,6 +15,7 @@ OriginalSkinOption::OriginalSkinOption(Menu* menu)
 void OriginalSkinOption::execute()
 {
 	getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), &Resources::instance().getPlayerTexture(7));
+	getMenu()->getController().getPlayer().updateFallingAndDying(&Resources::instance().getPlayerTexture(6), &Resources::instance().getPlayerTexture(5));
 	std::unique_ptr temp = std::make_unique<RunGameState>(getMenu());
 	getMenu()->updateState(std::move(temp));
 }

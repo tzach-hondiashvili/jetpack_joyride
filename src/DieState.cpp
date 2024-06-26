@@ -1,17 +1,70 @@
 #include "DieState.h"
 #include "Menu.h"
 #include "Return2Menu.h"
+#include "StartGame.h"
 
-DieState::DieState(Menu* menu,sf::Sprite& bg1, sf::Sprite& bg2)
-    :
-    m_backGround1(std::move(bg1)),
-    m_backGround2(std::move(bg2))
+DieState::DieState(Menu* menu, sf::Sprite& bg1, sf::Sprite& bg2)
+    : m_backGround1(std::move(bg1)),
+    m_backGround2(std::move(bg2)), m_onGround(false)
 {
     updateMenu(menu);
+
+    auto& player = getMenu()->getController().getPlayer();
+    player.updateSprite(player.getSprite().getPosition(), player.getFallingTexture());
+
+    // Calculate scale factors based on desired size
+    float scaleX = (450.0f / 2) / player.getSprite().getTexture()->getSize().x;
+    float scaleY = 150.0f / player.getSprite().getTexture()->getSize().y;
+    player.setScale(sf::Vector2f(scaleX, scaleY));
+
+    // Initialize player's animation for falling state
+    sf::IntRect playerRect(0, 0, player.getSprite().getTexture()->getSize().x / 4, player.getSprite().getTexture()->getSize().y);
+    player.changeSpriteAnimation(playerRect);
+    player.setAnimationFrame(0);
+
+    updateOptions();
 }
 
 void DieState::update(float deltaTime)
 {
+    static float timeSinceLastFrame = 0.f;
+    timeSinceLastFrame += deltaTime;
+
+    getMenu()->getController().getPlayer().fall(deltaTime);
+
+    if (timeSinceLastFrame >= 0.5f)
+    {
+        if (getMenu()->getController().getPlayer().getSprite().getPosition().y == 750)
+        {
+            if (!m_onGround)
+            {
+                getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), getMenu()->getController().getPlayer().getDyingTexture());
+                sf::IntRect playerRect(0, 0, getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x, getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().y);
+                getMenu()->getController().getPlayer().changeSpriteAnimation(playerRect);
+
+                static sf::Sound HitFloor;
+                HitFloor.setBuffer(Resources::instance().getSoundEffect(2));
+                HitFloor.setVolume(100);
+                HitFloor.play();
+                m_onGround = true;
+            }
+            getMenu()->getController().getPlayer().updateSpritePos(getMenu()->getController().getPlayer().getSprite().getPosition() + sf::Vector2f(0, 70));
+        }
+        else
+        {
+            getMenu()->getController().getPlayer().setAnimationFrame((getMenu()->getController().getPlayer().getAnimationFrame() + 1));
+
+            if (getMenu()->getController().getPlayer().getAnimationFrame() < 5)
+            {
+                int frameWidth = getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x/4;
+
+                sf::IntRect frameRect(frameWidth, 0, frameWidth, getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().y);
+                getMenu()->getController().getPlayer().changeSpriteAnimation(frameRect);
+            }
+
+            timeSinceLastFrame = 0.f;
+        }
+    }   
 }
 
 void DieState::print()
@@ -59,8 +112,24 @@ void DieState::hoverButton(sf::Vector2i )
 void DieState::updateOptions()
 {
     m_Buttons.emplace_back(std::make_pair("Return2Menu", std::make_unique<Return2Menu>(getMenu())));
+    m_Buttons.emplace_back(std::make_pair("StartGame", std::make_unique<StartGame>(getMenu())));
 
-    m_Buttons[0].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 200,300),&Resources::instance().getOtherTexture(13));
+    m_Buttons[0].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400,700),&Resources::instance().getOtherTexture(16));
+    m_Buttons[0].second->adjustRec();
+  
+
+    m_Buttons[1].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400, 580), &Resources::instance().getOtherTexture(13));
+    m_Buttons[1].second->adjustRec();
+
+    sf::Vector2u size1 = m_Buttons[1].second->getSprite().getTexture()->getSize();
+    sf::Vector2u size0 = m_Buttons[0].second->getSprite().getTexture()->getSize();
+
+    // Calculate the scale factors
+    float scaleX = static_cast<float>(size1.x) / size0.x;
+    float scaleY = static_cast<float>(size1.y) / size0.y;
+
+    // Set the scale of the first button
+    m_Buttons[0].second->setscale(sf::Vector2f(scaleX, scaleY));
 }
 
 void DieState::show()

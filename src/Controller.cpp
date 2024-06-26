@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include "CollisionHandling.h"
+#include "Collision.h"
 
 Controller::Controller()
 {
@@ -43,16 +44,12 @@ void Controller::checkCollision()
 	}
 
 
-	for (auto it = m_map.getObstacles().begin(); it != m_map.getObstacles().end(); it++) 
+	for (auto it = m_map.getObstacles().begin(); it != m_map.getObstacles().end(); it++)
 	{
-		sf::FloatRect playerBounds = m_player.getSprite().getTransform().transformRect(m_player.getSprite().getLocalBounds());
-		sf::FloatRect obstacleBounds = (*it)->getSprite().getTransform().transformRect((*it)->getSprite().getLocalBounds());
-
-		if (playerBounds.intersects(obstacleBounds)) 
+		if (Collision::pixelPerfectTest(m_player.getSprite(),(*it)->getSprite(),128))
 		{
 			processCollision(m_player, *(*it));
-			break;
+			break; // Exit loop on first collision found
 		}
 	}
-
 }
