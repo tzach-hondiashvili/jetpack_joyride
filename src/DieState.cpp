@@ -32,7 +32,7 @@ void DieState::update(float deltaTime)
 
     getMenu()->getController().getPlayer().fall(deltaTime);
 
-    if (timeSinceLastFrame >= 0.5f)
+    if (timeSinceLastFrame >= 0.35f)
     {
         if (getMenu()->getController().getPlayer().getSprite().getPosition().y == 750)
         {

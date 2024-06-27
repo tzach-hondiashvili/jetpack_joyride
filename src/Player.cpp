@@ -99,7 +99,7 @@ void Player::updateAnimation(float time)
             changeSpriteAnimation(frameRect);
 
             // Update the flame animation while the player is flying
-            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getSprite().getTexture()->getSize().y);
+            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, m_flame.getTexture()->getSize().y);
             m_flame.setTextureRect(flameRect);
         }
         else
@@ -176,11 +176,10 @@ void Player::fall(float time)
      m_velocity.y += m_gravity * time;
  
     // Clamp the player's position
-    if (newPosition.y > 750) 
+    if (newPosition.y >= 750) 
     {
         newPosition.y = 750;
         m_velocity.y = 0;
-        m_velocity.x = 0;
     }
     else
     {
