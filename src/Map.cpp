@@ -72,9 +72,7 @@ void Map::updateEnemiesAnimation(sf::Vector2f pos, float time)
 
 	for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
 	{
-
-		(*it)->move({ (*it)->getSprite().getPosition().x, (*it)->getSprite().getPosition().y }, time);
-		
+		(*it)->move({ (*it)->getSprite().getPosition().x, (*it)->getSprite().getPosition().y }, time);		
 	}
 
 	if (timeSinceLastFrame >= 0.08f)

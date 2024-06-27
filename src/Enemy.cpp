@@ -1,5 +1,10 @@
 #include "Enemy.h"
 
+Enemy::Enemy()
+    :m_isPlayed(false)
+{
+}
+
 bool Enemy::getIsPlayed()
 {
     return m_isPlayed;

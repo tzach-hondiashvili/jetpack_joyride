@@ -110,6 +110,11 @@ void RunGameState::print()
     for (auto it = getMenu()->getController().getMap().getEnemies().begin(); it != getMenu()->getController().getMap().getEnemies().end(); it++)
     {
         getMenu()->getWindow().draw((*it)->getSprite());
+        if (!(*it)->getIsPlayed())
+        {
+            getMenu()->getWindow().draw((*it)->getWarning());
+        }
+        
     }
 
     getMenu()->printPlayer();
