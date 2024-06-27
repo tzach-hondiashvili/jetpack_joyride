@@ -551,7 +551,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 500 + scrollOffset.x; 
+    float startX = 2000 + scrollOffset.x; 
     float startY = scrollOffset.y + 50;
 
     sf::Vector2f position(startX, startY);
