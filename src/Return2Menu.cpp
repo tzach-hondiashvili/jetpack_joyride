@@ -11,6 +11,8 @@ Return2Menu::Return2Menu(Menu* menu)
 }
 void Return2Menu::execute()
 {
+	Resources::instance().endGameMusic();
+	Resources::instance().startMenuMusic();
 	getMenu()->resetView();
 	getMenu()->getController().getPlayer().resetCoins();
 	getMenu()->getController().getMap().resetMap();

@@ -17,6 +17,9 @@ public:
 
 	void startGameMusic();
 	void endGameMusic();
+
+	void startMenuMusic();
+	void endMenuMusic();
 	
 
 	void updateFont();
@@ -38,7 +41,9 @@ private:
 
 
 	std::vector <sf::SoundBuffer> m_soundFX;
+
 	sf::Music m_gameMusic;
+	sf::Music m_MenuMusic;
 
 
 	sf::Font m_font;

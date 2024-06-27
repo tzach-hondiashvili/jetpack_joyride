@@ -110,6 +110,9 @@ void Resources::updateGameMusic()
 {
 	m_gameMusic.openFromFile("JetpackJoyrideMusic.ogg");
 	m_gameMusic.setVolume(50);
+
+	m_MenuMusic.openFromFile("menumusic.ogg");
+	m_MenuMusic.setVolume(50);
 }
 
 void Resources::fillSoundFX()
@@ -122,6 +125,7 @@ void Resources::fillSoundFX()
 		"d_MissileAlarm.ogg",  //3
 		"e_missileLaunch.ogg", //4
 		"f_ZapperSound.ogg",   //5
+		"g_rocketexplode.ogg"  //6
 	};
 
 	for (int i = 0; i < namesOfSounds.size(); i++)
@@ -159,13 +163,31 @@ sf::SoundBuffer& Resources::getSoundEffect(int index)
 
 void Resources::startGameMusic()
 {
-	m_gameMusic.play();
-	m_gameMusic.setLoop(true);
+
+	if (m_gameMusic.getStatus() != sf::SoundSource::Playing)
+	{
+		m_gameMusic.play();
+		m_gameMusic.setLoop(true);
+	}
 }
 
 void Resources::endGameMusic()
 {
 	m_gameMusic.stop();
+}
+
+void Resources::startMenuMusic()
+{
+	if (m_MenuMusic.getStatus() != sf::SoundSource::Playing) 
+	{
+		m_MenuMusic.play();
+		m_MenuMusic.setLoop(true);
+	}
+}
+
+void Resources::endMenuMusic()
+{
+	m_MenuMusic.stop();
 }
 
 void Resources::updateFont()

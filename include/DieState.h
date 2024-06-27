@@ -4,6 +4,7 @@
 
 class DieState :public MenuState
 {
+
 public:
 	DieState(Menu* menu,sf::Sprite& bg1, sf::Sprite& bg2);
 

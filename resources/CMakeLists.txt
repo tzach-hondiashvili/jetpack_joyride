@@ -80,6 +80,8 @@ configure_file ("Images/Help/6.png" ${CMAKE_BINARY_DIR} COPYONLY)
 #Music
 #main music
 configure_file ("Audios/jetpackJoyrideMusic.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audios/menumusic.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+
 
 #sound effects
 configure_file ("Audios/a_coin.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -88,3 +90,4 @@ configure_file ("Audios/c_hitSound.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/d_MissileAlarm.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/e_missileLaunch.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/f_ZapperSound.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audios/g_rocketexplode.ogg" ${CMAKE_BINARY_DIR} COPYONLY)

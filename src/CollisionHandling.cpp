@@ -69,10 +69,10 @@ namespace // anonymous namespace — the standard way to make function "static"
    {
        static_cast<Player&>(player).die();
 
-       /*static sf::Sound boom;
-       boom.setBuffer(Resources::instance().getSoundEffect(5));
+       static sf::Sound boom;
+       boom.setBuffer(Resources::instance().getSoundEffect(6));
        boom.setVolume(100);
-       boom.play();*/
+       boom.play();
    }
 
    void PlayerPowerUp(GameObjects& player,
