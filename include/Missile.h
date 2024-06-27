@@ -9,7 +9,7 @@ public:
 	virtual ~Missile() override {};
 	void move(sf::Vector2f pos, float time) override;
 	virtual void show();
-	virtual void updateAnimation(float time) override;
+	virtual void updateAnimation(float ) override;
 	void updatebeforeMissile(int index);
 private:
 	static bool m_registerit;

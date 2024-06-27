@@ -13,7 +13,7 @@ Missile::Missile(sf::Vector2f position)
     updateSprite(position, &Resources::instance().getObjectTexture(6));
     sf::IntRect missileRect(0, 0, getSprite().getTexture()->getSize().x / 7, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(missileRect);
-    setOrigin(sf::Vector2f(getSprite().getTexture()->getSize().x / 7, getSprite().getTexture()->getSize().y / 2));
+    setOrigin(sf::Vector2f((float)getSprite().getTexture()->getSize().x / 7, (float)getSprite().getTexture()->getSize().y / 2));
 }
 
 void Missile::updatebeforeMissile(int index)
@@ -30,7 +30,7 @@ void Missile::show() {
     // Implementation of show function
 }
 
-void Missile::updateAnimation(float time)
+void Missile::updateAnimation(float )
 {
     setAnimationFrame((getAnimationFrame() + 1) % 7);
 

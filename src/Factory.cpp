@@ -18,7 +18,6 @@ bool Factory::registerit(const std::string& name, std::unique_ptr<GameObjects>(*
 
 std::list<std::unique_ptr<Pickable>> Factory::createDiamond(const std::string& name, sf::Vector2f scrollOffset)
 {
-    int numCoins = 25;
     std::list<std::unique_ptr <Pickable>> temp;
     
     // Initial positions for rectangle shape
@@ -58,7 +57,6 @@ std::list<std::unique_ptr<Pickable>> Factory::createDiamond(const std::string& n
 
 std::list<std::unique_ptr<Pickable>> Factory::createRectangle(const std::string& name, sf::Vector2f scrollOffset)
 {
-    int numCoins = 20; // Number of coins in the rectangle shape (adjust as needed)
     std::list<std::unique_ptr <Pickable>> temp;
 
     // Initial positions for rectangle shape
@@ -71,8 +69,8 @@ std::list<std::unique_ptr<Pickable>> Factory::createRectangle(const std::string&
     startX += scrollOffset.x + randomNumberX;
     startY += scrollOffset.y + randomNumberY;
 
-    float width = (std::rand() % 6) + 1; // Adjust range and base size as needed
-    float height = (std::rand() % 6) + 1;
+    float width = (float)(std::rand() % 6) + 1; // Adjust range and base size as needed
+    float height = (float)(std::rand() % 6) + 1;
 
     for (int i = 0; i < height; ++i)
     {
@@ -97,7 +95,6 @@ std::list<std::unique_ptr<Pickable>> Factory::createRectangle(const std::string&
 
 std::list<std::unique_ptr<Pickable>> Factory::createTriangle(const std::string& name, sf::Vector2f scrollOffset)
 {
-    int numCoins = 10; // Number of coins in the triangle shape (adjust as needed)
     std::list<std::unique_ptr <Pickable>> temp;
 
     float startX = 100.f;
@@ -248,7 +245,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createPowerup(const std::string& n
 
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset)
 {
-    std::srand(std::time(NULL));
+    std::srand((unsigned int)std::time(NULL));
 
     using CreateFunction = std::list<std::unique_ptr<Pickable>>(*)(const std::string&, sf::Vector2f);
 
@@ -319,15 +316,12 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createYparallel(const std::st
         float deltaX = position2.x - position1.x;
         float deltaY = position2.y - position1.y;
         float distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
-        float angle = std::atan2(deltaY, deltaX) * 180.f / 3.14159265358979323846;
 
         // Create the beam
         sf::Vector2f beamPosition((position1.x + position2.x) / 2, (position1.y + position2.y) / 2); // Midpoint of the laser heads
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
-            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
-            float scaleX = distance / originalBeamWidth;
             float originalBeamHeight = beam->getSprite().getLocalBounds().height;
             float scaleY = distance / originalBeamHeight;
 
@@ -368,14 +362,11 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createXparallel(const std::st
         float deltaX = position2.x - position1.x;
         float deltaY = position2.y - position1.y;
         float distance = std::sqrt(deltaX * deltaX + deltaY * deltaY);
-        float angle = std::atan2(deltaY, deltaX) * 180.f / 3.14159265358979323846;
 
         sf::Vector2f beamPosition(startX + randomNumber / 2.f, startY);
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
-            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
-            float scaleX = distance / originalBeamWidth;
             float originalBeamHeight = beam->getSprite().getLocalBounds().height;
             float scaleY = distance / originalBeamHeight;
 
@@ -412,11 +403,11 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingLeft(const std::s
         // Calculate the angle between the two positions
         float deltaX = position2.x - position1.x;
         float deltaY = position2.y - position1.y;
-        float angle = std::atan2(deltaY, deltaX) * 180.f / 3.14159265358979323846;
+        float angle = std::atan2(deltaY, deltaX) * 180.f / (float)3.14159265358979323846;
 
         // Set the rotations based on the calculated angle
-        laserHead1->rotate(angle + 90); // Rotate to face left
-        laserHead2->rotate(angle - 90);         // Rotate to face right
+        laserHead1->rotate((int)angle + 90); // Rotate to face left
+        laserHead2->rotate((int)angle - 90);         // Rotate to face right
 
         std::unique_ptr<StaticObjects> staticLaserHead1(static_cast<StaticObjects*>(laserHead1.release()));
         std::unique_ptr<StaticObjects> staticLaserHead2(static_cast<StaticObjects*>(laserHead2.release()));
@@ -428,8 +419,6 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingLeft(const std::s
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
-            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
-            float scaleX = distance / originalBeamWidth;
             float originalBeamHeight = beam->getSprite().getLocalBounds().height;
             float scaleY = distance / originalBeamHeight;
 
@@ -469,13 +458,11 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
     if (laserHead1 && laserHead2)
     {
         // Calculate the angle between the two positions
-        float deltaX = position2.x - position1.x;
-        float deltaY = position2.y - position1.y;
-        float angle = std::atan2(deltaY, deltaX) * 180.f / 3.14159265358979323846;
+        float angle = std::atan2(deltaY, deltaX) * 180.f / (float)3.14159265358979323846;
 
         // Set the rotations based on the calculated angle
-        laserHead1->rotate(angle + 90); // Rotate to face left
-        laserHead2->rotate(angle - 90);         // Rotate to face right
+        laserHead1->rotate((int)angle + 90); // Rotate to face left
+        laserHead2->rotate((int)angle - 90);         // Rotate to face right
 
         std::unique_ptr<StaticObjects> staticLaserHead1(static_cast<StaticObjects*>(laserHead1.release()));
         std::unique_ptr<StaticObjects> staticLaserHead2(static_cast<StaticObjects*>(laserHead2.release()));
@@ -486,8 +473,6 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
         std::unique_ptr<GameObjects> beam = Factory::create("Beam", beamPosition);
         if (beam)
         {
-            float originalBeamWidth = beam->getSprite().getLocalBounds().width;
-            float scaleX = distance / originalBeamWidth;
             float originalBeamHeight = beam->getSprite().getLocalBounds().height;
             float scaleY = distance / originalBeamHeight;
 
@@ -506,7 +491,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
 
 std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vector2f scrollOffset)
 {
-    std::srand(std::time(NULL));
+    std::srand((unsigned int)std::time(NULL));
 
     using CreateFunction = std::list<std::unique_ptr<StaticObjects>>(*)(const std::string&, sf::Vector2f);
 
@@ -534,7 +519,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vec
 
 std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
 { 
-    std::srand(std::time(NULL));
+    std::srand((unsigned int)std::time(NULL));
     
     using CreateFunction = std::list<std::unique_ptr<Enemy>>(*)(const std::string&, sf::Vector2f);
     

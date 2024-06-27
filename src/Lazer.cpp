@@ -13,14 +13,14 @@ Lazer::Lazer(sf::Vector2f position)
     updateSprite(position, &Resources::instance().getObjectTexture(3));
     sf::IntRect lazerRect(0, 0, getSprite().getTexture()->getSize().x / 4, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(lazerRect);
-    setOrigin( sf::Vector2f(getSprite().getTexture()->getSize().x / 8, getSprite().getTexture()->getSize().y/2 ));
+    setOrigin( sf::Vector2f((float)getSprite().getTexture()->getSize().x / 8, (float)getSprite().getTexture()->getSize().y/2 ));
 }
 
 void Lazer::show() {
     // Implementation of show function
 }
 
-void Lazer::updateAnimation(float time)
+void Lazer::updateAnimation(float )
 {
     //setAnimationFrame((getAnimationFrame() + 1) % 4);
 

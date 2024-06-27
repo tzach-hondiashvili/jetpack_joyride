@@ -6,7 +6,7 @@ class StaticObjects:public GameObjects
 public:
 	StaticObjects();
 	virtual ~StaticObjects() {};
-	virtual void updateAnimation(float time) override;
+	virtual void updateAnimation(float ) override;
 
 private:
 

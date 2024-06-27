@@ -4,6 +4,6 @@ StaticObjects::StaticObjects()
 {
 }
 
-void StaticObjects::updateAnimation(float time)
+void StaticObjects::updateAnimation(float )
 {
 }

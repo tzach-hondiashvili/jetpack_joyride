@@ -19,7 +19,7 @@ void Coin::show() {
     // Implementation of show function
 }
 
-void Coin::updateAnimation(float time)
+void Coin::updateAnimation(float )
 {
     setAnimationFrame((getAnimationFrame() + 1) % 8);
 

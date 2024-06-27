@@ -13,7 +13,7 @@ public:
 	virtual ~Coin() override{};
 
 	virtual void show();
-	virtual void updateAnimation(float time) override;
+	virtual void updateAnimation(float ) override;
 	
 private:
 	static bool m_registerit;

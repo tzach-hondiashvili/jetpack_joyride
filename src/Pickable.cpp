@@ -4,6 +4,6 @@ Pickable::Pickable()
 {
 }
 
-void Pickable::updateAnimation(float time)
+void Pickable::updateAnimation(float )
 {
 }

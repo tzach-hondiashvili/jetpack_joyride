@@ -7,7 +7,7 @@ public:
 	Pickable();
 	virtual ~Pickable() {};
 
-	virtual void updateAnimation(float time) override;
+	virtual void updateAnimation(float ) override;
 private:
 
 };

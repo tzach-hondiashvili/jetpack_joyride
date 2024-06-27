@@ -32,7 +32,7 @@ namespace // anonymous namespace — the standard way to make function "static"
     //}
 
     void playerCoin(GameObjects& player,
-        GameObjects& coin)
+        GameObjects& )
     {
         static_cast<Player&>(player).collectCoin();
 
@@ -43,7 +43,7 @@ namespace // anonymous namespace — the standard way to make function "static"
     }
 
    void PlayerBeam(GameObjects& player,
-       GameObjects& Beam)
+       GameObjects& )
    {
        static_cast<Player&>(player).die();
 
@@ -54,7 +54,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    }
 
    void PlayerLazer(GameObjects& player,
-       GameObjects& Beam)
+       GameObjects& )
    {
        static_cast<Player&>(player).die();
 
@@ -65,7 +65,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    }
 
    void PlayerMissile(GameObjects& player,
-       GameObjects& missile)
+       GameObjects& )
    {
        static_cast<Player&>(player).die();
 
@@ -76,7 +76,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    }
 
    void PlayerPowerUp(GameObjects& player,
-       GameObjects& powerUp)
+       GameObjects& )
    {
        static sf::Sound power;
        power.setBuffer(Resources::instance().getSoundEffect(1));

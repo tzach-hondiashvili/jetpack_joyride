@@ -12,14 +12,14 @@ Beam::Beam(sf::Vector2f position)
     updateSprite(position, &Resources::instance().getObjectTexture(4));
     sf::IntRect lazerRect(0, 0, getSprite().getTexture()->getSize().x / 4, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(lazerRect);
-    setOrigin(sf::Vector2f(getSprite().getTexture()->getSize().x / 8, getSprite().getTexture()->getSize().y / 2));
+    setOrigin(sf::Vector2f((float)getSprite().getTexture()->getSize().x / 8, (float)getSprite().getTexture()->getSize().y / 2));
 }
 
 void Beam::show() {
     // Implementation of show function
 }
 
-void Beam::updateAnimation(float time)
+void Beam::updateAnimation(float )
 {
     setAnimationFrame((getAnimationFrame() + 1) % 4);
 
