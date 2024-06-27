@@ -65,31 +65,31 @@ void Map::updateObstaclesAnimation(float time)
 	}
 }
 
-void Map::updateEnemiesAnimation(float time)
+void Map::updateEnemiesAnimation(sf::Vector2f pos, float time)
 {
 	static float timeSinceLastFrame = 0.f;
 	timeSinceLastFrame += time;
 
+	for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
+	{
+
+		(*it)->move({ (*it)->getSprite().getPosition().x, (*it)->getSprite().getPosition().y }, time);
 		
+	}
+
+	if (timeSinceLastFrame >= 0.08f)
+	{
 
 		for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
 		{
-			
-			(*it)->move({ (*it)->getSprite().getPosition().x, (*it)->getSprite().getPosition().y }, time);
+
+			(*it)->updateAnimation(time);
+			(*it)->updateSoundAndWarnings(pos);
+
 		}
-
-
-		if (timeSinceLastFrame >= 0.08f)
-		{
-
-			for (auto it = m_enemies.begin(); it != m_enemies.end(); it++)
-			{
-
-				(*it)->updateAnimation(time);
-				
-			}
-			timeSinceLastFrame = 0;
-		}
+		timeSinceLastFrame = 0;
+	}
+	
 }
 
 void Map::resetMap()

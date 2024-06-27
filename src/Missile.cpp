@@ -21,6 +21,32 @@ void Missile::updatebeforeMissile(int index)
   
 }
 
+void Missile::updateSoundAndWarnings(sf::Vector2f pos)
+{
+	static sf::Sound missileLaunch;
+	missileLaunch.setBuffer(Resources::instance().getSoundEffect(4));
+	missileLaunch.setVolume(100);
+
+	if (getSprite().getPosition().x >= pos.x + 1328) //beginning of missile trace
+	{
+		std::cout << "Incoming!\n";
+		setIsPlayed(false);
+	}
+	else if (getSprite().getPosition().x <= pos.x - 128) //end of missile trace
+	{
+
+	}
+	else
+	{
+		if (!getIsPlayed())
+		{
+			std::cout << "Missile!\n";
+			missileLaunch.play();
+			setIsPlayed(true);
+		}
+	}
+}
+
 void Missile::move(sf::Vector2f pos, float time)
 {
     updateSpritePos({pos.x - 700*time, pos.y });
@@ -39,3 +65,5 @@ void Missile::updateAnimation(float )
     sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(frameRect);
 }
+
+

@@ -11,6 +11,8 @@ public:
 	virtual void show();
 	virtual void updateAnimation(float ) override;
 	void updatebeforeMissile(int index);
+	bool getIsPlayed();
+	virtual void updateSoundAndWarnings(sf::Vector2f pos) override;
 private:
 	static bool m_registerit;
 	sf::Texture *m_beforeMissile;
