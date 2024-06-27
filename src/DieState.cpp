@@ -114,23 +114,31 @@ void DieState::updateOptions()
     m_Buttons.emplace_back(std::make_pair("Return2Menu", std::make_unique<Return2Menu>(getMenu())));
     m_Buttons.emplace_back(std::make_pair("StartGame", std::make_unique<StartGame>(getMenu())));
 
-    m_Buttons[0].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400,700),&Resources::instance().getOtherTexture(16));
+    // Update positions and textures for both buttons
+    m_Buttons[0].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400, 700), &Resources::instance().getOtherTexture(16));
     m_Buttons[0].second->adjustRec();
-  
 
     m_Buttons[1].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400, 580), &Resources::instance().getOtherTexture(13));
     m_Buttons[1].second->adjustRec();
 
-    sf::Vector2u size1 = m_Buttons[1].second->getSprite().getTexture()->getSize();
+    // Set desired size for both buttons
+    sf::Vector2f desiredSize(300.0f, 100.0f);
+
+    // Get current sizes of both buttons
     sf::Vector2u size0 = m_Buttons[0].second->getSprite().getTexture()->getSize();
+    sf::Vector2u size1 = m_Buttons[1].second->getSprite().getTexture()->getSize();
 
-    // Calculate the scale factors
-    float scaleX = static_cast<float>(size1.x) / size0.x;
-    float scaleY = static_cast<float>(size1.y) / size0.y;
+    // Calculate scale factors for each dimension
+    float scaleX0 = desiredSize.x / size0.x;
+    float scaleY0 = desiredSize.y / size0.y;
+    float scaleX1 = desiredSize.x / size1.x;
+    float scaleY1 = desiredSize.y / size1.y;
 
-    // Set the scale of the first button
-    m_Buttons[0].second->setscale(sf::Vector2f(scaleX, scaleY));
+    // Set the scale for both buttons
+    m_Buttons[0].second->setscale(sf::Vector2f(scaleX0, scaleY0));
+    m_Buttons[1].second->setscale(sf::Vector2f(scaleX1, scaleY1));
 }
+
 
 void DieState::show()
 {
