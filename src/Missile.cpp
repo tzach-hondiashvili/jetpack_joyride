@@ -34,11 +34,21 @@ void Missile::updateSoundAndWarnings(sf::Vector2f playerpos)
 	missileLaunch.setBuffer(Resources::instance().getSoundEffect(4));
 	missileLaunch.setVolume(100);
 
+	static sf::Sound missileWarning;
+	missileWarning.setBuffer(Resources::instance().getSoundEffect(3));
+	missileWarning.setVolume(100);
+
 	if (getSprite().getPosition().x >= playerpos.x + 1380) //missile not yet reached
 	{
 		updateWarningLocation( playerpos + sf::Vector2f(1300,0));
-		std::cout << "Incoming!\n";
-		setIsPlayed(false);
+
+		if (!getIsWarningPlayed())
+		{
+			std::cout << "Incoming!\n";
+			missileWarning.play();
+			setIsWarningPlayed(true);
+		}
+		setIsWarningPlayed(false);
 	}
 	else if (getSprite().getPosition().x <= playerpos.x - 128) //end of missile trace
 	{
@@ -46,11 +56,11 @@ void Missile::updateSoundAndWarnings(sf::Vector2f playerpos)
 	}
 	else
 	{
-		if (!getIsPlayed())
+		if (!getIsLaunchPlayed())
 		{
 			std::cout << "Missile!\n";
 			missileLaunch.play();
-			setIsPlayed(true);
+			setIsLaunchPlayed(true);
 		}
 	}
 }

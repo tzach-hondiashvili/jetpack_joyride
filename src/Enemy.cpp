@@ -1,17 +1,28 @@
 #include "Enemy.h"
 
 Enemy::Enemy()
-    :m_isPlayed(false)
+    :m_isLaunchPlayed(false), m_isWarningPlayed(false)
 {
 }
 
-bool Enemy::getIsPlayed()
+bool Enemy::getIsWarningPlayed()
 {
-    return m_isPlayed;
+    return m_isWarningPlayed;
 }
 
-bool Enemy::setIsPlayed(bool state)
+bool Enemy::setIsWarningPlayed(bool state)
 {
-    m_isPlayed = state;
-    return m_isPlayed;
+    m_isWarningPlayed = state;
+    return m_isLaunchPlayed;
+}
+
+bool Enemy::getIsLaunchPlayed()
+{
+    return m_isLaunchPlayed;
+}
+
+bool Enemy::setIsLaunchPlayed(bool state)
+{
+    m_isLaunchPlayed = state;
+    return m_isLaunchPlayed;
 }
