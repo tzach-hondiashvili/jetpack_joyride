@@ -94,7 +94,7 @@ void Menu::printScoreBoard()
 
 void Menu::updateScoreBoard()
 {
-    m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());*/
+    m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());
 
     m_scoreBoard.updateDistance(m_controller.getPlayer().getState()->getCurrSkin().getPosition().x,m_controller.getPlayer().getState()->getCurrSkin().getPosition());
     m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());
