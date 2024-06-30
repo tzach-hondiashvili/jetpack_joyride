@@ -89,6 +89,14 @@ void Missile::updateBeforeLocation(sf::Vector2f pos)
 	m_warningMissile.setPosition({ pos.x,getSprite().getPosition().y });
 }
 
+void Missile::CheckIfToDeleteEnemie(sf::Vector2f playerpos)
+{
+	if (getSprite().getPosition().x <= playerpos.x - 128) //missile passed the screen, end of trace
+	{
+		setPassedTheScreen(true);
+	}
+}
+
 void Missile::move(sf::Vector2f pos, float time)
 {
     updateSpritePos({pos.x - 700*time, pos.y });
