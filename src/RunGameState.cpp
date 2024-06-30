@@ -116,7 +116,6 @@ void RunGameState::print()
         {
             getMenu()->getWindow().draw((*it)->getWarning());
         }
-        
     }
 
     getMenu()->printPlayer();

@@ -17,8 +17,6 @@ public:
 	virtual sf::Sprite getBeforeMissile() override;
 	void updateBeforeLocation(sf::Vector2f pos);
 
-	virtual void CheckIfToDeleteEnemie(sf::Vector2f pos) override;
-
 private:
 	static bool m_registerit;
 	sf::Sprite m_beforeMissile;

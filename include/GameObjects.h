@@ -7,7 +7,7 @@ class GameObjects
 public:
 	GameObjects();
 	virtual ~GameObjects() {};
-
+	bool CheckIfToDelete(sf::Vector2f pos);
 	GameObjects(sf::Vector2f position, sf::Texture* texture);
 	const sf::Sprite &getSprite() const;
 	void changeSpriteAnimation(sf::IntRect rect);

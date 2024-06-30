@@ -90,6 +90,51 @@ void Map::updateEnemiesAnimation(sf::Vector2f pos, float time)
 	
 }
 
+void Map::updateMap(sf::Vector2f viewPos, float time)
+{
+	updatePickablesAnimation(time);
+	updateObstaclesAnimation(time);
+	updateEnemiesAnimation(viewPos, time);
+
+	// deleting passed objects
+	for (auto it = m_pickables.begin(); it != m_pickables.end(); )
+	{
+		if ((*it)->CheckIfToDelete(viewPos))
+		{
+			it = m_pickables.erase(it); 
+		}
+		else
+		{
+			++it; 
+		}
+	}
+
+	for (auto it = m_obstacles.begin(); it != m_obstacles.end(); )
+	{
+		if ((*it)->CheckIfToDelete(viewPos))
+		{
+			it = m_obstacles.erase(it);
+
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	for (auto it = m_enemies.begin(); it != m_enemies.end(); )
+	{
+		if ((*it)->CheckIfToDelete(viewPos))
+		{
+			it = m_enemies.erase(it); 
+		}
+		else
+		{
+			++it; 
+		}
+	}
+}
+
 void Map::resetMap()
 {
 	m_enemies.clear();

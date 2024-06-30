@@ -76,17 +76,11 @@ bool Menu::finishedLoading()
     return m_finishedLoading;
 }
 
-void Menu::updateController(sf::Vector2f pos, float time) 
+void Menu::updateController(sf::Vector2f viewPos, float time) 
 {
     m_controller.getPlayer().getState()->handleInput();
-    m_controller.getPlayer().getState()->move(pos,time);
-
-    /* m_controller.getPlayer().handleInput();*/
-    /*m_controller.updatePlayerPos(pos, time);*/
-
-    m_controller.getMap().updatePickablesAnimation(time);
-    m_controller.getMap().updateObstaclesAnimation(time);
-    m_controller.getMap().updateEnemiesAnimation(pos,time);
+    m_controller.getPlayer().getState()->move(viewPos,time);
+    m_controller.getMap().updateMap(viewPos,time);
 }
 
 void Menu::printScoreBoard()
@@ -97,8 +91,7 @@ void Menu::printScoreBoard()
 
 void Menu::updateScoreBoard()
 {
-   /* m_scoreBoard.updateDistance(m_controller.getPlayer().getSprite().getPosition().x , m_controller.getPlayer().getSprite().getPosition());
-    m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());*/
+    m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());
 
     m_scoreBoard.updateDistance(m_controller.getPlayer().getState()->getCurrSkin().getPosition().x,m_controller.getPlayer().getState()->getCurrSkin().getPosition());
     m_scoreBoard.updateCoins(m_controller.getPlayer().getCoinsCounter());
@@ -106,13 +99,6 @@ void Menu::updateScoreBoard()
 
 void Menu::printPlayer()
 {
-    //if (m_controller.getPlayer().getSprite().getPosition().y != 750)
-    //{
-    //    m_window.draw(m_controller.getPlayer().getFlame());
-    //}
-
-    //m_window.draw(m_controller.getPlayer().getSprite());
-
     m_controller.getPlayer().getState()->print();
 }
 

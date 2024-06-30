@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy()
-    :m_isLaunchPlayed(false), m_isWarningPlayed(false), m_passedTheScreen(false)
+    :m_isLaunchPlayed(false), m_isWarningPlayed(false)
 {
 }
 
@@ -10,16 +10,7 @@ bool Enemy::getIsWarningPlayed()
     return m_isWarningPlayed;
 }
 
-bool Enemy::getPassedTheScreenPlayed()
-{
-    return m_passedTheScreen;
-}
 
-bool Enemy::setPassedTheScreen(bool state)
-{
-    m_passedTheScreen = state;
-    return m_passedTheScreen;
-}
 
 
 bool Enemy::setIsWarningPlayed(bool state)
