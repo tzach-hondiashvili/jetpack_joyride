@@ -55,7 +55,7 @@ void GameObjects::setAnimationFrame(int frame)
 
 void GameObjects::rotate(int angle)
 {
-	m_sprite.rotate(angle);
+	m_sprite.rotate((float)angle);
 }
 
 

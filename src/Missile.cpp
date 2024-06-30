@@ -25,18 +25,13 @@ Missile::Missile(sf::Vector2f position)
 	sf::IntRect warningRect2(0, 0, m_warningMissile.getTexture()->getSize().x / 2, m_warningMissile.getTexture()->getSize().y);
 	m_beforeMissile.setTextureRect(warningRect2);
 
-	m_beforeMissile.setScale(0.8,0.8);
-	m_warningMissile.setScale(0.8,0.8);
+	m_beforeMissile.setScale((float)0.8, (float)0.8);
+	m_warningMissile.setScale((float)0.8, (float)0.8);
 
     updateSprite(position, &Resources::instance().getObjectTexture(6));
     sf::IntRect missileRect(0, 0, getSprite().getTexture()->getSize().x / 7, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(missileRect);
 	setOrigin(sf::Vector2f((float)getSprite().getTexture()->getSize().x / 7, (float)getSprite().getTexture()->getSize().y / 2));
-}
-
-void Missile::updatebeforeMissile(int index)
-{
-  
 }
 
 void Missile::updateSoundAndWarnings(sf::Vector2f playerpos)

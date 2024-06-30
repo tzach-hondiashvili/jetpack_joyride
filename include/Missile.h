@@ -10,7 +10,6 @@ public:
 	void move(sf::Vector2f pos, float time) override;
 	virtual void show();
 	virtual void updateAnimation(float ) override;
-	void updatebeforeMissile(int index);
 	virtual void updateSoundAndWarnings(sf::Vector2f pos) override;
 	virtual sf::Sprite getWarning() override;
 	void updateWarningLocation(sf::Vector2f pos);

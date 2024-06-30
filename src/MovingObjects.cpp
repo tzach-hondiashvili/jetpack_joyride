@@ -4,7 +4,7 @@ MovingObjects::MovingObjects()
 {
 }
 
-void MovingObjects::updateAnimation(float time)
+void MovingObjects::updateAnimation(float )
 {
 }
 
