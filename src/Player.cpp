@@ -2,7 +2,7 @@
 #include <SFML/Window/Keyboard.hpp>
 
 Player::Player()
-    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f), m_isFlying(false), m_flame(sf::Sprite()),m_coinsCounter(0)
+    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f), m_isFlying(false), m_flame(sf::Sprite()),m_coinsCounter(0),m_dying(nullptr),m_falling(nullptr)
 {
 }
 
@@ -128,24 +128,6 @@ void Player::resetCoins()
 {
     m_lives = 1;
     m_coinsCounter = 0;
-}
-
-Player::Player(Player&& other) noexcept
-    : MovingObjects(std::move(other)),
-    m_lives(other.m_lives),
-    m_coinsCounter(other.m_coinsCounter),
-    m_velocity(std::move(other.m_velocity)),
-    m_gravity(other.m_gravity),
-    m_jumpForce(other.m_jumpForce),
-    m_isFlying(other.m_isFlying),
-    m_flame(std::move(other.m_flame))
-{
-    other.m_lives = 0;
-    other.m_coinsCounter = 0;
-    other.m_velocity = sf::Vector2f(0, 0);
-    other.m_gravity = 0.0f;
-    other.m_jumpForce = 0.0f;
-    other.m_isFlying = false;
 }
 
 void Player::die()

@@ -17,7 +17,6 @@ public:
     void collectCoin();
     int getCoinsCounter();
     void resetCoins();
-    Player(Player&& other) noexcept;
     void die();
     void updateFallingAndDying(sf::Texture* falling, sf::Texture* dying);
 
