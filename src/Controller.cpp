@@ -30,7 +30,7 @@ void Controller::checkCollision()
 	//check collision with pickables
 	for (auto it = m_map.getPickables().begin(); it != m_map.getPickables().end(); it++)
 	{
-		if (m_player.getSprite().getGlobalBounds().intersects((*it)->getSprite().getGlobalBounds()))
+		if (m_player.getState()->getCurrSkin().getGlobalBounds().intersects((*it)->getSprite().getGlobalBounds()))
 		{
 			processCollision(m_player, *(*it));
 			pickable2Remove = it;
@@ -46,7 +46,7 @@ void Controller::checkCollision()
 
 	for (auto it = m_map.getObstacles().begin(); it != m_map.getObstacles().end(); it++)
 	{
-		if (Collision::pixelPerfectTest(m_player.getSprite(),(*it)->getSprite(),128))
+		if (Collision::pixelPerfectTest(m_player.getState()->getCurrSkin(), (*it)->getSprite(), 128))
 		{
 			processCollision(m_player, *(*it));
 			break; // Exit loop on first collision found
@@ -55,7 +55,7 @@ void Controller::checkCollision()
 
 	for (auto it = m_map.getEnemies().begin(); it != m_map.getEnemies().end(); it++)
 	{
-		if (Collision::pixelPerfectTest(m_player.getSprite(), (*it)->getSprite(), 128))
+		if (Collision::pixelPerfectTest(m_player.getState()->getCurrSkin(), (*it)->getSprite(), 128))
 		{
 			processCollision(m_player, *(*it));
 			break; // Exit loop on first collision found

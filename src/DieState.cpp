@@ -9,18 +9,18 @@ DieState::DieState(Menu* menu, sf::Sprite& bg1, sf::Sprite& bg2)
 {
     updateMenu(menu);
 
-    auto& player = getMenu()->getController().getPlayer();
-    player.updateSprite(player.getSprite().getPosition(), player.getFallingTexture());
+    auto& player = getMenu()->getController().getPlayer().getState();
+    player->updateCurrSkin(getMenu()->getController().getPlayer().getFallingTexture(), player->getCurrSkin().getPosition());
 
     // Calculate scale factors based on desired size
-    float scaleX = (450.0f / 2) / player.getSprite().getTexture()->getSize().x;
-    float scaleY = 150.0f / player.getSprite().getTexture()->getSize().y;
-    player.setScale(sf::Vector2f(scaleX, scaleY));
+    float scaleX = (450.0f / 2) / player->getCurrSkin().getTexture()->getSize().x;
+    float scaleY = 150.0f / player->getCurrSkin().getTexture()->getSize().y;
+    player->getCurrSkin().setScale(sf::Vector2f(scaleX, scaleY));
 
     // Initialize player's animation for falling state
-    sf::IntRect playerRect(0, 0, player.getSprite().getTexture()->getSize().x / 4, player.getSprite().getTexture()->getSize().y);
-    player.changeSpriteAnimation(playerRect);
-    player.setAnimationFrame(0);
+    sf::IntRect playerRect(0, 0, player->getCurrSkin().getTexture()->getSize().x / 4, player->getCurrSkin().getTexture()->getSize().y);
+    player->getCurrSkin().setTextureRect(playerRect);
+    player->setAnimationFrame(0);
 
     updateOptions();
 }
@@ -34,13 +34,13 @@ void DieState::update(float deltaTime)
 
     if (timeSinceLastFrame >= 0.35f)
     {
-        if (getMenu()->getController().getPlayer().getSprite().getPosition().y == 750)
+        if (getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition().y == 750)
         {
             if (!m_onGround)
             {
-                getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), getMenu()->getController().getPlayer().getDyingTexture());
-                sf::IntRect playerRect(0, 0, getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x, getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().y);
-                getMenu()->getController().getPlayer().changeSpriteAnimation(playerRect);
+                getMenu()->getController().getPlayer().getState()->updateCurrSkin(getMenu()->getController().getPlayer().getDyingTexture(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
+                sf::IntRect playerRect(0, 0, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().y);
+                getMenu()->getController().getPlayer().getState()->getCurrSkin().setTextureRect(playerRect);
 
                 static sf::Sound HitFloor;
                 HitFloor.setBuffer(Resources::instance().getSoundEffect(2));
@@ -48,18 +48,18 @@ void DieState::update(float deltaTime)
                 HitFloor.play();
                 m_onGround = true;
             }
-            getMenu()->getController().getPlayer().updateSpritePos(getMenu()->getController().getPlayer().getSprite().getPosition() + sf::Vector2f(0, 70));
+            getMenu()->getController().getPlayer().getState()->getCurrSkin().setPosition(getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition() + sf::Vector2f(0, 70));
         }
         else
         {
-            getMenu()->getController().getPlayer().setAnimationFrame((getMenu()->getController().getPlayer().getAnimationFrame() + 1));
+            getMenu()->getController().getPlayer().getState()->setAnimationFrame((getMenu()->getController().getPlayer().getAnimationFrame() + 1));
 
-            if (getMenu()->getController().getPlayer().getAnimationFrame() < 5)
+            if (getMenu()->getController().getPlayer().getState()->getAnimationFrame() < 5)
             {
-                int frameWidth = getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x/4;
+                int frameWidth = getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x / 4;
 
-                sf::IntRect frameRect(frameWidth, 0, frameWidth, getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().y);
-                getMenu()->getController().getPlayer().changeSpriteAnimation(frameRect);
+                sf::IntRect frameRect(frameWidth, 0, frameWidth, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().y);
+                getMenu()->getController().getPlayer().getState()->getCurrSkin().setTextureRect(frameRect);
             }
 
             timeSinceLastFrame = 0.f;
@@ -86,7 +86,7 @@ void DieState::print()
     }
 
  
-    getMenu()->getWindow().draw(getMenu()->getController().getPlayer().getSprite());
+    getMenu()->getWindow().draw(getMenu()->getController().getPlayer().getState()->getCurrSkin());
 
     getMenu()->printScoreBoard();
 
@@ -115,10 +115,10 @@ void DieState::updateOptions()
     m_Buttons.emplace_back(std::make_pair("StartGame", std::make_unique<StartGame>(getMenu())));
 
     // Update positions and textures for both buttons
-    m_Buttons[0].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400, 700), &Resources::instance().getOtherTexture(16));
+    m_Buttons[0].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition().x + 400, 700), &Resources::instance().getOtherTexture(16));
     m_Buttons[0].second->adjustRec();
 
-    m_Buttons[1].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getSprite().getPosition().x + 400, 580), &Resources::instance().getOtherTexture(13));
+    m_Buttons[1].second->updateSprite(sf::Vector2f(getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition().x + 400, 580), &Resources::instance().getOtherTexture(13));
     m_Buttons[1].second->adjustRec();
 
     // Set desired size for both buttons

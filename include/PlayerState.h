@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Menu.h"
 
 //forward decleration 
 class Menu;
@@ -13,8 +12,8 @@ public:
 	virtual void updateAnimation(float time) = 0;
 	virtual void die() = 0;
 
-	void updateCurrSkin(sf::Texture* currSkin,sf::Vector2f pos);
-	void updatePrevSkin(sf::Texture *PrevSkin);
+	void updateCurrSkin(const sf::Texture* currSkin,sf::Vector2f pos);
+	void updatePrevSkin(const sf::Texture *PrevSkin);
 	void updateMenu(Menu* Menu);
 	void setAnimationFrame(int frame);
 	void handleInput();
@@ -24,6 +23,8 @@ public:
 	sf::Sprite& getFlame();
 	sf::Vector2f& getVelocity();
 	Menu* getMenu();
+	float& getGravity();
+	float& getJumpForce();
 
 	virtual void move(sf::Vector2f , float ) = 0;
 	virtual void print() = 0;

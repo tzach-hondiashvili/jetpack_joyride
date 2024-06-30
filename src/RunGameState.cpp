@@ -61,6 +61,7 @@ void RunGameState::update(float deltaTime)
         getMenu()->updateState(std::move(temp));
         return;
     }
+
     m_view.move(m_scrollSpeed * deltaTime, 0.f);
 
     getMenu()->getController().checkCollision();
