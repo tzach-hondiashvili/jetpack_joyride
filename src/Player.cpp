@@ -1,80 +1,33 @@
 #include "Player.h"
 #include <SFML/Window/Keyboard.hpp>
+#include "BasicPlayerState.h"
 
 Player::Player()
-    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f), m_isFlying(false), m_flame(sf::Sprite()),m_coinsCounter(0),m_dying(nullptr),m_falling(nullptr)
+    : m_lives(1),m_coinsCounter(0),m_dying(nullptr),m_falling(nullptr)
 {
 }
 
-int Player::getLives() const {
+int Player::getLives() const 
+{
     return m_lives;
 }
 
-sf::Sprite& Player::getFlame()
-{
-    return m_flame;
-}
 
-void Player::applyGravity(float deltaTime)
-{
-    if (!m_isFlying)
-    {
-        m_velocity.y += m_gravity * deltaTime;
-    }
-}
-
-void Player::move(sf::Vector2f pos, float time)
-{
-    updateSpritePos({ pos.x, getSprite().getPosition().y });
-
-    updateAnimation(time);
-
-    applyGravity(time);
-    handleInput();
-
-    sf::Vector2f newPosition = getSprite().getPosition();
-    newPosition.y += m_velocity.y * time;
-
-    // Clamp the player's position
-    if (newPosition.y > 750) {
-        newPosition.y = 750;
-        m_velocity.y = 0;
-    }
-    else if (newPosition.y < 30) {
-        newPosition.y = 30;
-        m_velocity.y = 0;
-    }
-    updateSpritePos(newPosition);
-    m_flame.setPosition({ newPosition.x + 15, newPosition.y + 130 });
-}
-
-void Player::createPlayer()
+void Player::createPlayer(Menu* menu)
 {
     updateSprite({ 150, 750 }, &Resources::instance().getPlayerTexture(7));
 
-    sf::IntRect playerRect(0, 0, getSprite().getTexture()->getSize().x / 4, getSprite().getTexture()->getSize().y);
-    changeSpriteAnimation(playerRect);
+    /*sf::IntRect playerRect(0, 0, getSprite().getTexture()->getSize().x / 4, getSprite().getTexture()->getSize().y);
+    changeSpriteAnimation(playerRect);*/
 
-    m_flame.setPosition({ 165, 880 });
-    m_flame.setTexture(Resources::instance().getObjectTexture(1));
+    //m_flame.setPosition({ 165, 880 });
+    //m_flame.setTexture(Resources::instance().getObjectTexture(1));
 
-    sf::IntRect flameRect(0, 0, m_flame.getTexture()->getSize().x / 6, m_flame.getTexture()->getSize().y);
-    m_flame.setTextureRect(flameRect);
-}
+    //sf::IntRect flameRect(0, 0, m_flame.getTexture()->getSize().x / 6, m_flame.getTexture()->getSize().y);
+    //m_flame.setTextureRect(flameRect);
 
-bool Player::isFlying() {
-    return m_isFlying;
-}
+    m_state = std::move(std::make_unique<BasicPlayerState>(getSprite().getTexture(), getSprite().getTexture(), getSprite().getPosition(), menu));
 
-void Player::handleInput()
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        m_velocity.y = m_jumpForce;
-        m_isFlying = true;
-    }
-    else {
-        m_isFlying = false;
-    }
 }
 
 void Player::updateAnimation(float time)
@@ -84,29 +37,29 @@ void Player::updateAnimation(float time)
     static float timeSinceLastFrame = 0.f;
     timeSinceLastFrame += time;
 
-    if (timeSinceLastFrame >= 0.13f - getSprite().getPosition().x/10000000)
+    if (timeSinceLastFrame >= 0.13f - getState()->getCurrSkin().getPosition().x / 10000000)
     {
-        setAnimationFrame((getAnimationFrame() + 1) % 4);
+        getState()->setAnimationFrame((getState()->getAnimationFrame() + 1) % 4);
         currFlame = (currFlame + 1) % 6;
 
-        int frameWidth = getSprite().getTexture()->getSize().x / 4;
-        int flameWidth = m_flame.getTexture()->getSize().x / 6;
+        int frameWidth = getState()->getCurrSkin().getTexture()->getSize().x / 4;
+        int flameWidth = getState()->getFlame().getTexture()->getSize().x / 6;
 
 
-        if (getSprite().getPosition().y != 750)
+        if (getState()->getCurrSkin().getPosition().y != 750)
         {
-            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
-            changeSpriteAnimation(frameRect);
+            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getState()->getCurrSkin().getTexture()->getSize().y);
+            getState()->getCurrSkin().setTextureRect(frameRect);
 
             // Update the flame animation while the player is flying
-            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, m_flame.getTexture()->getSize().y);
-            m_flame.setTextureRect(flameRect);
+            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getState()->getFlame().getTexture()->getSize().y);
+            getState()->getFlame().setTextureRect(flameRect);
         }
         else
         {
 
-            sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getSprite().getTexture()->getSize().y);
-            changeSpriteAnimation(frameRect);
+            sf::IntRect frameRect(getState()->getAnimationFrame() * frameWidth, 0, frameWidth, getState()->getCurrSkin().getTexture()->getSize().y);
+            getState()->getCurrSkin().setTextureRect(frameRect);
             currFlame = 0;
         }
 
@@ -153,23 +106,27 @@ sf::Texture* Player::getDyingTexture()
 
 void Player::fall(float time)
 {
-    sf::Vector2f newPosition = getSprite().getPosition();
+    sf::Vector2f newPosition = getState()->getCurrSkin().getPosition();
 
-     m_velocity.y += m_gravity * time;
+    getState()->getVelocity().y += getState()->getGravity() * time;
  
     // Clamp the player's position
     if (newPosition.y >= 750) 
     {
         newPosition.y = 750;
-        m_velocity.y = 0;
+        getState()->getVelocity().y = 0;
     }
     else
     {
-        newPosition.y += m_velocity.y * time;
+        newPosition.y += getState()->getVelocity().y * time;
         newPosition.x += 200 * time;
     }
 
-    updateSpritePos(newPosition);
+    getState()->getCurrSkin().setPosition(newPosition);
+}
 
+std::unique_ptr<PlayerState>& Player::getState()
+{
+    return m_state;
 }
 

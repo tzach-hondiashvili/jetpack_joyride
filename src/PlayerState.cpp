@@ -6,15 +6,15 @@ PlayerState::PlayerState()
 {
 }
 
-void PlayerState::updateCurrSkin(sf::Texture* currSkin, sf::Vector2f pos)
+void PlayerState::updateCurrSkin(const sf::Texture* currSkin, sf::Vector2f pos)
 {
 	m_currSkin.setTexture(*currSkin);
 	m_currSkin.setPosition(pos);
 }
 
-void PlayerState::updatePrevSkin(sf::Texture* PrevSkin)
+void PlayerState::updatePrevSkin(const sf::Texture* PrevSkin)
 {
-	m_prevSkin = PrevSkin;
+	m_prevSkin = (sf::Texture*)PrevSkin;
 }
 
 void PlayerState::updateMenu(Menu* Menu)
@@ -58,6 +58,16 @@ sf::Vector2f& PlayerState::getVelocity()
 Menu* PlayerState::getMenu()
 {
 	return m_menu;
+}
+
+float& PlayerState::getGravity()
+{
+	return m_gravity;
+}
+
+float& PlayerState::getJumpForce()
+{
+	return m_jumpForce;
 }
 
 void PlayerState::applyGravity(float deltaTime)

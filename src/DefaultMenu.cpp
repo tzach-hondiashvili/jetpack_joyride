@@ -28,7 +28,7 @@ void DefaultMenu::print()
 
     if (check)
     {
-        getMenu()->getController().getPlayer().createPlayer();
+        getMenu()->getController().getPlayer().createPlayer(getMenu());
         updateOptions();
         check = false;
     }

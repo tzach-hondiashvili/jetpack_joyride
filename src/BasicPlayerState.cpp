@@ -1,7 +1,7 @@
 #include "BasicPlayerState.h"
 #include "Menu.h"
 
-BasicPlayerState::BasicPlayerState(sf::Texture* currSkin, sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu)
+BasicPlayerState::BasicPlayerState(const sf::Texture* currSkin, const sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu)
 {
 	updateCurrSkin(currSkin, pos);
 	updatePrevSkin(prevSkin);
@@ -9,6 +9,9 @@ BasicPlayerState::BasicPlayerState(sf::Texture* currSkin, sf::Texture* prevSkin,
 
     getFlame().setPosition({ 165, 880 });
     getFlame().setTexture(Resources::instance().getObjectTexture(1));
+
+    sf::IntRect playerRect(0, 0, getCurrSkin().getTexture()->getSize().x / 4, getCurrSkin().getTexture()->getSize().y);
+    getCurrSkin().setTextureRect(playerRect);
 
     sf::IntRect flameRect(0, 0, getFlame().getTexture()->getSize().x / 6, getFlame().getTexture()->getSize().y);
     getFlame().setTextureRect(flameRect);
@@ -69,11 +72,13 @@ void BasicPlayerState::move(sf::Vector2f pos, float time)
     newPosition.y += getVelocity().y * time;
 
     // Clamp the player's position
-    if (newPosition.y > 750) {
+    if (newPosition.y > 750) 
+    {
         newPosition.y = 750;
         getVelocity().y = 0;
     }
-    else if (newPosition.y < 30) {
+    else if (newPosition.y < 30) 
+    {
         newPosition.y = 30;
         getVelocity().y = 0;
     }
