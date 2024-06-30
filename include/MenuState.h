@@ -15,6 +15,7 @@ public:
 	virtual ~MenuState() {};
 
 	void updateMenu(Menu* menu);
+
 	virtual void update(float deltaTime) = 0;
 	virtual void print() = 0;
 	virtual void handleClick(const sf::Event::MouseButtonEvent& event) = 0;

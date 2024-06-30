@@ -2,7 +2,7 @@
 #include <SFML/Window/Keyboard.hpp>
 
 Player::Player()
-    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f), m_isFlying(false), m_flame(sf::Sprite()),m_coinsCounter(0)
+    : m_lives(1), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f), m_isFlying(false), m_flame(sf::Sprite()),m_coinsCounter(0),m_dying(nullptr),m_falling(nullptr)
 {
 }
 
@@ -99,7 +99,7 @@ void Player::updateAnimation(float time)
             changeSpriteAnimation(frameRect);
 
             // Update the flame animation while the player is flying
-            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getSprite().getTexture()->getSize().y);
+            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, m_flame.getTexture()->getSize().y);
             m_flame.setTextureRect(flameRect);
         }
         else
@@ -130,24 +130,6 @@ void Player::resetCoins()
     m_coinsCounter = 0;
 }
 
-Player::Player(Player&& other) noexcept
-    : MovingObjects(std::move(other)),
-    m_lives(other.m_lives),
-    m_coinsCounter(other.m_coinsCounter),
-    m_velocity(std::move(other.m_velocity)),
-    m_gravity(other.m_gravity),
-    m_jumpForce(other.m_jumpForce),
-    m_isFlying(other.m_isFlying),
-    m_flame(std::move(other.m_flame))
-{
-    other.m_lives = 0;
-    other.m_coinsCounter = 0;
-    other.m_velocity = sf::Vector2f(0, 0);
-    other.m_gravity = 0.0f;
-    other.m_jumpForce = 0.0f;
-    other.m_isFlying = false;
-}
-
 void Player::die()
 {
     m_lives = 0;
@@ -176,11 +158,10 @@ void Player::fall(float time)
      m_velocity.y += m_gravity * time;
  
     // Clamp the player's position
-    if (newPosition.y > 750) 
+    if (newPosition.y >= 750) 
     {
         newPosition.y = 750;
         m_velocity.y = 0;
-        m_velocity.x = 0;
     }
     else
     {

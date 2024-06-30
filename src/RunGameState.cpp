@@ -7,6 +7,7 @@ RunGameState::RunGameState(Menu* menu)
 
     updateMenu(menu);
     updateOptions();
+    Resources::instance().endMenuMusic();
     Resources::instance().startGameMusic();
 
 
@@ -48,7 +49,7 @@ RunGameState::RunGameState(Menu* menu)
 
 RunGameState::~RunGameState()
 {
-    Resources::instance().endGameMusic();
+
 }
 
 //Menu* menu, Map& oldMap, sf::Sprite& bg1, sf::Sprite& bg2, Player& player

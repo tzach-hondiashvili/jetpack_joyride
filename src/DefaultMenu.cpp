@@ -9,6 +9,11 @@ DefaultMenu::DefaultMenu(Menu* menu)
     {
         updateOptions();
     }
+    if (getMenu()->finishedLoading())
+    {
+        Resources::instance().startMenuMusic();
+    }
+    
 
 }
 

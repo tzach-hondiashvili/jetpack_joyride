@@ -20,6 +20,7 @@ void Menu::runMenu()
             float deltaTime = clock.restart().asSeconds();
 
             m_state->update(deltaTime);
+            Resources::instance().startMenuMusic();
         });
 
     m_window.setFramerateLimit(60);
