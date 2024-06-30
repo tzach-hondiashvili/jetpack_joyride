@@ -17,54 +17,8 @@ void Player::createPlayer(Menu* menu)
 {
     updateSprite({ 150, 750 }, &Resources::instance().getPlayerTexture(7));
 
-    /*sf::IntRect playerRect(0, 0, getSprite().getTexture()->getSize().x / 4, getSprite().getTexture()->getSize().y);
-    changeSpriteAnimation(playerRect);*/
-
-    //m_flame.setPosition({ 165, 880 });
-    //m_flame.setTexture(Resources::instance().getObjectTexture(1));
-
-    //sf::IntRect flameRect(0, 0, m_flame.getTexture()->getSize().x / 6, m_flame.getTexture()->getSize().y);
-    //m_flame.setTextureRect(flameRect);
-
     m_state = std::move(std::make_unique<BasicPlayerState>(getSprite().getTexture(), getSprite().getTexture(), getSprite().getPosition(), menu));
 
-}
-
-void Player::updateAnimation(float time)
-{
-    static int currFlame = 0;
-    
-    static float timeSinceLastFrame = 0.f;
-    timeSinceLastFrame += time;
-
-    if (timeSinceLastFrame >= 0.13f - getState()->getCurrSkin().getPosition().x / 10000000)
-    {
-        getState()->setAnimationFrame((getState()->getAnimationFrame() + 1) % 4);
-        currFlame = (currFlame + 1) % 6;
-
-        int frameWidth = getState()->getCurrSkin().getTexture()->getSize().x / 4;
-        int flameWidth = getState()->getFlame().getTexture()->getSize().x / 6;
-
-
-        if (getState()->getCurrSkin().getPosition().y != 750)
-        {
-            sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getState()->getCurrSkin().getTexture()->getSize().y);
-            getState()->getCurrSkin().setTextureRect(frameRect);
-
-            // Update the flame animation while the player is flying
-            sf::IntRect flameRect(currFlame * flameWidth, 0, flameWidth, getState()->getFlame().getTexture()->getSize().y);
-            getState()->getFlame().setTextureRect(flameRect);
-        }
-        else
-        {
-
-            sf::IntRect frameRect(getState()->getAnimationFrame() * frameWidth, 0, frameWidth, getState()->getCurrSkin().getTexture()->getSize().y);
-            getState()->getCurrSkin().setTextureRect(frameRect);
-            currFlame = 0;
-        }
-
-        timeSinceLastFrame = 0.f;
-    }
 }
 
 void Player::collectCoin()

@@ -21,9 +21,6 @@ void KingSkinOption::execute()
 	getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale({ 1,1 });
 	getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale(sf::Vector2f(389 / (float)getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x, 528 / (float)getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x));
 
-	/*getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), &Resources::instance().getPlayerTexture(3));
-	getMenu()->getController().getPlayer().setScale({ 1,1 });
-	getMenu()->getController().getPlayer().setScale(sf::Vector2f(389 / (float)getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x, 528 / (float)getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x));*/
 	getMenu()->getController().getPlayer().updateFallingAndDying(&Resources::instance().getPlayerTexture(2),&Resources::instance().getPlayerTexture(1));
 	std::unique_ptr temp = std::make_unique<RunGameState>(getMenu());
 	getMenu()->updateState(std::move(temp));
