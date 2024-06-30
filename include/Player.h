@@ -9,11 +9,12 @@ public:
 
     int getLives() const;
 
-    virtual void move(sf::Vector2f pos, float time) {};
+    virtual void move(sf::Vector2f , float ) {};
     virtual void show() override {};
-    void createPlayer(Menu* menu);
+    virtual void updateAnimation(float) {};
 
-    virtual void updateAnimation(float time) override;
+    void createPlayer(Menu* menu);
+    
     void collectCoin();
     int getCoinsCounter();
     void resetCoins();

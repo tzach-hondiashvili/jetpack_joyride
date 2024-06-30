@@ -20,11 +20,6 @@ RunGameState::RunGameState(Menu* menu)
     sf::Texture hallTexture = Resources::instance().getOtherTexture(22);
     sf::Texture backgroundTexture = Resources::instance().getOtherTexture(5);
 
-    // Create sprites and scale them
-    //sf::Sprite hallStartSprite(hallTexture);
-    //sf::Sprite background1(backgroundTexture);
-    //sf::Sprite background2(backgroundTexture);
-
     m_background1.setTexture(Resources::instance().getOtherTexture(5));
     m_background2.setTexture(Resources::instance().getOtherTexture(5));
     m_hall.setTexture(Resources::instance().getOtherTexture(22));
@@ -32,10 +27,6 @@ RunGameState::RunGameState(Menu* menu)
     m_background1.setScale(1456.f / 277, 960.f / 240);
     m_background2.setScale(1456.f / 277, 960.f / 240);
     m_hall.setScale(1456.f / 649, 960.f / 240);
-
-    //hallStartSprite.setScale(1456.f / 649, 960.f / 240);
-    //background1.setScale(1456.f / 277, 960.f / 240);
-    //background2.setScale(1456.f / 277, 960.f / 240);
 
     // Initial positions for backgrounds
     float hallWidth = hallTexture.getSize().x * (1456.f / 649);  // Width of the hall sprite
@@ -52,7 +43,6 @@ RunGameState::~RunGameState()
 
 }
 
-//Menu* menu, Map& oldMap, sf::Sprite& bg1, sf::Sprite& bg2, Player& player
 void RunGameState::update(float deltaTime)
 {
     if (getMenu()->getController().getPlayer().getLives() == 0)
@@ -112,6 +102,11 @@ void RunGameState::print()
     for (auto it = getMenu()->getController().getMap().getEnemies().begin(); it != getMenu()->getController().getMap().getEnemies().end(); it++)
     {
         getMenu()->getWindow().draw((*it)->getSprite());
+        if (!(*it)->getIsLaunchPlayed())
+        {
+            getMenu()->getWindow().draw((*it)->getWarning());
+        }
+        
     }
 
     getMenu()->printPlayer();
