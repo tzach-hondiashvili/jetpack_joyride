@@ -27,10 +27,10 @@ public:
     static bool registerit(const std::string& name, std::unique_ptr<GameObjects>(*)(sf::Vector2f position));
 
     //Logic function
-    static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos);
-    static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos);
+    static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset, float gameTime);
+    static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset, float gameTime);
+    static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos, float gameTime);
+    static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime);
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);

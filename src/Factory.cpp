@@ -243,7 +243,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createPowerup(const std::string& n
     return temp;
 }
 
-std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset)
+std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset, float gameTime)
 {
     std::srand((unsigned int)std::time(NULL));
 
@@ -262,7 +262,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f
     };
 
     // Generate a random number between 0 and 5
-    int randomNumber = std::rand() % 6;
+    int randomNumber = std::rand() % 10 - gameTime / 300;
     std::list<std::unique_ptr<Pickable>> basic;
 
     // Find the corresponding creation function and call it
@@ -489,7 +489,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
     return temp;
 }
 
-std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vector2f scrollOffset)
+std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vector2f scrollOffset, float gameTime)
 {
     std::srand((unsigned int)std::time(NULL));
 
@@ -503,21 +503,25 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetObstacles(sf::Vec
         {3, &Factory::createLayingRight}
     };
 
-    int randomNumber = std::rand() % 6;
-    std::list<std::unique_ptr<StaticObjects>> obstacles;
+    int maxRange = std::max(5, 10 - static_cast<int>(gameTime / 300.0f)); // Ensures the max range is at least 5
+    int randomNumber = std::rand() % maxRange;
 
-    auto it = FunctionMap.find(randomNumber);
-    if (it != FunctionMap.end())
+    std::list<std::unique_ptr<StaticObjects>> obstacles;
+    if (randomNumber < FunctionMap.size())
     {
-        CreateFunction createFunc = it->second;
-        std::list<std::unique_ptr<StaticObjects>> temp = createFunc("Lazer", scrollOffset);
-        obstacles.insert(obstacles.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+        auto it = FunctionMap.find(randomNumber);
+        if (it != FunctionMap.end())
+        {
+            CreateFunction createFunc = it->second;
+            std::list<std::unique_ptr<StaticObjects>> temp = createFunc("Lazer", scrollOffset);
+            obstacles.insert(obstacles.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+        }
     }
 
     return obstacles;
 }
 
-std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
+std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime)
 { 
     std::srand((unsigned int)std::time(NULL));
     
@@ -532,15 +536,19 @@ std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scro
         {4, &Factory::createMissile}
     };
     
-    int randomNumber = std::rand() % 10;
+    int maxRange = std::max(5, 15 - static_cast<int>(gameTime / 700.0f)); // Ensures the max range is at least 5
+    int randomNumber = std::rand() % maxRange;
+
     std::list<std::unique_ptr<Enemy>> enemies;
-    
-    auto it = FunctionMap.find(randomNumber);
-    if (it != FunctionMap.end())
+    if (randomNumber < FunctionMap.size())
     {
-        CreateFunction createFunc = it->second;
-        std::list<std::unique_ptr<Enemy>> temp = createFunc("Missile", { scrollOffset.x , playerPos.y});
-        enemies.insert(enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+        auto it = FunctionMap.find(randomNumber);
+        if (it != FunctionMap.end())
+        {
+            CreateFunction createFunc = it->second;
+            std::list<std::unique_ptr<Enemy>> temp = createFunc("Missile", { scrollOffset.x , playerPos.y });
+            enemies.insert(enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+        }
     }
     
     return enemies;
@@ -680,13 +688,13 @@ std::list<std::unique_ptr<MovingObjects>> Factory::createScientists(const std::s
     std::list<std::unique_ptr<MovingObjects>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 1000 + scrollOffset.x;
+    float startX = 2000 + scrollOffset.x;
     float startY = 750;
 
     sf::Vector2f position1(startX+ randomNumber + 1000, startY);
-    sf::Vector2f position2(startX+ randomNumber - 600, startY);
+    sf::Vector2f position2(startX+ randomNumber - 1200, startY);
     sf::Vector2f position3(startX- randomNumber + 200, startY);
-    sf::Vector2f position4(startX- randomNumber - 1200, startY);
+    sf::Vector2f position4(startX- randomNumber - 600, startY);
     sf::Vector2f position5(startX, startY);
 
     // Create the scientists
@@ -710,7 +718,7 @@ std::list<std::unique_ptr<MovingObjects>> Factory::createScientists(const std::s
     return temp;
 }
 
-std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
+std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime)
 {
     std::srand((unsigned int)std::time(NULL));
     using CreateFunction = std::list<std::unique_ptr<MovingObjects>>(*)(const std::string&, sf::Vector2f);

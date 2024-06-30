@@ -14,10 +14,10 @@ public:
 	std::list<std::unique_ptr <Enemy>>& getEnemies();
 	std::list<std::unique_ptr <MovingObjects>>& getScientists();
 
-	void updatePickables(sf::Vector2f scrollOffset);
-	void updateObstacles(sf::Vector2f scrollOffset);
-	void updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos);
-	void updateScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos);
+	void updatePickables(sf::Vector2f scrollOffset, float deltaTime);
+	void updateObstacles(sf::Vector2f scrollOffset, float deltaTime);
+	void updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime);
+	void updateScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime);
 
 
 	void updatePickablesAnimation(float time);

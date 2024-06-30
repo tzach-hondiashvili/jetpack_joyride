@@ -20,27 +20,27 @@ std::list<std::unique_ptr<MovingObjects>>& Map::getScientists()
 	return m_scientists;
 }
 
-void Map::updatePickables(sf::Vector2f scrollOffset)
+void Map::updatePickables(sf::Vector2f scrollOffset, float deltaTime)
 {
-	auto temp = Factory::createAndGetPickables(scrollOffset);
+	auto temp = Factory::createAndGetPickables(scrollOffset , deltaTime);
 	m_pickables.insert(m_pickables.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
-void Map::updateObstacles(sf::Vector2f scrollOffset)
+void Map::updateObstacles(sf::Vector2f scrollOffset, float deltaTime)
 {
-	auto temp = Factory::createAndGetObstacles(scrollOffset);
+	auto temp = Factory::createAndGetObstacles(scrollOffset, deltaTime);
 	m_obstacles.insert(m_obstacles.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
-void Map::updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
+void Map::updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime)
 {
-	auto temp = Factory::createAndGetEnemies(scrollOffset, playerPos);
+	auto temp = Factory::createAndGetEnemies(scrollOffset, playerPos, deltaTime);
 	m_enemies.insert(m_enemies.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
-void Map::updateScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
+void Map::updateScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime)
 {
-	auto temp = Factory::createAndGetScientists(scrollOffset, playerPos);
+	auto temp = Factory::createAndGetScientists(scrollOffset, playerPos, deltaTime);
 	m_scientists.insert(m_scientists.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
