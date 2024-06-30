@@ -191,7 +191,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createHeart(const std::string& nam
 
     // Randomize radius within a range
     float minRadius = 15.f;
-    float maxRadius = 30.f;
+    float maxRadius = 20.f;
     float radius = minRadius + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxRadius - minRadius)));
 
     for (int i = 0; i < numCoins; ++i)
@@ -290,7 +290,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createYparallel(const std::st
     std::list<std::unique_ptr<StaticObjects>> temp;
 
     float startX = 100.f + scrollOffset.x + (std::rand() % (1356 - 100));
-    float startY = 100.f + scrollOffset.y + (std::rand() % (760 - 100));
+    float startY = 100.f + scrollOffset.y + (std::rand() % (760 - 400));
 
     int randomNumber = 100 + std::rand() % 300;
 
@@ -388,7 +388,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingLeft(const std::s
     std::list<std::unique_ptr<StaticObjects>> temp;
 
     float startX = 100.f + scrollOffset.x + (std::rand() % (1356 - 200)); // Adjusted to avoid going out of bounds
-    float startY = 100.f + scrollOffset.y + (std::rand() % (760 - 100));
+    float startY = 150.f + scrollOffset.y + (std::rand() % (760 - 400));
 
     int randomNumber = 100 + (std::rand() % 200); // Ensure a minimum length
 
@@ -440,7 +440,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
     std::list<std::unique_ptr<StaticObjects>> temp;
 
     float startX = 100.f + scrollOffset.x + (std::rand() % (1356 - 200)); // Adjusted to avoid going out of bounds
-    float startY = 100.f + scrollOffset.y + (std::rand() % (760 - 100));
+    float startY = 150.f + scrollOffset.y + (std::rand() % (760 - 400));
 
     int randomNumber = 100 + (std::rand() % 200); // Ensure a minimum length
 
@@ -532,7 +532,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scro
         {4, &Factory::createMissile}
     };
     
-    int randomNumber = std::rand() % 7;
+    int randomNumber = std::rand() % 10;
     std::list<std::unique_ptr<Enemy>> enemies;
     
     auto it = FunctionMap.find(randomNumber);
