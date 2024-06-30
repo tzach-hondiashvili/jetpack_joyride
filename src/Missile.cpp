@@ -13,7 +13,7 @@ Missile::Missile(sf::Vector2f position)
 	m_MissileLaunch.setBuffer(Resources::instance().getSoundEffect(4));
 	m_MissileLaunch.setVolume(100);
 	m_MissileWarning.setBuffer(Resources::instance().getSoundEffect(3));
-	m_MissileWarning.setVolume(100);
+	m_MissileWarning.setVolume(50);
 	m_MissileWarning.setLoop(true);
 
 	m_beforeMissile.setTexture(Resources::instance().getObjectTexture(8));
@@ -48,7 +48,6 @@ void Missile::updateSoundAndWarnings(sf::Vector2f playerpos)
 		if (!getIsWarningPlayed() && (getSprite().getPosition().x <= playerpos.x + 1980))
 		{
 			m_beforeMissile.setTexture(Resources::instance().getObjectTexture(7));
-			std::cout << "Incoming!\n";
 			m_MissileWarning.play();
 			setIsWarningPlayed(true);
 		}
@@ -61,7 +60,6 @@ void Missile::updateSoundAndWarnings(sf::Vector2f playerpos)
 	{
 		if (!getIsLaunchPlayed())
 		{
-			std::cout << "Missile!\n";
 			m_MissileLaunch.play();
 			setIsLaunchPlayed(true);
 			m_MissileWarning.setLoop(false);
@@ -89,13 +87,7 @@ void Missile::updateBeforeLocation(sf::Vector2f pos)
 	m_warningMissile.setPosition({ pos.x,getSprite().getPosition().y });
 }
 
-void Missile::CheckIfToDeleteEnemie(sf::Vector2f playerpos)
-{
-	if (getSprite().getPosition().x <= playerpos.x - 128) //missile passed the screen, end of trace
-	{
-		setPassedTheScreen(true);
-	}
-}
+
 
 void Missile::move(sf::Vector2f pos, float time)
 {

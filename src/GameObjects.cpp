@@ -5,6 +5,16 @@ GameObjects::GameObjects()
 {
 }
 
+bool GameObjects::CheckIfToDelete(sf::Vector2f viewPos)
+{
+	if (getSprite().getPosition().x <= viewPos.x-300) //missile passed the screen, end of trace
+	{
+		return true;
+	}
+	
+	return false;
+}
+
 GameObjects::GameObjects(sf::Vector2f position, sf::Texture* texture)
 	:m_animationFrame(0)
 {
@@ -56,6 +66,5 @@ const sf::Sprite& GameObjects::getSprite() const
 
 void GameObjects::changeSpriteAnimation(sf::IntRect rect)
 {
-
 	m_sprite.setTextureRect(rect);
 }

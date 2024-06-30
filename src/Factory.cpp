@@ -671,3 +671,66 @@ std::list<std::unique_ptr<Enemy>> Factory::create4together(const std::string& na
 
     return temp;
 }
+
+std::list<std::unique_ptr<MovingObjects>> Factory::createScientists(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::srand((unsigned int)std::time(NULL));
+    int randomNumber = std::rand() % 400;
+
+    std::list<std::unique_ptr<MovingObjects>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 1000 + scrollOffset.x;
+    float startY = 750;
+
+    sf::Vector2f position1(startX+ randomNumber + 1000, startY);
+    sf::Vector2f position2(startX+ randomNumber - 600, startY);
+    sf::Vector2f position3(startX- randomNumber + 200, startY);
+    sf::Vector2f position4(startX- randomNumber - 1200, startY);
+    sf::Vector2f position5(startX, startY);
+
+    // Create the scientists
+    std::unique_ptr<GameObjects> scientist1 = Factory::create(name, position1);
+    std::unique_ptr<GameObjects> scientist2 = Factory::create(name, position2);
+    std::unique_ptr<GameObjects> scientist3 = Factory::create(name, position3);
+    std::unique_ptr<GameObjects> scientist4 = Factory::create(name, position4);
+    std::unique_ptr<GameObjects> scientist5 = Factory::create(name, position5);
+
+    std::unique_ptr<MovingObjects> scientistObject1(static_cast<MovingObjects*>(scientist1.release()));
+    temp.push_back(std::move(scientistObject1));
+    std::unique_ptr<MovingObjects> scientistObject2(static_cast<MovingObjects*>(scientist2.release()));
+    temp.push_back(std::move(scientistObject2));
+    std::unique_ptr<MovingObjects> scientistObject3(static_cast<MovingObjects*>(scientist3.release()));
+    temp.push_back(std::move(scientistObject3));
+    std::unique_ptr<MovingObjects> scientistObject4(static_cast<MovingObjects*>(scientist4.release()));
+    temp.push_back(std::move(scientistObject4));
+    std::unique_ptr<MovingObjects> scientistObject5(static_cast<MovingObjects*>(scientist5.release()));
+    temp.push_back(std::move(scientistObject5));
+
+    return temp;
+}
+
+std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos)
+{
+    std::srand((unsigned int)std::time(NULL));
+    using CreateFunction = std::list<std::unique_ptr<MovingObjects>>(*)(const std::string&, sf::Vector2f);
+
+    int randomNumber = std::rand() % 3;
+
+    static std::map<int, CreateFunction> FunctionMap =
+    {
+        {0, &Factory::createScientists}
+    };
+
+    std::list<std::unique_ptr<MovingObjects>> scientists;
+
+    auto it = FunctionMap.find(randomNumber);
+    if (it != FunctionMap.end())
+    {
+        CreateFunction createFunc = it->second;
+        std::list<std::unique_ptr<MovingObjects>> temp = createFunc("Scientist", { scrollOffset.x , playerPos.y });
+        scientists.insert(scientists.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+    }
+
+    return scientists;
+}

@@ -76,14 +76,11 @@ bool Menu::finishedLoading()
     return m_finishedLoading;
 }
 
-void Menu::updateController(sf::Vector2f pos, float time) 
+void Menu::updateController(sf::Vector2f viewPos, float time) 
 {
     m_controller.getPlayer().getState()->handleInput();
-    m_controller.getPlayer().getState()->move(pos,time);
-
-    m_controller.getMap().updatePickablesAnimation(time);
-    m_controller.getMap().updateObstaclesAnimation(time);
-    m_controller.getMap().updateEnemiesAnimation(pos,time);
+    m_controller.getPlayer().getState()->move(viewPos,time);
+    m_controller.getMap().updateMap(viewPos,time);
 }
 
 void Menu::printScoreBoard()

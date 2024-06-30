@@ -62,14 +62,16 @@ void RunGameState::update(float deltaTime)
         m_background1.setPosition(m_background2.getPosition().x + 277.f * (1456.f / 277), 0.f);
         getMenu()->getController().getMap().updatePickables(m_background1.getPosition());
         getMenu()->getController().getMap().updateObstacles(m_background1.getPosition());
-        getMenu()->getController().getMap().updateEnemies(m_background1.getPosition(),getMenu()->getController().getPlayer().getSprite().getPosition());
+        getMenu()->getController().getMap().updateEnemies(m_background1.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
+        getMenu()->getController().getMap().updateScientists(m_background1.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
     }
     if (m_background2.getPosition().x + 277.f * (1456.f / 277) < m_view.getCenter().x - m_view.getSize().x / 2)
     {
         m_background2.setPosition(m_background1.getPosition().x + 277.f * (1456.f / 277), 0.f);
         getMenu()->getController().getMap().updatePickables(m_background2.getPosition());
         getMenu()->getController().getMap().updateObstacles(m_background2.getPosition());
-        getMenu()->getController().getMap().updateEnemies(m_background2.getPosition(), getMenu()->getController().getPlayer().getSprite().getPosition());
+        getMenu()->getController().getMap().updateEnemies(m_background2.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
+        getMenu()->getController().getMap().updateScientists(m_background2.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
     }
 
     getMenu()->updateController({m_view.getCenter().x - 600 , 760}, deltaTime);
@@ -106,7 +108,10 @@ void RunGameState::print()
         {
             getMenu()->getWindow().draw((*it)->getWarning());
         }
-        
+    }
+    for (auto it = getMenu()->getController().getMap().getScientists().begin(); it != getMenu()->getController().getMap().getScientists().end(); it++)
+    {
+        getMenu()->getWindow().draw((*it)->getSprite());
     }
 
     getMenu()->printPlayer();
