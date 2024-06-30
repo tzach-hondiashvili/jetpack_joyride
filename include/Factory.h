@@ -30,6 +30,7 @@ public:
     static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos);
+    static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos);
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
@@ -51,6 +52,10 @@ public:
     static std::list<std::unique_ptr<Enemy>> create4oneByOne(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Enemy>> create2together(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Enemy>> create4together(const std::string& name, sf::Vector2f scrollOffset);
+
+    // Methods to create scientists
+    static std::list<std::unique_ptr<MovingObjects>> createScientists(const std::string& name, sf::Vector2f scrollOffset);
+
 private:
     //Get the static map of factory functions.
     static mymap& getMap()

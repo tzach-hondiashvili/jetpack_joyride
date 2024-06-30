@@ -22,6 +22,7 @@ Map& Controller::getMap()
 	return m_map;
 }
 
+
 void Controller::checkCollision()
 {
 	auto pickable2Remove = m_map.getPickables().end();
