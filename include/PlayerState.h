@@ -22,6 +22,7 @@ public:
 	sf::Sprite& getCurrSkin();
 	sf::Sprite& getFlame();
 	sf::Vector2f& getVelocity();
+	sf::Texture* getPrevText();
 	Menu* getMenu();
 	float& getGravity();
 	float& getJumpForce();

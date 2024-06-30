@@ -15,6 +15,10 @@ KingSkinOption::KingSkinOption(Menu* menu)
 
 void KingSkinOption::execute()
 {
+	static sf::Sound Boom;
+	Boom.setBuffer(Resources::instance().getSoundEffect(8));
+	Boom.setVolume(100);
+	Boom.play();
 
 	getMenu()->getController().getPlayer().getState()->updatePrevSkin(&Resources::instance().getPlayerTexture(3));
 	getMenu()->getController().getPlayer().getState()->updateCurrSkin(&Resources::instance().getPlayerTexture(3), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());

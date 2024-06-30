@@ -11,6 +11,11 @@ StartGame::StartGame(Menu* menu)
 
 void StartGame::execute()
 {
+	static sf::Sound Click;
+	Click.setBuffer(Resources::instance().getSoundEffect(7));
+	Click.setVolume(100);
+	Click.play();
+
 	getMenu()->resetView();
 	getMenu()->getController().getPlayer().resetCoins();
 	getMenu()->getController().getMap().resetMap();

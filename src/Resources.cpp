@@ -119,13 +119,15 @@ void Resources::fillSoundFX()
 {
 	std::vector<std::string> namesOfSounds =
 	{
-		"a_coin.ogg",		   //0
-		"b_getPowerSound.ogg", //1
-		"c_hitSound.ogg",      //2  
-		"d_MissileAlarm.ogg",  //3
-		"e_missileLaunch.ogg", //4
-		"f_ZapperSound.ogg",   //5
-		"g_rocketexplode.ogg"  //6
+		"a_coin.ogg",		      //0  
+		"b_getPowerSound.ogg",    //1
+		"c_hitSound.ogg",         //2  
+		"d_MissileAlarm.ogg",     //3
+		"e_missileLaunch.ogg",    //4
+		"f_ZapperSound.ogg",      //5
+		"g_rocketexplode.ogg",    //6
+		"h_ClickSound.ogg",       //7
+		"i_StartingExplosion.ogg" //8
 	};
 
 	for (int i = 0; i < namesOfSounds.size(); i++)

@@ -11,5 +11,10 @@ HelpRight::HelpRight(Menu* menu)
 
 void HelpRight::execute()
 {
+	static sf::Sound Click;
+	Click.setBuffer(Resources::instance().getSoundEffect(7));
+	Click.setVolume(100);
+	Click.play();
+
 	getMenu()->getState()->moveHelpRight();
 }

@@ -12,6 +12,11 @@ Help::Help(Menu* menu)
 
 void Help::execute()
 {
+	static sf::Sound Click;
+	Click.setBuffer(Resources::instance().getSoundEffect(7));
+	Click.setVolume(100);
+	Click.play();
+
 	std::unique_ptr<MenuState> temp = std::make_unique<HelpState>(getMenu());
 	getMenu()->updateState(std::move(temp));
 }

@@ -11,6 +11,11 @@ Return2Menu::Return2Menu(Menu* menu)
 }
 void Return2Menu::execute()
 {
+	static sf::Sound Click;
+	Click.setBuffer(Resources::instance().getSoundEffect(7));
+	Click.setVolume(100);
+	Click.play();
+
 	Resources::instance().endGameMusic();
 	Resources::instance().startMenuMusic();
 	getMenu()->resetView();

@@ -55,6 +55,11 @@ sf::Vector2f& PlayerState::getVelocity()
 	return m_velocity;
 }
 
+sf::Texture* PlayerState::getPrevText()
+{
+	return m_prevSkin;
+}
+
 Menu* PlayerState::getMenu()
 {
 	return m_menu;

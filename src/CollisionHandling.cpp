@@ -11,8 +11,11 @@
 #include "Beam.h"
 #include "Lazer.h"
 #include "PowerUp.h"
+#include "MechState.h"
+#include "ReverserState.h"
 
 
+using CreateFunction = std::function<void(Player& player)>;
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
@@ -31,6 +34,24 @@ namespace // anonymous namespace — the standard way to make function "static"
     //    std::cout << "SpaceShip and Asteroid collision!\n";
     //}
 
+    void CreateReverserState(Player& player) {
+        player.getState() = std::move(std::make_unique<ReverserState>(&Resources::instance().getPlayerTexture(18),
+            player.getSprite().getTexture(),
+            player.getState()->getCurrSkin().getPosition(),
+            player.getState()->getMenu()
+        ));
+    }
+
+    void CreateMechState(Player& player) {
+        player.getState() = std::move(std::make_unique<MechState>(
+            &Resources::instance().getPlayerTexture(19),
+            player.getSprite().getTexture(),
+            player.getState()->getCurrSkin().getPosition(),
+            player.getState()->getMenu()
+        ));
+    }
+
+
     void playerCoin(GameObjects& player,
         GameObjects& )
     {
@@ -45,7 +66,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    void PlayerBeam(GameObjects& player,
        GameObjects& )
    {
-       static_cast<Player&>(player).die();
+       static_cast<Player&>(player).getState()->die();
 
        static sf::Sound Zap;
        Zap.setBuffer(Resources::instance().getSoundEffect(5));
@@ -56,7 +77,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    void PlayerLazer(GameObjects& player,
        GameObjects& )
    {
-       static_cast<Player&>(player).die();
+       static_cast<Player&>(player).getState()->die();
 
        static sf::Sound Zap;
        Zap.setBuffer(Resources::instance().getSoundEffect(5));
@@ -67,7 +88,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    void PlayerMissile(GameObjects& player,
        GameObjects& )
    {
-       static_cast<Player&>(player).die();
+       static_cast<Player&>(player).getState()->die();
 
        static sf::Sound boom;
        boom.setBuffer(Resources::instance().getSoundEffect(6));
@@ -78,6 +99,20 @@ namespace // anonymous namespace — the standard way to make function "static"
    void PlayerPowerUp(GameObjects& player,
        GameObjects& )
    {
+       static std::map<int, CreateFunction> PowerupMap = 
+       {
+            {0, CreateReverserState},
+            {1, CreateMechState}
+       };
+       
+       int choice = rand() % 2;
+       
+       auto it = PowerupMap.find(choice);
+       if (it != PowerupMap.end())
+       {
+           it->second(static_cast<Player&>(player));
+       }
+
        static sf::Sound power;
        power.setBuffer(Resources::instance().getSoundEffect(1));
        power.setVolume(100);
