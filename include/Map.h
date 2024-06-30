@@ -19,7 +19,7 @@ public:
 
 	void updatePickablesAnimation(float time);
 	void updateObstaclesAnimation(float time);
-	void updateEnemiesAnimation(float time);
+	void updateEnemiesAnimation(sf::Vector2f pos, float time);
 
 	void resetMap();
 

@@ -551,7 +551,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createMissile(const std::string& name
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 500 + scrollOffset.x; 
+    float startX = 2000 + scrollOffset.x; 
     float startY = scrollOffset.y + 50;
 
     sf::Vector2f position(startX, startY);
@@ -570,7 +570,7 @@ std::list<std::unique_ptr<Enemy>> Factory::create2oneByOne(const std::string& na
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 500 + scrollOffset.x;
+    float startX = 2000 + scrollOffset.x;
     float startY = scrollOffset.y + 50;
 
     sf::Vector2f position1(startX, startY+20);
@@ -593,7 +593,7 @@ std::list<std::unique_ptr<Enemy>> Factory::create4oneByOne(const std::string& na
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 500 + scrollOffset.x;
+    float startX = 2000 + scrollOffset.x;
     float startY = scrollOffset.y + 50;
 
     sf::Vector2f position1(startX, startY);
@@ -624,8 +624,8 @@ std::list<std::unique_ptr<Enemy>> Factory::create2together(const std::string& na
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 500 + scrollOffset.x;
-    float startY = scrollOffset.y + 50;
+    float startX = 2000 + scrollOffset.x;
+    float startY = 150 + scrollOffset.y;
 
     sf::Vector2f position1(startX, startY-50);
     sf::Vector2f position2(startX, startY+50);
@@ -646,13 +646,13 @@ std::list<std::unique_ptr<Enemy>> Factory::create4together(const std::string& na
     std::list<std::unique_ptr<Enemy>> temp;
 
     // Calculate starting position outside the screen on the right side
-    float startX = 500 + scrollOffset.x;
-    float startY = scrollOffset.y + 50;
+    float startX = 2000 + scrollOffset.x;
+    float startY = 150;
 
-    sf::Vector2f position1(startX, startY-300);
-    sf::Vector2f position2(startX, startY -100);
-    sf::Vector2f position3(startX, startY + 100);
-    sf::Vector2f position4(startX, startY + 300);
+    sf::Vector2f position1(startX, startY);
+    sf::Vector2f position2(startX, startY + 120);
+    sf::Vector2f position3(startX, startY + 540);
+    sf::Vector2f position4(startX, startY + 660);
 
     // Create the missile
     std::unique_ptr<GameObjects> missile1 = Factory::create(name, position1);
