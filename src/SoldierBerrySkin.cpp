@@ -18,9 +18,6 @@ void SoldierBerrySkin::execute()
 	getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale({1,1});
 	getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale(sf::Vector2f(389 / (float)getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x, 528 / (float)getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x));
 
-	/*getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), &Resources::instance().getPlayerTexture(15));
-	getMenu()->getController().getPlayer().setScale({ 1,1 });
-	getMenu()->getController().getPlayer().setScale(sf::Vector2f(389 / (float)getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x, 528 / (float)getMenu()->getController().getPlayer().getSprite().getTexture()->getSize().x));*/
 	getMenu()->getController().getPlayer().updateFallingAndDying(&Resources::instance().getPlayerTexture(14), &Resources::instance().getPlayerTexture(13));
 	
 

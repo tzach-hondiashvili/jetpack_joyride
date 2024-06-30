@@ -19,8 +19,6 @@ void OriginalSkinOption::execute()
 	getMenu()->getController().getPlayer().getState()->updateCurrSkin(&Resources::instance().getPlayerTexture(7), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
 	getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale({ 1,1 });
 	
-	/*getMenu()->getController().getPlayer().updateSprite(getMenu()->getController().getPlayer().getSprite().getPosition(), &Resources::instance().getPlayerTexture(7));
-	getMenu()->getController().getPlayer().setScale({ 1,1 });*/
 	getMenu()->getController().getPlayer().updateFallingAndDying(&Resources::instance().getPlayerTexture(6), &Resources::instance().getPlayerTexture(5));
 	std::unique_ptr temp = std::make_unique<RunGameState>(getMenu());
 	getMenu()->updateState(std::move(temp));
