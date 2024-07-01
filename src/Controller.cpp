@@ -25,31 +25,23 @@ Map& Controller::getMap()
 
 void Controller::checkCollision()
 {
-	auto pickable2Remove = m_map.getPickables().end();
-
-
 	//check collision with pickables
 	for (auto it = m_map.getPickables().begin(); it != m_map.getPickables().end(); it++)
 	{
 		if (m_player.getState()->getCurrSkin().getGlobalBounds().intersects((*it)->getSprite().getGlobalBounds()))
 		{
 			processCollision(m_player, *(*it));
-			pickable2Remove = it;
+			m_map.getPickables().remove(*it);
 			break;
 		}
 	}
-	if (pickable2Remove != m_map.getPickables().end())
-	{
-		m_map.getPickables().remove(*pickable2Remove);
-		return;
-	}
-
 
 	for (auto it = m_map.getObstacles().begin(); it != m_map.getObstacles().end(); it++)
 	{
 		if (Collision::pixelPerfectTest(m_player.getState()->getCurrSkin(), (*it)->getSprite(), 128))
 		{
 			processCollision(m_player, *(*it));
+			m_map.getObstacles().remove(*it);
 			break; // Exit loop on first collision found
 		}
 	}
@@ -59,6 +51,7 @@ void Controller::checkCollision()
 		if (Collision::pixelPerfectTest(m_player.getState()->getCurrSkin(), (*it)->getSprite(), 128))
 		{
 			processCollision(m_player, *(*it));
+			m_map.getEnemies().remove(*it);
 			break; // Exit loop on first collision found
 		}
 	}
