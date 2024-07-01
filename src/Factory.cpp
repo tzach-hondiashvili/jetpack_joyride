@@ -243,6 +243,30 @@ std::list<std::unique_ptr<Pickable>> Factory::createPowerup(const std::string& n
     return temp;
 }
 
+std::list<std::unique_ptr<Pickable>> Factory::createPig(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr <Pickable>> temp;
+
+    // Randomize center position within a range
+    float centerX = 100.f + static_cast<float>(std::rand() % 1356) + scrollOffset.x;
+    float centerY = 260.f + static_cast<float>(std::rand() % 400) + scrollOffset.y;
+
+    sf::Vector2f position(centerX, centerY);
+
+    // Create a GameObject instance
+    std::unique_ptr<GameObjects> Pig = Factory::create(name, position);
+    if (Pig)
+    {
+        // Downcast to Pickable by transferring ownership and casting raw pointer
+        std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(Pig.release()));
+
+        // Add to temp
+        temp.push_back(std::move(pickable));
+    }
+
+    return temp;
+}
+
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset, float gameTime)
 {
     std::srand((unsigned int)std::time(NULL));
@@ -258,11 +282,12 @@ std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f
         {2, &Factory::createTriangle},
         {3, &Factory::createCircle},
         {4, &Factory::createHeart},
-        {5, &Factory::createPowerup}
+        {5, &Factory::createPowerup},
+        {6, &Factory::createPig}
     };
 
     // Generate a random number between 0 and 5
-    int randomNumber = std::rand() % 10 - gameTime / 300;
+    int randomNumber = int(std::rand() % 9 - gameTime / 300);
     std::list<std::unique_ptr<Pickable>> basic;
 
     // Find the corresponding creation function and call it
@@ -272,6 +297,10 @@ std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f
         if (randomNumber==5)
         {
             object = "PowerUp";
+        }
+        else if (randomNumber == 6)
+        {
+            object = "Pig";
         }
         else
         {
@@ -387,13 +416,13 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingLeft(const std::s
 {
     std::list<std::unique_ptr<StaticObjects>> temp;
 
-    float startX = 100.f + scrollOffset.x + (std::rand() % (1356 - 200)); // Adjusted to avoid going out of bounds
-    float startY = 150.f + scrollOffset.y + (std::rand() % (760 - 400));
+    float startX = 100.f + scrollOffset.x + (std::rand() % (1356 - 200));// Adjusted to avoid going out of bounds
+    float startY = 200.f + scrollOffset.y + (std::rand() % (960 - 300)); //max is 510
 
     int randomNumber = 100 + (std::rand() % 200); // Ensure a minimum length
 
     sf::Vector2f position2(startX - randomNumber, startY);
-    sf::Vector2f position1(startX, startY - randomNumber);
+    sf::Vector2f position1(startX, startY - randomNumber); //min is 210
 
     std::unique_ptr<GameObjects> laserHead1 = Factory::create(name, position1);
     std::unique_ptr<GameObjects> laserHead2 = Factory::create(name, position2);
@@ -440,7 +469,7 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLayingRight(const std::
     std::list<std::unique_ptr<StaticObjects>> temp;
 
     float startX = 100.f + scrollOffset.x + (std::rand() % (1356 - 200)); // Adjusted to avoid going out of bounds
-    float startY = 150.f + scrollOffset.y + (std::rand() % (760 - 400));
+    float startY = 200.f + scrollOffset.y + (std::rand() % (960 - 300));
 
     int randomNumber = 100 + (std::rand() % 200); // Ensure a minimum length
 
@@ -658,8 +687,8 @@ std::list<std::unique_ptr<Enemy>> Factory::create4together(const std::string& na
     float startY = 150;
 
     sf::Vector2f position1(startX, startY);
-    sf::Vector2f position2(startX, startY + 120);
-    sf::Vector2f position3(startX, startY + 540);
+    sf::Vector2f position2(startX, startY + 60);
+    sf::Vector2f position3(startX, startY + 600);
     sf::Vector2f position4(startX, startY + 660);
 
     // Create the missile
@@ -742,3 +771,45 @@ std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Ve
 
     return scientists;
 }
+
+std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime)
+{
+    using CreateFunction = std::list<std::unique_ptr<StaticObjects>>(*)(const std::string&, sf::Vector2f);
+
+    static std::map<int, CreateFunction> FunctionMap =
+    {
+        {0, &Factory::createLight}
+    };
+
+    std::list<std::unique_ptr<StaticObjects>> lights;
+    
+        auto it = FunctionMap.find(0);
+        if (it != FunctionMap.end())
+        {
+            CreateFunction createFunc = it->second;
+            std::list<std::unique_ptr<StaticObjects>> temp = createFunc("Alarm", scrollOffset);
+            lights.insert(lights.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+        }
+
+    return lights;
+}
+
+std::list<std::unique_ptr<StaticObjects>> Factory::createLight(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr<StaticObjects>> temp;
+
+    // Calculate starting position outside the screen on the right side
+    float startX = 500 + scrollOffset.x;
+    float startY = 120 + scrollOffset.y;
+
+    sf::Vector2f position(startX, startY);
+
+    // Create the scientists
+    std::unique_ptr<GameObjects> createLight = Factory::create(name, position);
+
+    std::unique_ptr<StaticObjects> light(static_cast<StaticObjects*>(createLight.release()));
+    temp.push_back(std::move(light));
+
+    return temp;
+}
+

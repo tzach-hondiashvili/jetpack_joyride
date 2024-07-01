@@ -62,6 +62,7 @@ void RunGameState::update(float deltaTime)
         m_background1.setPosition(m_background2.getPosition().x + 277.f * (1456.f / 277), 0.f);
         getMenu()->getController().getMap().updatePickables(m_background1.getPosition(), deltaTime);
         getMenu()->getController().getMap().updateObstacles(m_background1.getPosition(), deltaTime);
+        getMenu()->getController().getMap().updateAlarms(m_background1.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
         getMenu()->getController().getMap().updateEnemies(m_background1.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
         getMenu()->getController().getMap().updateScientists(m_background1.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
     }
@@ -70,6 +71,7 @@ void RunGameState::update(float deltaTime)
         m_background2.setPosition(m_background1.getPosition().x + 277.f * (1456.f / 277), 0.f);
         getMenu()->getController().getMap().updatePickables(m_background2.getPosition(), deltaTime);
         getMenu()->getController().getMap().updateObstacles(m_background2.getPosition(), deltaTime);
+        getMenu()->getController().getMap().updateAlarms(m_background2.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
         getMenu()->getController().getMap().updateEnemies(m_background2.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
         getMenu()->getController().getMap().updateScientists(m_background2.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
     }
@@ -92,6 +94,11 @@ void RunGameState::print()
     getMenu()->getWindow().draw(m_background1);
     getMenu()->getWindow().draw(m_background2);
     
+    for (auto it = getMenu()->getController().getMap().getAlarms().begin(); it != getMenu()->getController().getMap().getAlarms().end(); it++)
+    {
+        getMenu()->getWindow().draw((*it)->getSprite());
+    }
+
     //print pickable object list
     for (auto it = getMenu()->getController().getMap().getPickables().begin();it!= getMenu()->getController().getMap().getPickables().end();it++)
     {
@@ -113,6 +120,7 @@ void RunGameState::print()
     {
         getMenu()->getWindow().draw((*it)->getSprite());
     }
+    
 
     getMenu()->printPlayer();
 
