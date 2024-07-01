@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayerState.h"
+#include <SFML/Audio.hpp>
 
 class MechState:public PlayerState
 {
@@ -12,5 +13,5 @@ public:
 	virtual void move(sf::Vector2f, float) override;
 	virtual void print() override;
 private:
-
+	sf::Sound run;
 };

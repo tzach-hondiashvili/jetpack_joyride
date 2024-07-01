@@ -36,7 +36,7 @@ namespace // anonymous namespace — the standard way to make function "static"
 
     void CreateReverserState(Player& player) {
         player.getState() = std::move(std::make_unique<ReverserState>(&Resources::instance().getPlayerTexture(18),
-            player.getSprite().getTexture(),
+            player.getState()->getCurrSkin().getTexture(),
             player.getState()->getCurrSkin().getPosition(),
             player.getState()->getMenu()
         ));
@@ -45,7 +45,7 @@ namespace // anonymous namespace — the standard way to make function "static"
     void CreateMechState(Player& player) {
         player.getState() = std::move(std::make_unique<MechState>(
             &Resources::instance().getPlayerTexture(19),
-            player.getSprite().getTexture(),
+            player.getState()->getCurrSkin().getTexture(),
             player.getState()->getCurrSkin().getPosition(),
             player.getState()->getMenu()
         ));

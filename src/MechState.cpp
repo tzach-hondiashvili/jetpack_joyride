@@ -6,6 +6,7 @@ MechState::MechState(const sf::Texture* currSkin, const sf::Texture* prevSkin, s
 {
 	updateCurrSkin(currSkin, pos);
 	updatePrevSkin(prevSkin);
+    getCurrSkin().setScale({ 1,1 });
 	updateMenu(menu);
 
 	sf::IntRect playerRect(0, 0, getCurrSkin().getTexture()->getSize().x / 2, getCurrSkin().getTexture()->getSize().y);
@@ -17,18 +18,35 @@ MechState::MechState(const sf::Texture* currSkin, const sf::Texture* prevSkin, s
 void MechState::updateAnimation(float time)
 {
     static float timeSinceLastFrame = 0.f;
+    static bool runPlaying = false;
+
+    if (!run.getBuffer()) 
+    {
+        run.setBuffer(Resources::instance().getSoundEffect(10));
+        run.setVolume(100);
+    }
+
     timeSinceLastFrame += time;
 
-    if (timeSinceLastFrame >= 0.3f - getCurrSkin().getPosition().x / 10000000)
+    const float animationFrameRate = 0.3f - getCurrSkin().getPosition().x / 10000000;
+
+    if (timeSinceLastFrame >= animationFrameRate)
     {
         if (getCurrSkin().getPosition().y != 750)
         {
+            // Not on the ground
             getCurrSkin().setTexture(Resources::instance().getPlayerTexture(17));
             sf::IntRect frameRect(0, 0, getCurrSkin().getTexture()->getSize().x, getCurrSkin().getTexture()->getSize().y);
             getCurrSkin().setTextureRect(frameRect);
+
+            if (runPlaying) {
+                run.stop();
+                runPlaying = false;
+            }
         }
         else
         {
+            // On the ground
             setAnimationFrame((getAnimationFrame() + 1) % 2);
             getCurrSkin().setTexture(Resources::instance().getPlayerTexture(19));
 
@@ -36,11 +54,19 @@ void MechState::updateAnimation(float time)
             sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getCurrSkin().getTexture()->getSize().y);
             getCurrSkin().setTextureRect(frameRect);
 
+            if (!runPlaying) 
+            {
+                run.setLoop(true); 
+                run.play();
+                runPlaying = true;
+            }
         }
-
         timeSinceLastFrame = 0.f;
     }
 }
+
+
+
 
 void MechState::die()
 {

@@ -109,10 +109,10 @@ void Resources::fillTextureVectors(std::vector<std::string > names, std::vector<
 void Resources::updateGameMusic()
 {
 	m_gameMusic.openFromFile("JetpackJoyrideMusic.ogg");
-	m_gameMusic.setVolume(50);
+	m_gameMusic.setVolume(30);
 
 	m_MenuMusic.openFromFile("menumusic.ogg");
-	m_MenuMusic.setVolume(50);
+	m_MenuMusic.setVolume(30);
 }
 
 void Resources::fillSoundFX()
@@ -127,7 +127,11 @@ void Resources::fillSoundFX()
 		"f_ZapperSound.ogg",      //5
 		"g_rocketexplode.ogg",    //6
 		"h_ClickSound.ogg",       //7
-		"i_StartingExplosion.ogg" //8
+		"i_StartingExplosion.ogg",//8
+		"j_runSound.ogg",		  //9
+		"k_MechRunSound.ogg",     //10
+		"l_reverseSound1.ogg",    //11
+		"m_reverseSound2.ogg"     //12
 	};
 
 	for (int i = 0; i < namesOfSounds.size(); i++)

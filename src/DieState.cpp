@@ -8,9 +8,10 @@ DieState::DieState(Menu* menu, sf::Sprite& bg1, sf::Sprite& bg2)
     m_backGround2(std::move(bg2)), m_onGround(false)
 {
     updateMenu(menu);
-
+    
     auto& player = getMenu()->getController().getPlayer().getState();
     player->updateCurrSkin(getMenu()->getController().getPlayer().getFallingTexture(), player->getCurrSkin().getPosition());
+    player->getCurrSkin().setScale(sf::Vector2f(1, 1));
 
     // Calculate scale factors based on desired size
     float scaleX = (450.0f / 2) / player->getCurrSkin().getTexture()->getSize().x;
@@ -39,6 +40,7 @@ void DieState::update(float deltaTime)
             if (!m_onGround)
             {
                 getMenu()->getController().getPlayer().getState()->updateCurrSkin(getMenu()->getController().getPlayer().getDyingTexture(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
+                getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale({ 1,1 });
                 sf::IntRect playerRect(0, 0, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().y);
                 getMenu()->getController().getPlayer().getState()->getCurrSkin().setTextureRect(playerRect);
 

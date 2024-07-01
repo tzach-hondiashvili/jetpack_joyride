@@ -1,12 +1,14 @@
 #include "ReverserState.h"
 #include "Menu.h"
 #include "BasicPlayerState.h"
+#include "Resources.h"
 
 ReverserState::ReverserState(const sf::Texture* currSkin, const sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu)
-    :m_isGravityReversed(false),m_wasSpacePressed(false)
+    : m_isGravityReversed(false), m_wasSpacePressed(false), stepsPlaying(false)
 {
     updateCurrSkin(currSkin, pos);
     updatePrevSkin(prevSkin);
+    getCurrSkin().setScale({ 1,1 });
     updateMenu(menu);
 
     sf::IntRect playerRect(0, 0, getCurrSkin().getTexture()->getSize().x / 4, getCurrSkin().getTexture()->getSize().y);
@@ -14,8 +16,10 @@ ReverserState::ReverserState(const sf::Texture* currSkin, const sf::Texture* pre
 
     getCurrSkin().setOrigin(playerRect.width / 2.0f, playerRect.height / 2.0f);
     getCurrSkin().rotate(180);
-    getCurrSkin().setScale({-1,1});
+    getCurrSkin().setScale({ -1,1 });
 
+    steps.setBuffer(Resources::instance().getSoundEffect(9));
+    steps.setVolume(100);
 }
 
 void ReverserState::updateAnimation(float time)
@@ -23,7 +27,9 @@ void ReverserState::updateAnimation(float time)
     static float timeSinceLastFrame = 0.f;
     timeSinceLastFrame += time;
 
-    if (timeSinceLastFrame >= 0.3f - getCurrSkin().getPosition().x / 10000000)
+    const float animationFrameRate = 0.3f - getCurrSkin().getPosition().x / 10000000;
+
+    if (timeSinceLastFrame >= animationFrameRate)
     {
         setAnimationFrame((getAnimationFrame() + 1) % 4);
 
@@ -33,7 +39,42 @@ void ReverserState::updateAnimation(float time)
 
         timeSinceLastFrame = 0.f;
     }
+
+    // Check if the player is on the ground (either floor or ceiling)
+    bool isOnGround = false;
+
+    // Get player position
+    sf::Vector2f playerPosition = getCurrSkin().getPosition();
+
+    // Define proximity ranges to floor and ceiling
+    float floorLevel = 120.f;
+    float ceilingLevel = 810.f;
+    float proximityThreshold = 10.f; // Adjust this threshold as needed
+
+    // Calculate proximity to floor and ceiling
+    float distanceToFloor = std::abs(playerPosition.y - floorLevel);
+    float distanceToCeiling = std::abs(playerPosition.y - ceilingLevel);
+
+    // Determine if the player is close enough to either floor or ceiling
+    if (distanceToFloor <= proximityThreshold || distanceToCeiling <= proximityThreshold)
+    {
+        isOnGround = true;
+    }
+
+    if (isOnGround)
+    {
+        playStepsSound();
+    }
+    else
+    {
+        stopStepsSound();
+    }
 }
+
+
+
+
+
 
 void ReverserState::die()
 {
@@ -52,7 +93,6 @@ void ReverserState::move(sf::Vector2f pos, float time)
     sf::Vector2f newPosition = getCurrSkin().getPosition();
     newPosition.y += getVelocity().y * time;
 
-    // Clamp the player's position
     if (m_isGravityReversed)
     {
         if (newPosition.y < 120)
@@ -89,18 +129,20 @@ void ReverserState::print()
 
 void ReverserState::applyReverseGravity(float time)
 {
-    if (m_isGravityReversed) 
+    if (m_isGravityReversed)
     {
-        getVelocity().y -= getGravity() * time; // Apply gravity upwards
+        getVelocity().y -= getGravity() * time;
     }
-    else 
+    else
     {
-        getVelocity().y += getGravity() * time; // Apply gravity downwards
+        getVelocity().y += getGravity() * time;
     }
 }
 
 void ReverserState::handleReverseInput()
 {
+    static sf::Sound reverse;
+
     bool isSpacePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
     if (!isSpacePressed && m_wasSpacePressed)
@@ -108,8 +150,39 @@ void ReverserState::handleReverseInput()
         m_isGravityReversed = !m_isGravityReversed;
         getCurrSkin().rotate(180);
         getCurrSkin().setScale(m_isGravityReversed ? sf::Vector2f{ 1, 1 } : sf::Vector2f{ -1, 1 });
+
+        if (m_isGravityReversed)
+        {
+            reverse.setBuffer(Resources::instance().getSoundEffect(11));
+            reverse.setVolume(100);
+            reverse.play();
+        }
+        else
+        {
+            reverse.setBuffer(Resources::instance().getSoundEffect(12));
+            reverse.setVolume(100);
+            reverse.play();
+        }
     }
 
-
     m_wasSpacePressed = isSpacePressed;
+}
+
+void ReverserState::playStepsSound()
+{
+    if (!stepsPlaying)
+    {
+        steps.setLoop(true);
+        steps.play();
+        stepsPlaying = true;
+    }
+}
+
+void ReverserState::stopStepsSound()
+{
+    if (stepsPlaying)
+    {
+        steps.stop();
+        stepsPlaying = false;
+    }
 }
