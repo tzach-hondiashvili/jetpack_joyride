@@ -536,7 +536,7 @@ std::list<std::unique_ptr<Enemy>> Factory::createAndGetEnemies(sf::Vector2f scro
         {4, &Factory::createMissile}
     };
     
-    int maxRange = std::max(5, 15 - static_cast<int>(gameTime / 700.0f)); // Ensures the max range is at least 5
+    int maxRange = std::max(5, 20 - static_cast<int>(gameTime / 1200.0f)); // Ensures the max range is at least 5
     int randomNumber = std::rand() % maxRange;
 
     std::list<std::unique_ptr<Enemy>> enemies;
@@ -691,10 +691,10 @@ std::list<std::unique_ptr<MovingObjects>> Factory::createScientists(const std::s
     float startX = 2000 + scrollOffset.x;
     float startY = 750;
 
-    sf::Vector2f position1(startX+ randomNumber + 1000, startY);
-    sf::Vector2f position2(startX+ randomNumber - 1200, startY);
-    sf::Vector2f position3(startX- randomNumber + 200, startY);
-    sf::Vector2f position4(startX- randomNumber - 600, startY);
+    sf::Vector2f position1(startX + randomNumber + 1000, startY);
+    sf::Vector2f position2(startX + randomNumber - 1200, startY);
+    sf::Vector2f position3(startX - randomNumber + 200, startY);
+    sf::Vector2f position4(startX - randomNumber - 600, startY);
     sf::Vector2f position5(startX, startY);
 
     // Create the scientists

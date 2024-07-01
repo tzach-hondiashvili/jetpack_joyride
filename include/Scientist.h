@@ -17,4 +17,5 @@ public:
 
 private:
 	static bool m_registerit;
+	bool m_isLeft;
 };

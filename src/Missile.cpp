@@ -36,9 +36,9 @@ Missile::Missile(sf::Vector2f position)
 
 void Missile::updateSoundAndWarnings(sf::Vector2f playerpos)
 {
-	if (getSprite().getPosition().x >= playerpos.x + 1380) //missile not yet reached
+	if (getSprite().getPosition().x >= playerpos.x + 1300) //missile not yet reached
 	{
-		updateWarningLocation( playerpos + sf::Vector2f(1290,0));
+		updateWarningLocation( playerpos + sf::Vector2f(1250,0));
 
 		if (!getIsWarningPlayed() && (getSprite().getPosition().x <= playerpos.x + 1980))
 		{
