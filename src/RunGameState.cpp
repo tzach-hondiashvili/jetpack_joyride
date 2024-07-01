@@ -3,6 +3,7 @@
 #include "DieState.h"
 
 RunGameState::RunGameState(Menu* menu)
+    :m_isExplode(true)
 {
 
     updateMenu(menu);
@@ -33,8 +34,8 @@ RunGameState::RunGameState(Menu* menu)
     float backgroundWidth = 277.f * (1456.f / 277);  // Adjusted width of the background sprite
 
     m_hall.setPosition(0.f, 0.f);
-    m_background1.setPosition(hallWidth, 0.f);
-    m_background2.setPosition(hallWidth + backgroundWidth, 0.f);
+    m_background1.setPosition(hallWidth / 10, 0.f);
+    m_background2.setPosition(hallWidth / 10 + backgroundWidth, 0.f);
 
 }
 
@@ -45,6 +46,10 @@ RunGameState::~RunGameState()
 
 void RunGameState::update(float deltaTime)
 {
+    static int currentFrame = 0;
+    static float frameTime = 0.1f;
+    static float elapsedTime = 0.0f;
+
     if (getMenu()->getController().getPlayer().getLives() == 0)
     {
         std::unique_ptr temp = std::make_unique<DieState>(getMenu(),m_background1,m_background2);
@@ -76,6 +81,22 @@ void RunGameState::update(float deltaTime)
         getMenu()->getController().getMap().updateScientists(m_background2.getPosition(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition(), deltaTime);
     }
 
+    // Update hall animation frame
+    elapsedTime += deltaTime;
+    if (elapsedTime >= frameTime && m_isExplode)
+    {
+        elapsedTime = 0.0f;
+        currentFrame = (currentFrame + 1) % 10;
+        int frameWidth = m_hall.getTexture()->getSize().x / 10;
+        sf::IntRect hallRect(currentFrame * frameWidth, 0, frameWidth, m_hall.getTexture()->getSize().y);
+        m_hall.setTextureRect(hallRect);
+        if (currentFrame == 9)
+        {
+            m_isExplode = false;
+        }
+    }
+
+
     getMenu()->updateController({m_view.getCenter().x - 600 , 760}, deltaTime);
     getMenu()->updateScoreBoard();
     m_options[0].second->updateSprite(getMenu()->getSb().getDistance().getPosition() + sf::Vector2f{1300,0}, &Resources::instance().getOtherTexture(4));
@@ -87,12 +108,13 @@ void RunGameState::update(float deltaTime)
 
 void RunGameState::print()
 {
+    getMenu()->getWindow().draw(m_background1);
+    getMenu()->getWindow().draw(m_background2);
     if (m_view.getCenter().x - 770 * 2 < m_hall.getTexture()->getSize().x)
     {
         getMenu()->getWindow().draw(m_hall); // Draw hall if it's still visible
     }
-    getMenu()->getWindow().draw(m_background1);
-    getMenu()->getWindow().draw(m_background2);
+    
     
     for (auto it = getMenu()->getController().getMap().getAlarms().begin(); it != getMenu()->getController().getMap().getAlarms().end(); it++)
     {

@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 Menu::Menu()
-    :m_window(sf::VideoMode(1456, 960), "Jetpack Joyride"),m_finishedLoading(false)
+    :m_window(sf::VideoMode(1280, 720), "Jetpack Joyride"),m_finishedLoading(false)
 {
     m_state = std::move(std::make_unique<DefaultMenu>(this));
 }

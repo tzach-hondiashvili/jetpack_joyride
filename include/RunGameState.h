@@ -27,4 +27,6 @@ private:
 	std::vector<option> m_options;
 
 	float m_scrollSpeed;
+
+	bool m_isExplode;
 };
