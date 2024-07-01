@@ -31,6 +31,7 @@ public:
     static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset, float gameTime);
     static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos, float gameTime);
     static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime);
+    static std::list<std::unique_ptr<StaticObjects>> createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime);
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
@@ -39,6 +40,7 @@ public:
     static std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createPowerup(const std::string& name, sf::Vector2f scrollOffset);
+    static std::list<std::unique_ptr<Pickable>> createPig(const std::string& name, sf::Vector2f scrollOffset);
 
     // Methods to create different lazer shapes
     static std::list<std::unique_ptr<StaticObjects>> createYparallel(const std::string& name, sf::Vector2f scrollOffset);
@@ -55,6 +57,10 @@ public:
 
     // Methods to create scientists
     static std::list<std::unique_ptr<MovingObjects>> createScientists(const std::string& name, sf::Vector2f scrollOffset);
+
+    // Methods to create lights 
+    static std::list<std::unique_ptr<StaticObjects>> createLight(const std::string& name, sf::Vector2f scrollOffset);
+
 
 private:
     //Get the static map of factory functions.

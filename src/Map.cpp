@@ -20,6 +20,11 @@ std::list<std::unique_ptr<MovingObjects>>& Map::getScientists()
 	return m_scientists;
 }
 
+std::list<std::unique_ptr<StaticObjects>>& Map::getAlarms()
+{
+	return m_alarms;
+}
+
 void Map::updatePickables(sf::Vector2f scrollOffset, float deltaTime)
 {
 	auto temp = Factory::createAndGetPickables(scrollOffset , deltaTime);
@@ -42,6 +47,12 @@ void Map::updateScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, fl
 {
 	auto temp = Factory::createAndGetScientists(scrollOffset, playerPos, deltaTime);
 	m_scientists.insert(m_scientists.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
+}
+
+void Map::updateAlarms(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime)
+{
+	auto temp = Factory::createAndGetAlarms(scrollOffset, playerPos, deltaTime);
+	m_alarms.insert(m_alarms.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
 }
 
 void Map::updatePickablesAnimation(float time)
@@ -122,12 +133,30 @@ void Map::updateScientistsAnimation(sf::Vector2f viewPos, float time)
 	}
 }
 
+void Map::updateAlarmsAnimation(sf::Vector2f viewPos, float time)
+{
+	static float timeSinceLastFrame = 0.f;
+	timeSinceLastFrame += time;
+
+	if (timeSinceLastFrame >= 0.10f)
+	{
+		for (auto it = m_alarms.begin(); it != m_alarms.end(); it++)
+		{
+			(*it)->updateAnimation(time);
+		}
+
+		timeSinceLastFrame = 0;
+	}
+
+}
+
 void Map::updateMap(sf::Vector2f viewPos, float time)
 {
 	updatePickablesAnimation(time);
 	updateObstaclesAnimation(time);
 	updateEnemiesAnimation(viewPos, time);
 	updateScientistsAnimation(viewPos,time);
+	updateAlarmsAnimation(viewPos, time);
 
 	// deleting passed objects
 	for (auto it = m_pickables.begin(); it != m_pickables.end(); )
@@ -172,6 +201,18 @@ void Map::updateMap(sf::Vector2f viewPos, float time)
 		if ((*it)->CheckIfToDelete(viewPos))
 		{
 			it = m_scientists.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	for (auto it = m_alarms.begin(); it != m_alarms.end(); )
+	{
+		if ((*it)->CheckIfToDelete(viewPos))
+		{
+			it = m_alarms.erase(it);
 		}
 		else
 		{
