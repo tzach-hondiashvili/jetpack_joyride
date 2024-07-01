@@ -7,7 +7,7 @@ GameObjects::GameObjects()
 
 bool GameObjects::CheckIfToDelete(sf::Vector2f viewPos)
 {
-	if (getSprite().getPosition().x <= viewPos.x-300) //missile passed the screen, end of trace
+	if (getSprite().getPosition().x <= viewPos.x-400) //object passed the screen, end of trace
 	{
 		return true;
 	}
