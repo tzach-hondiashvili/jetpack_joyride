@@ -267,6 +267,41 @@ std::list<std::unique_ptr<Pickable>> Factory::createPig(const std::string& name,
     return temp;
 }
 
+std::list<std::unique_ptr<Pickable>> Factory::createPigCoins(const std::string& name, sf::Vector2f playerPos)
+{
+    std::list<std::unique_ptr <Pickable>> temp;
+
+    // Initial positions for rectangle shape
+    float startX = 100.f;
+    float startY = 100.f;
+
+    startX += playerPos.x;
+    startY;
+
+    float width = 20; // Adjust range and base size as needed
+    float height = 45;
+
+    for (int i = 0; i < height; ++i)
+    {
+        for (int j = 0; j < width; ++j)
+        {
+            sf::Vector2f position(startX + i * 50.f, startY + j * 40.f);
+
+            // Create a GameObject instance
+            std::unique_ptr<GameObjects> coin = Factory::create(name, position);
+            if (coin)
+            {
+                // Downcast to Pickable by transferring ownership and casting raw pointer
+                std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(coin.release()));
+
+                // Add to temp
+                temp.push_back(std::move(pickable));
+            }
+        }
+    }
+    return temp;
+}
+
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset, float gameTime)
 {
     std::srand((unsigned int)std::time(NULL));

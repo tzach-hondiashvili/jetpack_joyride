@@ -16,6 +16,7 @@ public:
 	std::list<std::unique_ptr <StaticObjects>>& getAlarms();
 
 	void updatePickables(sf::Vector2f scrollOffset, float deltaTime);
+	void updatePickablesWithPigCoin(sf::Vector2f playerPos);
 	void updateObstacles(sf::Vector2f scrollOffset, float deltaTime);
 	void updateEnemies(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime);
 	void updateScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float deltaTime);

@@ -7,32 +7,20 @@
 #include <typeindex>
 
 #include "Player.h"
+#include "Menu.h"
 #include "Coin.h"
 #include "Beam.h"
 #include "Lazer.h"
 #include "PowerUp.h"
 #include "MechState.h"
 #include "ReverserState.h"
+#include "Pig.h"
 
 
 using CreateFunction = std::function<void(Player& player)>;
 
-namespace // anonymous namespace — the standard way to make function "static"
+namespace 
 {
-
-    // primary collision-processing functions
-    //void shipAsteroid(GameObject& /*spaceShip*/,
-    //    GameObject& /*asteroid*/)
-    //{
-    //    // To get the actual types and use them:
-    //    // SpaceShip& ship = dynamic_cast<SpaceShip&>(spaceShip);
-    //    // Asteroid&  ast  = dynamic_cast<Asteroid&>(asteroid);
-    //    // or:
-    //    // SpaceShip& ship = static_cast<SpaceShip&>(spaceShip);
-    //    // Asteroid&  ast  = static_cast<Asteroid&>(asteroid);
-
-    //    std::cout << "SpaceShip and Asteroid collision!\n";
-    //}
 
     void CreateReverserState(Player& player) {
         player.getState() = std::move(std::make_unique<ReverserState>(&Resources::instance().getPlayerTexture(18),
@@ -96,6 +84,18 @@ namespace // anonymous namespace — the standard way to make function "static"
        boom.play();
    }
 
+   void PlayerPig(GameObjects& player,
+       GameObjects& pig)
+   {
+       std::cout << "Collided with pig!\n";
+       static_cast<Player&>(player).getState()->getMenu()->getController().getMap().updatePickablesWithPigCoin(pig.getSprite().getPosition());
+       
+       static sf::Sound pigParty;
+       pigParty.setBuffer(Resources::instance().getSoundEffect(13));
+       pigParty.setVolume(100);
+       pigParty.play();
+   }
+
    void PlayerPowerUp(GameObjects& player,
        GameObjects& )
    {
@@ -120,33 +120,7 @@ namespace // anonymous namespace — the standard way to make function "static"
    }
   
 
-    //void shipShip(GameObject& /*spaceShip1*/,
-    //    GameObject& /*spaceShip2*/)
-    //{
-    //    std::cout << "Two SpaceShips collision!\n";
-    //}
-
-    ////...
-
-    //// secondary collision-processing functions that just
-    //// implement symmetry: swap the parameters and call a
-    //// primary function
-    //void asteroidShip(GameObject& asteroid,
-    //    GameObject& spaceShip)
-    //{
-    //    shipAsteroid(spaceShip, asteroid);
-    //}
-    //void stationShip(GameObject& spaceStation,
-    //    GameObject& spaceShip)
-    //{
-    //    shipStation(spaceShip, spaceStation);
-    //}
-    //void stationAsteroid(GameObject& spaceStation,
-    //    GameObject& asteroid)
-    //{
-    //    asteroidStation(asteroid, spaceStation);
-    //}
-    //...
+    
 
     using HitFunctionPtr = void (*)(GameObjects&, GameObjects&);
     using Key = std::pair<std::type_index, std::type_index>;
@@ -160,13 +134,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[Key(typeid(Player), typeid(Lazer))] = &PlayerLazer;
         phm[Key(typeid(Player), typeid(Missile))] = &PlayerMissile;
         phm[Key(typeid(Player), typeid(PowerUp))] = &PlayerPowerUp;
-        //phm[Key(typeid(SpaceShip), typeid(SpaceStation))] = &shipStation;
-        //phm[Key(typeid(Asteroid), typeid(SpaceStation))] = &asteroidStation;
-        //phm[Key(typeid(SpaceShip), typeid(SpaceShip))] = &shipShip;
-        //phm[Key(typeid(Asteroid), typeid(SpaceShip))] = &asteroidShip;
-        //phm[Key(typeid(SpaceStation), typeid(SpaceShip))] = &stationShip;
-        //phm[Key(typeid(SpaceStation), typeid(Asteroid))] = &stationAsteroid;
-        //...
+        phm[Key(typeid(Player), typeid(Pig))] = &PlayerPig;
+        
         return phm;
     }
 

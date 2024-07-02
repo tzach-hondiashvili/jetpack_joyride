@@ -131,7 +131,8 @@ void Resources::fillSoundFX()
 		"j_runSound.ogg",		  //9
 		"k_MechRunSound.ogg",     //10
 		"l_reverseSound1.ogg",    //11
-		"m_reverseSound2.ogg"     //12
+		"m_reverseSound2.ogg",    //12
+		"n_pig.ogg"               //13
 	};
 
 	for (int i = 0; i < namesOfSounds.size(); i++)

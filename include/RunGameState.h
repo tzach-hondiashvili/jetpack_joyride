@@ -13,6 +13,9 @@ public:
 	virtual void hoverButton(sf::Vector2i position) override;
 	virtual void moveHelpLeft() override;
 	virtual void moveHelpRight() override;
+	sf::Sprite getBackground1();
+	sf::Sprite getBackground2();
+
 
 	void updateOptions();
 	void show();

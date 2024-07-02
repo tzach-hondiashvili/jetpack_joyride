@@ -177,6 +177,17 @@ void RunGameState::moveHelpRight()
 {
 }
 
+sf::Sprite RunGameState::getBackground1()
+{
+    return m_background1;
+}
+
+sf::Sprite RunGameState::getBackground2()
+{
+    return m_background2;
+}
+
+
 void RunGameState::updateOptions()
 {
 
