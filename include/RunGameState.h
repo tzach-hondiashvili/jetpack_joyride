@@ -15,7 +15,8 @@ public:
 	virtual void moveHelpRight() override;
 	sf::Sprite getBackground1();
 	sf::Sprite getBackground2();
-
+	float getScrollSpeed();
+	void setScrollSpeed(float newSpeed);
 
 	void updateOptions();
 	void show();

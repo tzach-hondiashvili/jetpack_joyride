@@ -8,7 +8,7 @@ public:
 	FastPlayerState(sf::Vector2f pos, Menu* menu);
 	virtual ~FastPlayerState() {};
 
-	virtual void updateAnimation(float time) {};
+	virtual void updateAnimation(float time) override;
 	virtual void die() {};
 	virtual void move(sf::Vector2f, float time) override;
 	virtual void print() override;
@@ -16,5 +16,6 @@ public:
 	virtual void stopSounds() {};
 
 private:
-	float m_timeInState;
+	float m_timeInState,
+		  m_prevSpeed;
 };

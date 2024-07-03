@@ -46,7 +46,7 @@ void Resources::fillTextures()
 													   "r_SuperPowerFlyTank.png",
 													   "s_SuperPowerRunner.png",
 													   "t_SuperPowerTank.png",
-													   "u_fastPlayer"		 //20
+													   "u_fastPlayer.png"		 //20
 													  };
 
 	std::vector<std::string> namesOfOtherTextures = {"a_arrow.png", //0

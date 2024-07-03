@@ -43,8 +43,8 @@ public:
     static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset, float gameTime);
     static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset, float gameTime);
     static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos, float gameTime);
-    static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime);
-    static std::list<std::unique_ptr<StaticObjects>> createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime);
+    static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float );
+    static std::list<std::unique_ptr<StaticObjects>> createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f , float );
 
     // Methods to create different coin shapes
     static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);

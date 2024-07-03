@@ -8,6 +8,7 @@
 
 #include "Player.h"
 #include "FastPlayerState.h"
+#include "BasicPlayerState.h"
 #include "SpeedBoost.h"
 #include "Menu.h"
 #include "Coin.h"
@@ -98,38 +99,44 @@ namespace
    void PlayerPowerUp(GameObjects& player,
        GameObjects& )
    {
-       static std::map<int, CreateFunction> PowerupMap = 
+       if (static_cast<Player&>(player).getState()->getMenu()->getController().getIfCheckCollision())
        {
-            {0, CreateReverserState},
-            {1, CreateMechState}
-       };
-       
-       int choice = rand() % 2;
-       
-       auto it = PowerupMap.find(choice);
-       if (it != PowerupMap.end())
-       {
-           it->second(static_cast<Player&>(player));
-       }
+           static std::map<int, CreateFunction> PowerupMap =
+           {
+                {0, CreateReverserState},
+                {1, CreateMechState}
+           };
 
-       static sf::Sound power;
-       power.setBuffer(Resources::instance().getSoundEffect(1));
-       power.setVolume(100);
-       power.play();
+           int choice = rand() % 2;
+
+           auto it = PowerupMap.find(choice);
+           if (it != PowerupMap.end())
+           {
+               it->second(static_cast<Player&>(player));
+           }
+
+           static sf::Sound power;
+           power.setBuffer(Resources::instance().getSoundEffect(1));
+           power.setVolume(100);
+           power.play();
+       }
    }
   
    void PlayerSpeedBoost(GameObjects& player,
-       GameObjects& speedBoost)
+       GameObjects& )
    {
+       if(static_cast<Player&>(player).getState()->getMenu()->getController().getIfCheckCollision())
+       {
+           static_cast<Player&>(player).getState() = std::move(std::make_unique<FastPlayerState>(
+               static_cast<Player&>(player).getState()->getCurrSkin().getPosition(),
+               static_cast<Player&>(player).getState()->getMenu()));
 
-       static_cast<Player&>(player).getState() = std::move(std::make_unique<FastPlayerState>(
-                                                 static_cast<Player&>(player).getState()->getCurrSkin().getPosition(),
-                                                 static_cast<Player&>(player).getState()->getMenu()));
+           static sf::Sound speedBoostSound;
+           speedBoostSound.setBuffer(Resources::instance().getSoundEffect(16));
+           speedBoostSound.setVolume(100);
+           speedBoostSound.play();
+       }
 
-       static sf::Sound speedBoostSound;
-       speedBoostSound.setBuffer(Resources::instance().getSoundEffect(16));
-       speedBoostSound.setVolume(100);
-       speedBoostSound.play();
    }
     
 

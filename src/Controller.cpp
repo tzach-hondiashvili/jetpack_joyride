@@ -3,6 +3,7 @@
 #include "Collision.h"
 
 Controller::Controller()
+	:m_ifCheckCollision(true)
 {
 
 }
@@ -55,4 +56,14 @@ void Controller::checkCollision()
 			break; // Exit loop on first collision found
 		}
 	}
+}
+
+void Controller::setIfCheckCollision(bool state)
+{
+	m_ifCheckCollision = state;
+}
+
+bool Controller::getIfCheckCollision()
+{
+	return m_ifCheckCollision;
 }

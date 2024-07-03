@@ -187,6 +187,16 @@ sf::Sprite RunGameState::getBackground2()
     return m_background2;
 }
 
+float RunGameState::getScrollSpeed()
+{
+    return m_scrollSpeed;
+}
+
+void RunGameState::setScrollSpeed(float newSpeed)
+{
+    m_scrollSpeed = newSpeed;
+}
+
 
 void RunGameState::updateOptions()
 {

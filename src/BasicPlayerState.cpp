@@ -27,6 +27,7 @@ BasicPlayerState::BasicPlayerState(sf::Vector2f pos, Menu* menu)
         m_engineSound.setVolume(70);
         m_engineSound.setLoop(true);
     }
+    getMenu()->getController().setIfCheckCollision(true);
 }
 
 // Update animation method

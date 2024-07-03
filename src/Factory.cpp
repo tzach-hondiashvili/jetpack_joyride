@@ -276,7 +276,6 @@ std::list<std::unique_ptr<Pickable>> Factory::createPigCoins(const std::string& 
     float startY = 100.f;
 
     startX += playerPos.x;
-    startY;
 
     float width = 20; // Adjust range and base size as needed
     float height = 45;
@@ -811,7 +810,7 @@ std::list<std::unique_ptr<MovingObjects>> Factory::createScientists(const std::s
     return temp;
 }
 
-std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime)
+std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float )
 {
     std::srand((unsigned int)std::time(NULL));
     using CreateFunction = std::list<std::unique_ptr<MovingObjects>>(*)(const std::string&, sf::Vector2f);
@@ -836,7 +835,7 @@ std::list<std::unique_ptr<MovingObjects>> Factory::createAndGetScientists(sf::Ve
     return scientists;
 }
 
-std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float gameTime)
+std::list<std::unique_ptr<StaticObjects>> Factory::createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f , float )
 {
     using CreateFunction = std::list<std::unique_ptr<StaticObjects>>(*)(const std::string&, sf::Vector2f);
 

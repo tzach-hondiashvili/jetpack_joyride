@@ -16,7 +16,7 @@ bool SpeedBoost::m_registerit = Factory::registerit("SpeedBoost", [](sf::Vector2
 SpeedBoost::SpeedBoost(sf::Vector2f position)
 {
     updateSprite(position, &Resources::instance().getObjectTexture(11));
-    setScale({ 0.18,0.18 });
+    setScale({ (float)0.18,(float)0.18 });
     sf::IntRect SpeedBoostRect(0, 0, getSprite().getTexture()->getSize().x, getSprite().getTexture()->getSize().y);
     changeSpriteAnimation(SpeedBoostRect);
 }

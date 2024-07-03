@@ -119,7 +119,7 @@ void Map::updateEnemiesAnimation(sf::Vector2f pos, float time)
 	
 }
 
-void Map::updateScientistsAnimation(sf::Vector2f viewPos, float time)
+void Map::updateScientistsAnimation(sf::Vector2f , float time)
 {
 	static float timeSinceLastFrame = 0.f;
 	timeSinceLastFrame += time;
@@ -140,7 +140,7 @@ void Map::updateScientistsAnimation(sf::Vector2f viewPos, float time)
 	}
 }
 
-void Map::updateAlarmsAnimation(sf::Vector2f viewPos, float time)
+void Map::updateAlarmsAnimation(sf::Vector2f , float time)
 {
 	static float timeSinceLastFrame = 0.f;
 	timeSinceLastFrame += time;
