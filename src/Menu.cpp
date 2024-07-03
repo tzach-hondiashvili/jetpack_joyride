@@ -1,9 +1,15 @@
 #include "Menu.h"
 
 Menu::Menu()
-    :m_window(sf::VideoMode(1456, 960), "Jetpack Joyride"),m_finishedLoading(false)
+    :m_window(sf::VideoMode(1456, 960), "Jetpack Joyride - Daniel Dalal &  Tzach Hondiashvili"),m_finishedLoading(false)
 {
     m_state = std::move(std::make_unique<DefaultMenu>(this));
+    sf::Image img;
+    img.loadFromFile("o_icon.png");
+    const sf::Uint8* pixels = img.getPixelsPtr(); // Get a pointer to the pixel data
+    unsigned int width = img.getSize().x;
+    unsigned int height = img.getSize().y;
+    m_window.setIcon(width,height,pixels);
 }
 
 
