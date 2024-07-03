@@ -3,13 +3,15 @@
 #include "BasicPlayerState.h"
 #include "Resources.h"
 
-ReverserState::ReverserState(const sf::Texture* currSkin, const sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu)
-    : m_isGravityReversed(false), m_wasSpacePressed(false), stepsPlaying(false)
+ReverserState::ReverserState(sf::Vector2f pos, Menu* menu)
+    : m_isGravityReversed(false), m_wasSpacePressed(false), m_stepsPlaying(false)
 {
-    updateCurrSkin(currSkin, pos);
-    updatePrevSkin(prevSkin);
-    getCurrSkin().setScale({ 1,1 });
     updateMenu(menu);
+
+    updateCurrSkin(&Resources::instance().getPlayerTexture(18), pos);
+    
+    getCurrSkin().setScale({ 1,1 });
+    
 
     sf::IntRect playerRect(0, 0, getCurrSkin().getTexture()->getSize().x / 4, getCurrSkin().getTexture()->getSize().y);
     getCurrSkin().setTextureRect(playerRect);
@@ -18,8 +20,8 @@ ReverserState::ReverserState(const sf::Texture* currSkin, const sf::Texture* pre
     getCurrSkin().rotate(180);
     getCurrSkin().setScale({ -1,1 });
 
-    steps.setBuffer(Resources::instance().getSoundEffect(9));
-    steps.setVolume(100);
+    m_steps.setBuffer(Resources::instance().getSoundEffect(9));
+    m_steps.setVolume(100);
 }
 
 void ReverserState::updateAnimation(float time)
@@ -78,7 +80,7 @@ void ReverserState::updateAnimation(float time)
 
 void ReverserState::die()
 {
-    getMenu()->getController().getPlayer().getState() = std::move(std::make_unique<BasicPlayerState>(getPrevText(), getPrevText(), getCurrSkin().getPosition(), getMenu()));
+    getMenu()->getController().getPlayer().getState() = std::move(std::make_unique<BasicPlayerState>(getCurrSkin().getPosition(), getMenu()));
 }
 
 void ReverserState::move(sf::Vector2f pos, float time)
@@ -168,21 +170,29 @@ void ReverserState::handleReverseInput()
     m_wasSpacePressed = isSpacePressed;
 }
 
+void ReverserState::stopSounds()
+{
+    if (m_steps.getStatus() == sf::Sound::Playing)
+    {
+        m_steps.stop();
+    }
+}
+
 void ReverserState::playStepsSound()
 {
-    if (!stepsPlaying)
+    if (!m_stepsPlaying)
     {
-        steps.setLoop(true);
-        steps.play();
-        stepsPlaying = true;
+        m_steps.setLoop(true);
+        m_steps.play();
+        m_stepsPlaying = true;
     }
 }
 
 void ReverserState::stopStepsSound()
 {
-    if (stepsPlaying)
+    if (m_stepsPlaying)
     {
-        steps.stop();
-        stepsPlaying = false;
+        m_steps.stop();
+        m_stepsPlaying = false;
     }
 }

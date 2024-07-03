@@ -5,7 +5,7 @@
 class ReverserState : public PlayerState
 {
 public:
-    ReverserState(const sf::Texture* currSkin, const sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu);
+    ReverserState(sf::Vector2f pos, Menu* menu);
     virtual ~ReverserState() {};
 
     virtual void updateAnimation(float time) override;
@@ -16,12 +16,14 @@ public:
     void applyReverseGravity(float time);
     void handleReverseInput();
 
+    virtual void stopSounds() override;
+
 private:
     bool m_isGravityReversed;
     bool m_wasSpacePressed;
 
-    sf::Sound steps;
-    bool stepsPlaying;
+    sf::Sound m_steps;
+    bool m_stepsPlaying;
 
     void playStepsSound();
     void stopStepsSound();

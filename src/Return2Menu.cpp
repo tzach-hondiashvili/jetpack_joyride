@@ -11,6 +11,7 @@ Return2Menu::Return2Menu(Menu* menu)
 }
 void Return2Menu::execute()
 {
+	getMenu()->getController().getPlayer().getState()->stopSounds();
 	static sf::Sound Click;
 	Click.setBuffer(Resources::instance().getSoundEffect(7));
 	Click.setVolume(100);

@@ -24,6 +24,8 @@ DieState::DieState(Menu* menu, sf::Sprite& bg1, sf::Sprite& bg2)
     player->setAnimationFrame(0);
 
     updateOptions();
+
+    getMenu()->getController().getPlayer().getState()->stopSounds();
 }
 
 void DieState::update(float deltaTime)
@@ -40,7 +42,6 @@ void DieState::update(float deltaTime)
             if (!m_onGround)
             {
                 getMenu()->getController().getPlayer().getState()->updateCurrSkin(getMenu()->getController().getPlayer().getDyingTexture(), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
-                getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale({ 1,1 });
                 sf::IntRect playerRect(0, 0, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().x, getMenu()->getController().getPlayer().getState()->getCurrSkin().getTexture()->getSize().y);
                 getMenu()->getController().getPlayer().getState()->getCurrSkin().setTextureRect(playerRect);
 

@@ -23,8 +23,7 @@ namespace
 {
 
     void CreateReverserState(Player& player) {
-        player.getState() = std::move(std::make_unique<ReverserState>(&Resources::instance().getPlayerTexture(18),
-            player.getState()->getCurrSkin().getTexture(),
+        player.getState() = std::move(std::make_unique<ReverserState>(
             player.getState()->getCurrSkin().getPosition(),
             player.getState()->getMenu()
         ));
@@ -32,8 +31,6 @@ namespace
 
     void CreateMechState(Player& player) {
         player.getState() = std::move(std::make_unique<MechState>(
-            &Resources::instance().getPlayerTexture(19),
-            player.getState()->getCurrSkin().getTexture(),
             player.getState()->getCurrSkin().getPosition(),
             player.getState()->getMenu()
         ));

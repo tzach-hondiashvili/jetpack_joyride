@@ -1,13 +1,16 @@
 #include "BasicPlayerState.h"
 #include "Menu.h"
 
-BasicPlayerState::BasicPlayerState(const sf::Texture* currSkin, const sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu)
+// Constructor
+BasicPlayerState::BasicPlayerState(sf::Vector2f pos, Menu* menu)
 {
-	updateCurrSkin(currSkin, pos);
-	updatePrevSkin(prevSkin);
-	updateMenu(menu);
+    updateMenu(menu);
 
-   getCurrSkin().setScale(sf::Vector2f((float)389 / (float)getCurrSkin().getTexture()->getSize().x, (float)528 / (float)getCurrSkin().getTexture()->getSize().x));
+    updateCurrSkin(getMenu()->getController().getPlayer().getSprite().getTexture(), pos);
+
+    
+
+    getCurrSkin().setScale(sf::Vector2f((float)389 / (float)getCurrSkin().getTexture()->getSize().x, (float)528 / (float)getCurrSkin().getTexture()->getSize().x));
 
     getFlame().setPosition({ 165, 880 });
     getFlame().setTexture(Resources::instance().getObjectTexture(1));
@@ -17,20 +20,26 @@ BasicPlayerState::BasicPlayerState(const sf::Texture* currSkin, const sf::Textur
 
     sf::IntRect flameRect(0, 0, getFlame().getTexture()->getSize().x / 6, getFlame().getTexture()->getSize().y);
     getFlame().setTextureRect(flameRect);
+
+    if (!m_engineSound.getBuffer())
+    {
+        m_engineSound.setBuffer(Resources::instance().getSoundEffect(14));
+        m_engineSound.setVolume(70);
+        m_engineSound.setLoop(true);
+    }
 }
 
+// Update animation method
 void BasicPlayerState::updateAnimation(float time)
 {
     static int currFlame = 0;
     static float timeSinceLastFrame = 0.f;
     static bool stepsPlaying = false;
 
-    static sf::Sound steps;
-
-    if (!steps.getBuffer()) 
+    if (!m_steps.getBuffer())
     {
-        steps.setBuffer(Resources::instance().getSoundEffect(9));
-        steps.setVolume(100);
+        m_steps.setBuffer(Resources::instance().getSoundEffect(9));
+        m_steps.setVolume(100);
     }
 
     const float animationFrameRate = 0.13f - getCurrSkin().getPosition().x / 10000000;
@@ -47,10 +56,15 @@ void BasicPlayerState::updateAnimation(float time)
 
         if (getCurrSkin().getPosition().y != 750)
         {
-            if (stepsPlaying) 
+            if (stepsPlaying)
             {
-                steps.stop();
+                m_steps.stop();
                 stepsPlaying = false;
+            }
+
+            if (m_engineSound.getStatus() != sf::Sound::Playing)
+            {
+                m_engineSound.play();
             }
 
             sf::IntRect frameRect(3 * frameWidth, 0, frameWidth, getCurrSkin().getTexture()->getSize().y);
@@ -61,11 +75,16 @@ void BasicPlayerState::updateAnimation(float time)
         }
         else
         {
-            if (!stepsPlaying) 
+            if (!stepsPlaying)
             {
-                steps.setLoop(true);
-                steps.play();
+                m_steps.setLoop(true);
+                m_steps.play();
                 stepsPlaying = true;
+            }
+
+            if (m_engineSound.getStatus() == sf::Sound::Playing)
+            {
+                m_engineSound.stop();
             }
 
             sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getCurrSkin().getTexture()->getSize().y);
@@ -75,7 +94,6 @@ void BasicPlayerState::updateAnimation(float time)
         timeSinceLastFrame = 0.f;
     }
 }
-
 
 
 void BasicPlayerState::die()
@@ -95,18 +113,18 @@ void BasicPlayerState::move(sf::Vector2f pos, float time)
     sf::Vector2f newPosition = getCurrSkin().getPosition();
     newPosition.y += getVelocity().y * time;
 
-    if (newPosition.y > 750) 
+    if (newPosition.y > 750)
     {
         newPosition.y = 750;
         getVelocity().y = 0;
     }
-    else if (newPosition.y < 30) 
+    else if (newPosition.y < 30)
     {
         newPosition.y = 30;
         getVelocity().y = 0;
     }
     getCurrSkin().setPosition(newPosition);
-    getFlame().setPosition({newPosition.x + 15, newPosition.y + 130});
+    getFlame().setPosition({ newPosition.x + 15, newPosition.y + 130 });
 }
 
 void BasicPlayerState::print()
@@ -117,5 +135,17 @@ void BasicPlayerState::print()
     }
 
     getMenu()->getWindow().draw(getCurrSkin());
+}
+
+void BasicPlayerState::stopSounds()
+{
+    if (m_steps.getStatus() == sf::Sound::Playing)
+    {
+        m_steps.stop();
+    }
+    if (m_engineSound.getStatus() == sf::Sound::Playing)
+    {
+        m_engineSound.stop();
+    }
 }
 

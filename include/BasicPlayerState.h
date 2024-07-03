@@ -1,10 +1,11 @@
 #pragma once
 #include "PlayerState.h"
+#include <SFML/Audio.hpp>
 
 class BasicPlayerState:public PlayerState
 {
 public:
-	BasicPlayerState(const sf::Texture* currSkin,const sf::Texture*prevSkin,sf::Vector2f pos,Menu* menu);
+	BasicPlayerState(sf::Vector2f pos,Menu* menu);
 	virtual ~BasicPlayerState() {};
 
 	virtual void updateAnimation(float time) override;
@@ -12,6 +13,9 @@ public:
 	virtual void move(sf::Vector2f, float) override;
 	virtual void print() override;
 
+	virtual void stopSounds() override;
+
 private:
+	sf::Sound m_steps, m_engineSound;
 	
 };

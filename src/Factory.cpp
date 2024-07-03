@@ -23,7 +23,7 @@ std::list<std::unique_ptr<Pickable>> Factory::createDiamond(const std::string& n
     // Initial positions for rectangle shape
     float startX = 100.f;
     float startY = 100.f;
-
+    
     // Calculate updated positions after applying scroll offset  
     
     int randomNumberX = std::rand() % (1456-100);
@@ -876,4 +876,3 @@ std::list<std::unique_ptr<StaticObjects>> Factory::createLight(const std::string
 
     return temp;
 }
-
