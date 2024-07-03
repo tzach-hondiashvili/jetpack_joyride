@@ -17,7 +17,7 @@ void Player::createPlayer(Menu* menu)
 {
     updateSprite({ 150, 750 }, &Resources::instance().getPlayerTexture(7));
 
-    m_state = std::move(std::make_unique<BasicPlayerState>(getSprite().getTexture(), getSprite().getTexture(), getSprite().getPosition(), menu));
+    m_state = std::move(std::make_unique<BasicPlayerState>(getSprite().getPosition(), menu));
 
 }
 

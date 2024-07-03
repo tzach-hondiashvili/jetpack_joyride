@@ -19,7 +19,7 @@ void OriginalSkinOption::execute()
 	Boom.setVolume(100);
 	Boom.play();
 
-	getMenu()->getController().getPlayer().getState()->updatePrevSkin(&Resources::instance().getPlayerTexture(7));
+	getMenu()->getController().getPlayer().updateSprite({ 0,0 }, &Resources::instance().getPlayerTexture(7));
 	getMenu()->getController().getPlayer().getState()->updateCurrSkin(&Resources::instance().getPlayerTexture(7), getMenu()->getController().getPlayer().getState()->getCurrSkin().getPosition());
 	getMenu()->getController().getPlayer().getState()->getCurrSkin().setScale({ 1,1 });
 	

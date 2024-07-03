@@ -2,7 +2,7 @@
 #include "Menu.h"
 
 PlayerState::PlayerState()
-	:m_currSkin(sf::Sprite()), m_Flame(sf::Sprite()),m_prevSkin(nullptr),m_menu(nullptr),m_animationFrame(0), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f)
+	:m_currSkin(sf::Sprite()), m_Flame(sf::Sprite()),m_menu(nullptr),m_animationFrame(0), m_velocity(0.f, 0.f), m_gravity(1200.f), m_jumpForce(-400.f)
 {
 }
 
@@ -12,10 +12,7 @@ void PlayerState::updateCurrSkin(const sf::Texture* currSkin, sf::Vector2f pos)
 	m_currSkin.setPosition(pos);
 }
 
-void PlayerState::updatePrevSkin(const sf::Texture* PrevSkin)
-{
-	m_prevSkin = (sf::Texture*)PrevSkin;
-}
+
 
 void PlayerState::updateMenu(Menu* Menu)
 {
@@ -53,11 +50,6 @@ sf::Sprite& PlayerState::getFlame()
 sf::Vector2f& PlayerState::getVelocity()
 {
 	return m_velocity;
-}
-
-sf::Texture* PlayerState::getPrevText()
-{
-	return m_prevSkin;
 }
 
 Menu* PlayerState::getMenu()

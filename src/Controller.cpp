@@ -28,7 +28,7 @@ void Controller::checkCollision()
 	//check collision with pickables
 	for (auto it = m_map.getPickables().begin(); it != m_map.getPickables().end(); it++)
 	{
-		if (m_player.getState()->getCurrSkin().getGlobalBounds().intersects((*it)->getSprite().getGlobalBounds()))
+		if (Collision::pixelPerfectTest(m_player.getState()->getCurrSkin(), (*it)->getSprite(), 128))
 		{
 			processCollision(m_player, *(*it));
 			m_map.getPickables().remove(*it);

@@ -13,7 +13,7 @@ public:
 	virtual void die() = 0;
 
 	void updateCurrSkin(const sf::Texture* currSkin,sf::Vector2f pos);
-	void updatePrevSkin(const sf::Texture *PrevSkin);
+
 	void updateMenu(Menu* Menu);
 	void setAnimationFrame(int frame);
 	void handleInput();
@@ -22,19 +22,18 @@ public:
 	sf::Sprite& getCurrSkin();
 	sf::Sprite& getFlame();
 	sf::Vector2f& getVelocity();
-	sf::Texture* getPrevText();
 	Menu* getMenu();
 	float& getGravity();
 	float& getJumpForce();
 
 	virtual void move(sf::Vector2f , float ) = 0;
 	virtual void print() = 0;
+	virtual void stopSounds() = 0;
 
 	void applyGravity(float deltaTime);
 
 private:
 	Menu* m_menu;
-	sf::Texture* m_prevSkin;
 	sf::Sprite m_currSkin, m_Flame;
 
 	int m_animationFrame;

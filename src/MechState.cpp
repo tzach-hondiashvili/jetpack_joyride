@@ -2,17 +2,24 @@
 #include "Menu.h"
 #include "BasicPlayerState.h"
 
-MechState::MechState(const sf::Texture* currSkin, const sf::Texture* prevSkin, sf::Vector2f pos, Menu* menu)
+MechState::MechState(sf::Vector2f pos, Menu* menu)
 {
-	updateCurrSkin(currSkin, pos);
-	updatePrevSkin(prevSkin);
-    getCurrSkin().setScale({ 1,1 });
-	updateMenu(menu);
+    updateMenu(menu);
+    updateCurrSkin(&Resources::instance().getPlayerTexture(19), pos);
 
-	sf::IntRect playerRect(0, 0, getCurrSkin().getTexture()->getSize().x / 2, getCurrSkin().getTexture()->getSize().y);
-	getCurrSkin().setTextureRect(playerRect);
+    getCurrSkin().setScale({ 1, 1 });
+
+    sf::IntRect playerRect(0, 0, getCurrSkin().getTexture()->getSize().x / 2, getCurrSkin().getTexture()->getSize().y);
+    getCurrSkin().setTextureRect(playerRect);
 
     getGravity() += 400;
+
+    if (!m_engineSound.getBuffer())
+    {
+        m_engineSound.setBuffer(Resources::instance().getSoundEffect(15));
+        m_engineSound.setVolume(70);
+        m_engineSound.setLoop(true);
+    }
 }
 
 void MechState::updateAnimation(float time)
@@ -20,10 +27,10 @@ void MechState::updateAnimation(float time)
     static float timeSinceLastFrame = 0.f;
     static bool runPlaying = false;
 
-    if (!run.getBuffer()) 
+    if (!m_run.getBuffer())
     {
-        run.setBuffer(Resources::instance().getSoundEffect(10));
-        run.setVolume(100);
+        m_run.setBuffer(Resources::instance().getSoundEffect(10));
+        m_run.setVolume(100);
     }
 
     timeSinceLastFrame += time;
@@ -40,8 +47,13 @@ void MechState::updateAnimation(float time)
             getCurrSkin().setTextureRect(frameRect);
 
             if (runPlaying) {
-                run.stop();
+                m_run.stop();
                 runPlaying = false;
+            }
+
+            if (m_engineSound.getStatus() != sf::Sound::Playing)
+            {
+                m_engineSound.play();
             }
         }
         else
@@ -54,23 +66,25 @@ void MechState::updateAnimation(float time)
             sf::IntRect frameRect(getAnimationFrame() * frameWidth, 0, frameWidth, getCurrSkin().getTexture()->getSize().y);
             getCurrSkin().setTextureRect(frameRect);
 
-            if (!runPlaying) 
+            if (!runPlaying)
             {
-                run.setLoop(true); 
-                run.play();
+                m_run.setLoop(true);
+                m_run.play();
                 runPlaying = true;
+            }
+
+            if (m_engineSound.getStatus() == sf::Sound::Playing)
+            {
+                m_engineSound.stop();
             }
         }
         timeSinceLastFrame = 0.f;
     }
 }
 
-
-
-
 void MechState::die()
 {
-	getMenu()->getController().getPlayer().getState() = std::move(std::make_unique<BasicPlayerState>(getPrevText(), getPrevText(), getCurrSkin().getPosition(), getMenu()));
+    getMenu()->getController().getPlayer().getState() = std::move(std::make_unique<BasicPlayerState>(getCurrSkin().getPosition(), getMenu()));
 }
 
 void MechState::move(sf::Vector2f pos, float time)
@@ -85,7 +99,6 @@ void MechState::move(sf::Vector2f pos, float time)
     sf::Vector2f newPosition = getCurrSkin().getPosition();
     newPosition.y += getVelocity().y * time;
 
-    // Clamp the player's position
     if (newPosition.y > 750)
     {
         newPosition.y = 750;
@@ -101,5 +114,18 @@ void MechState::move(sf::Vector2f pos, float time)
 
 void MechState::print()
 {
-	getMenu()->getWindow().draw(getCurrSkin());
+    getMenu()->getWindow().draw(getCurrSkin());
+}
+
+void MechState::stopSounds()
+{
+    if (m_run.getStatus() == sf::Sound::Playing)
+    {
+        m_run.stop();
+    }
+
+    if (m_engineSound.getStatus() == sf::Sound::Playing)
+    {
+        m_engineSound.stop();
+    }
 }
