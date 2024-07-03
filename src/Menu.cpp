@@ -71,12 +71,6 @@ void Menu::runMenu()
 
 }
 
-void Menu::quitGame()
-{
-	m_window.clear();
-	m_window.close();
-}
-
 bool Menu::finishedLoading()
 {
     return m_finishedLoading;

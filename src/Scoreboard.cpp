@@ -3,11 +3,11 @@
 #include "Resources.h"
 
 Scoreboard::Scoreboard()
-	:m_coinsCounter(),m_distanceCounter(),m_lives()
+	:m_coinsCounter(),m_distanceCounter()
 {
 	m_coinsCounter.setFont(Resources::instance().getFont());
 	m_distanceCounter.setFont(Resources::instance().getFont());
-	m_lives.setFont(Resources::instance().getFont());
+	
 
 	m_distanceCounter.setCharacterSize(40);
 	m_distanceCounter.setOutlineThickness(6);

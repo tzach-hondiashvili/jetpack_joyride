@@ -17,22 +17,9 @@
 //Typedef for a map storing factory functions for GameObject creation.
 typedef std::map<std::string, std::unique_ptr<GameObjects>(*)(sf::Vector2f position)> mymap;
 
-//template <typename T>
 //brief Factory class responsible for creating instances of GameObject based on name.
 class Factory {
 public:
-    //Yehezkels
-    /***********************************************************************************************/
-    //using mymap = std::map<std::string, std::unique_ptr<T>(*)(sf::Vector2f position)>;
-
-    //static std::unique_ptr<T> create(const std::string& name, sf::Vector2f position);
-    //static bool registerit(const std::string& name, std::unique_ptr<T>(*)(sf::Vector2f position));
-
-    // In Map.cpp:
-    // Factory<Pickable>::create(...)
-    // instead Factory::createPickable(...)
-    /***********************************************************************************************/
-
     //Create a GameObject instance based on the provided name.
     static std::unique_ptr<GameObjects> create(const std::string& name, sf::Vector2f position);
 
@@ -40,41 +27,41 @@ public:
     static bool registerit(const std::string& name, std::unique_ptr<GameObjects>(*)(sf::Vector2f position));
 
     //Logic function
-    static std::list<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset, float gameTime);
-    static std::list<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset, float gameTime);
-    static std::list<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos, float gameTime);
-    static std::list<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float );
-    static std::list<std::unique_ptr<StaticObjects>> createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f , float );
+    static std::vector<std::unique_ptr<Pickable>> createAndGetPickables(sf::Vector2f scrollOffset, float gameTime);
+    static std::vector<std::unique_ptr<StaticObjects>> createAndGetObstacles(sf::Vector2f scrollOffset, float gameTime);
+    static std::vector<std::unique_ptr<Enemy>> createAndGetEnemies(sf::Vector2f scrollOffset,sf::Vector2f playerPos, float gameTime);
+    static std::vector<std::unique_ptr<MovingObjects>> createAndGetScientists(sf::Vector2f scrollOffset, sf::Vector2f playerPos, float );
+    static std::vector<std::unique_ptr<StaticObjects>> createAndGetAlarms(sf::Vector2f scrollOffset, sf::Vector2f , float );
 
     // Methods to create different coin shapes
-    static std::list<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Pickable>> createRectangle(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Pickable>> createTriangle(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Pickable>> createPigCoins(const std::string& name, sf::Vector2f playerPos);
-    static std::list<std::unique_ptr<Pickable>> createSpeedBoost(const std::string& name, sf::Vector2f playerPos);
-    static std::list<std::unique_ptr<Pickable>> createPowerup(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Pickable>> createPig(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createDiamond(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createRectangle(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createTriangle(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createPigCoins(const std::string& name, sf::Vector2f playerPos);
+    static std::vector<std::unique_ptr<Pickable>> createSpeedBoost(const std::string& name, sf::Vector2f playerPos);
+    static std::vector<std::unique_ptr<Pickable>> createPowerup(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Pickable>> createPig(const std::string& name, sf::Vector2f scrollOffset);
 
     // Methods to create different lazer shapes
-    static std::list<std::unique_ptr<StaticObjects>> createYparallel(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<StaticObjects>> createXparallel(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<StaticObjects>> createLayingLeft(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<StaticObjects>> createLayingRight(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<StaticObjects>> createYparallel(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<StaticObjects>> createXparallel(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<StaticObjects>> createLayingLeft(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<StaticObjects>> createLayingRight(const std::string& name, sf::Vector2f scrollOffset);
 
     // Methods to create different missile shapes
-    static std::list<std::unique_ptr<Enemy>> createMissile(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Enemy>> create2oneByOne(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Enemy>> create4oneByOne(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Enemy>> create2together(const std::string& name, sf::Vector2f scrollOffset);
-    static std::list<std::unique_ptr<Enemy>> create4together(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Enemy>> createMissile(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Enemy>> create2oneByOne(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Enemy>> create4oneByOne(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Enemy>> create2together(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<Enemy>> create4together(const std::string& name, sf::Vector2f scrollOffset);
 
     // Methods to create scientists
-    static std::list<std::unique_ptr<MovingObjects>> createScientists(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<MovingObjects>> createScientists(const std::string& name, sf::Vector2f scrollOffset);
 
     // Methods to create lights 
-    static std::list<std::unique_ptr<StaticObjects>> createLight(const std::string& name, sf::Vector2f scrollOffset);
+    static std::vector<std::unique_ptr<StaticObjects>> createLight(const std::string& name, sf::Vector2f scrollOffset);
 
 
 private:

@@ -6,7 +6,6 @@ class Scoreboard
 public:
 	Scoreboard();
 	void updateCoins(int numOfCoins);
-	void updateLives(int lives);
 	void updateDistance(float distance, sf::Vector2f newpos);
 
 	const sf::Text& getDistance() const;
@@ -14,5 +13,5 @@ public:
 
 
 private:
-	sf::Text m_distanceCounter, m_coinsCounter, m_lives;
+	sf::Text m_distanceCounter, m_coinsCounter;
 };
