@@ -17,9 +17,22 @@
 //Typedef for a map storing factory functions for GameObject creation.
 typedef std::map<std::string, std::unique_ptr<GameObjects>(*)(sf::Vector2f position)> mymap;
 
+//template <typename T>
 //brief Factory class responsible for creating instances of GameObject based on name.
 class Factory {
 public:
+    //Yehezkels
+    /***********************************************************************************************/
+    //using mymap = std::map<std::string, std::unique_ptr<T>(*)(sf::Vector2f position)>;
+
+    //static std::unique_ptr<T> create(const std::string& name, sf::Vector2f position);
+    //static bool registerit(const std::string& name, std::unique_ptr<T>(*)(sf::Vector2f position));
+
+    // In Map.cpp:
+    // Factory<Pickable>::create(...)
+    // instead Factory::createPickable(...)
+    /***********************************************************************************************/
+
     //Create a GameObject instance based on the provided name.
     static std::unique_ptr<GameObjects> create(const std::string& name, sf::Vector2f position);
 

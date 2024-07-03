@@ -67,6 +67,8 @@ configure_file ("Images/Player/r_SuperPowerFlyTank.png" ${CMAKE_BINARY_DIR} COPY
 configure_file ("Images/Player/s_SuperPowerRunner.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Player/t_SuperPowerTank.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
+configure_file ("Images/Player/u_fastPlayer.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
 #font
 configure_file ("Images/Other/Jetpackia.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 
@@ -101,3 +103,4 @@ configure_file ("Audios/m_reverseSound2.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/n_pig.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/o_engineSound.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/p_mechEngine.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Audios/q_speedBoost.ogg" ${CMAKE_BINARY_DIR} COPYONLY)

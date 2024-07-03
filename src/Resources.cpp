@@ -45,8 +45,8 @@ void Resources::fillTextures()
 													   "q_GokuAvatar.png",
 													   "r_SuperPowerFlyTank.png",
 													   "s_SuperPowerRunner.png",
-													   "t_SuperPowerTank.png"
-																			//20
+													   "t_SuperPowerTank.png",
+													   "u_fastPlayer"		 //20
 													  };
 
 	std::vector<std::string> namesOfOtherTextures = {"a_arrow.png", //0
@@ -135,7 +135,8 @@ void Resources::fillSoundFX()
 		"m_reverseSound2.ogg",    //12
 		"n_pig.ogg",              //13
 		"o_engineSound.ogg",      //14
-		"p_mechEngine.ogg"        //15
+		"p_mechEngine.ogg",        //15
+		"q_speedBoost.ogg"
 	};
 
 	for (int i = 0; i < namesOfSounds.size(); i++)

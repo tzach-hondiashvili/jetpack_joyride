@@ -7,6 +7,8 @@
 #include <typeindex>
 
 #include "Player.h"
+#include "FastPlayerState.h"
+#include "SpeedBoost.h"
 #include "Menu.h"
 #include "Coin.h"
 #include "Beam.h"
@@ -120,10 +122,12 @@ namespace
        GameObjects& speedBoost)
    {
 
-       static_cast<Player&>(player).getState()->getMenu()->getController().getMap().updatePickablesWithPigCoin(speedBoost.getSprite().getPosition());
+       static_cast<Player&>(player).getState() = std::move(std::make_unique<FastPlayerState>(
+                                                 static_cast<Player&>(player).getState()->getCurrSkin().getPosition(),
+                                                 static_cast<Player&>(player).getState()->getMenu()));
 
        static sf::Sound speedBoostSound;
-       speedBoostSound.setBuffer(Resources::instance().getSoundEffect(13));
+       speedBoostSound.setBuffer(Resources::instance().getSoundEffect(16));
        speedBoostSound.setVolume(100);
        speedBoostSound.play();
    }
@@ -142,10 +146,11 @@ namespace
         phm[Key(typeid(Player), typeid(Missile))] = &PlayerMissile;
         phm[Key(typeid(Player), typeid(PowerUp))] = &PlayerPowerUp;
         phm[Key(typeid(Player), typeid(Pig))] = &PlayerPig;
+        phm[Key(typeid(Player), typeid(SpeedBoost))] = &PlayerSpeedBoost;
         
         return phm;
     }
-
+    
     HitFunctionPtr lookup(const std::type_index& class1, const std::type_index& class2)
     {
         static HitMap collisionMap = initializeCollisionMap();
