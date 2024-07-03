@@ -12,6 +12,7 @@ configure_file ("Images/Objects/h_MissileIncoming.png" ${CMAKE_BINARY_DIR} COPYO
 configure_file ("Images/Objects/i_MissileWarning.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Objects/j_Piggy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Images/Objects/k_PowerUpBox.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("Images/Objects/l_SpeedBoost.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 #Other
 configure_file ("Images/Other/a_arrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -98,3 +99,5 @@ configure_file ("Audios/k_MechRunSound.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/l_reverseSound1.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/m_reverseSound2.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Audios/n_pig.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("Audios/p_speedBoost.ogg" ${CMAKE_BINARY_DIR} COPYONLY)

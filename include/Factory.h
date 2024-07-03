@@ -40,6 +40,7 @@ public:
     static std::list<std::unique_ptr<Pickable>> createCircle(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createHeart(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createPigCoins(const std::string& name, sf::Vector2f playerPos);
+    static std::list<std::unique_ptr<Pickable>> createSpeedBoost(const std::string& name, sf::Vector2f playerPos);
     static std::list<std::unique_ptr<Pickable>> createPowerup(const std::string& name, sf::Vector2f scrollOffset);
     static std::list<std::unique_ptr<Pickable>> createPig(const std::string& name, sf::Vector2f scrollOffset);
 

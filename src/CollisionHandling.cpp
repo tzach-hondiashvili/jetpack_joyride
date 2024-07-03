@@ -87,7 +87,7 @@ namespace
    void PlayerPig(GameObjects& player,
        GameObjects& pig)
    {
-       std::cout << "Collided with pig!\n";
+       
        static_cast<Player&>(player).getState()->getMenu()->getController().getMap().updatePickablesWithPigCoin(pig.getSprite().getPosition());
        
        static sf::Sound pigParty;
@@ -119,7 +119,17 @@ namespace
        power.play();
    }
   
+   void PlayerSpeedBoost(GameObjects& player,
+       GameObjects& speedBoost)
+   {
 
+       static_cast<Player&>(player).getState()->getMenu()->getController().getMap().updatePickablesWithPigCoin(speedBoost.getSprite().getPosition());
+
+       static sf::Sound speedBoostSound;
+       speedBoostSound.setBuffer(Resources::instance().getSoundEffect(13));
+       speedBoostSound.setVolume(100);
+       speedBoostSound.play();
+   }
     
 
     using HitFunctionPtr = void (*)(GameObjects&, GameObjects&);

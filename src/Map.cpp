@@ -35,7 +35,7 @@ void Map::updatePickablesWithPigCoin(sf::Vector2f playerPos)
 {
 	auto temp = Factory::createPigCoins("Coin", playerPos);
 	m_pickables.insert(m_pickables.end(), std::make_move_iterator(temp.begin()), std::make_move_iterator(temp.end()));
-	std::cout << "Updated m_pickables with pig coins!\n";
+	
 }
 
 void Map::updateObstacles(sf::Vector2f scrollOffset, float deltaTime)

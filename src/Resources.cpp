@@ -22,7 +22,8 @@ void Resources::fillTextures()
 														"h_MissileIncoming.png",
 														"i_MissileWarning.png",
 														"j_Piggy.png",
-														"k_PowerUpBox.png" //10
+														"k_PowerUpBox.png", //10
+														"l_SpeedBoost.png"
 													  };
 
 	std::vector<std::string> namesOfPlayerTextures = { "a_KingAvatar.png", //0

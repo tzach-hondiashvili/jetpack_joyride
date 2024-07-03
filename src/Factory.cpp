@@ -302,6 +302,30 @@ std::list<std::unique_ptr<Pickable>> Factory::createPigCoins(const std::string& 
     return temp;
 }
 
+std::list<std::unique_ptr<Pickable>> Factory::createSpeedBoost(const std::string& name, sf::Vector2f scrollOffset)
+{
+    std::list<std::unique_ptr <Pickable>> temp;
+
+    // Randomize center position within a range
+    float centerX = 100.f + static_cast<float>(std::rand() % 1356) + scrollOffset.x;
+    float centerY = 260.f + static_cast<float>(std::rand() % 400) + scrollOffset.y;
+
+    sf::Vector2f position(centerX, centerY);
+
+    // Create a GameObject instance
+    std::unique_ptr<GameObjects> speedBoost = Factory::create(name, position);
+    if (speedBoost)
+    {
+        // Downcast to Pickable by transferring ownership and casting raw pointer
+        std::unique_ptr<Pickable> pickable(static_cast<Pickable*>(speedBoost.release()));
+
+        // Add to temp
+        temp.push_back(std::move(pickable));
+    }
+
+    return temp;
+}
+
 std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f scrollOffset, float gameTime)
 {
     std::srand((unsigned int)std::time(NULL));
@@ -318,24 +342,29 @@ std::list<std::unique_ptr<Pickable>> Factory::createAndGetPickables(sf::Vector2f
         {3, &Factory::createCircle},
         {4, &Factory::createHeart},
         {5, &Factory::createPowerup},
-        {6, &Factory::createPig}
+        {6, &Factory::createPig},
+        {7, &Factory::createSpeedBoost}
     };
 
     // Generate a random number between 0 and 5
-    int randomNumber = int(std::rand() % 9 - gameTime / 300);
+    int randomNumber = int(std::rand() % 10 - gameTime / 300);
     std::list<std::unique_ptr<Pickable>> basic;
 
     // Find the corresponding creation function and call it
     auto it = FunctionMap.find(randomNumber);
     if (it != FunctionMap.end())
     {
-        if (randomNumber==5)
+        if (randomNumber == 5)
         {
             object = "PowerUp";
         }
         else if (randomNumber == 6)
         {
             object = "Pig";
+        }
+        else if (randomNumber == 7)
+        {
+            object = "SpeedBoost";
         }
         else
         {
