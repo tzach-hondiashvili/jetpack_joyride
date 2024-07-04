@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.26)
 
 project(jetpack_joyride)
-set(MY_AUTHORS "")
+set(MY_AUTHORS "Daniel_Dalal-Tzach_Hondiashvili")
 
 include(cmake/CompilerSettings.cmake)
 
