@@ -14,7 +14,7 @@ Missile::Missile(sf::Vector2f position)
 	m_MissileLaunch.setVolume(100);
 	m_MissileWarning.setBuffer(Resources::instance().getSoundEffect(3));
 	m_MissileWarning.setVolume(50);
-	m_MissileWarning.setLoop(true);
+	m_MissileWarning.setLoop(false);
 
 	m_beforeMissile.setTexture(Resources::instance().getObjectTexture(8));
 	m_warningMissile.setTexture(Resources::instance().getObjectTexture(7));
