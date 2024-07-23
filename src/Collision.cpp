@@ -174,10 +174,10 @@ namespace Collision
 
 		// Create the four distinct axes that are perpendicular to the edges of the two rectangles
 		auto axes = std::array<sf::Vector2f, 4>({
-			{ OBB1.points[1].x - OBB1.points[0].x, OBB1.points[1].y - OBB1.points[0].y },
-			{ OBB1.points[1].x - OBB1.points[2].x, OBB1.points[1].y - OBB1.points[2].y },
-			{ OBB2.points[0].x - OBB2.points[3].x, OBB2.points[0].y - OBB2.points[3].y },
-			{ OBB2.points[0].x - OBB2.points[1].x, OBB2.points[0].y - OBB2.points[1].y }
+			sf::Vector2f( OBB1.points[1].x - OBB1.points[0].x, OBB1.points[1].y - OBB1.points[0].y ),
+			sf::Vector2f( OBB1.points[1].x - OBB1.points[2].x, OBB1.points[1].y - OBB1.points[2].y ),
+			sf::Vector2f( OBB2.points[0].x - OBB2.points[3].x, OBB2.points[0].y - OBB2.points[3].y ),
+			sf::Vector2f( OBB2.points[0].x - OBB2.points[1].x, OBB2.points[0].y - OBB2.points[1].y )
 			});
 
 		for (auto& axis : axes)
